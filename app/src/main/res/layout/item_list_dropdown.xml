@@ -5,4 +5,5 @@
     android:ellipsize="end"
     android:maxLines="1"
     android:padding="20dp"
+    android:textColor="@color/black"
     />

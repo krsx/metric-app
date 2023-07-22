@@ -21,4 +21,6 @@
     <string name="have_acc">Sudah memiliki akun?</string>
     <string name="to_login">Masuk sekarang</string>
     <string name="register">Daftar</string>
+    <string name="invalid_email">Format email yang anda berikan salah</string>
+    <string name="invalid_pass">Password setidaknya memiliki 8 karakter</string>
 </resources>
