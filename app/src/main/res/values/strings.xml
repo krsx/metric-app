@@ -9,4 +9,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="enter_acc">Masuk ke\nAkun Anda</string>
+    <string name="email">Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="password_confirm">Konfirmasi Kata Sandi</string>
+    <string name="login">Masuk</string>
+    <string name="no_acc">Belum memiliki akun?</string>
+    <string name="register_now">Daftar sekarang</string>
+    <string name="regis_acc">Daftar Akun\nBaru Anda</string>
+    <string name="choose_division">Pilih divisi</string>
+    <string name="have_acc">Sudah memiliki akun?</string>
+    <string name="to_login">Masuk sekarang</string>
+    <string name="register">Daftar</string>
 </resources>

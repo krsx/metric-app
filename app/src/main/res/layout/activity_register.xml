@@ -6,4 +6,147 @@
     android:layout_height="match_parent"
     tools:context=".ui.register.RegisterActivity">
 
+    <TextView
+        android:id="@+id/tv_register_acc"
+        style="@style/textStyleHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/regis_acc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/ed_email"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_text_field_rounded"
+        android:drawableStart="@drawable/ic_email_24"
+        android:drawablePadding="12sp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp"
+        android:textColorHint="@color/grey_500"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_register_acc" />
+
+    <EditText
+        android:id="@+id/ed_pass"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_text_field_rounded"
+        android:drawableStart="@drawable/ic_pass_24"
+        android:drawablePadding="12sp"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textColorHint="@color/grey_500"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_email" />
+
+    <EditText
+        android:id="@+id/ed_pass_confirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_text_field_rounded"
+        android:drawableStart="@drawable/ic_pass_24"
+        android:drawablePadding="12sp"
+        android:ems="10"
+        android:hint="@string/password_confirm"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:textColorHint="@color/grey_500"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_pass" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ed_division"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/custom_drop_down_background"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:paddingBottom="4dp"
+        android:textColorHint="@color/grey_500"
+        style="@style/CustomTextInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_pass_confirm">
+
+        <AutoCompleteTextView
+            android:id="@+id/dropdown_menu"
+            android:layout_width="match_parent"
+            android:background="@drawable/custom_drop_down_background"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:hint="@string/choose_division"
+            android:padding="12dp"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_register"
+        style="@style/textStyleTitleWhite"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/custom_button_rounded"
+        android:paddingVertical="12dp"
+        android:text="@string/register"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_division" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <TextView
+            android:id="@+id/tv_have_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:text="@string/have_acc"
+            android:textColor="@color/grey_500" />
+
+        <TextView
+            android:id="@+id/tv_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/to_login"
+            android:textColor="@color/blue_600" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
