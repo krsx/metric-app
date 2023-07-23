@@ -97,6 +97,7 @@
             android:id="@+id/tv_to_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/textStyleCardCategory"
             android:text="@string/register_now"
             android:textColor="@color/blue_600" />
     </LinearLayout>

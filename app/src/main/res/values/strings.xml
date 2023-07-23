@@ -23,4 +23,7 @@
     <string name="register">Daftar</string>
     <string name="invalid_email">Format email yang anda berikan salah</string>
     <string name="invalid_pass">Password setidaknya memiliki 8 karakter</string>
+    <string name="region">Daerah</string>
+    <string name="keypoints">Keypoints</string>
+    <string name="fab_menu">FAB Menu</string>
 </resources>

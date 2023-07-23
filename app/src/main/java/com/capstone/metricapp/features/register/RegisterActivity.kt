@@ -15,6 +15,7 @@ import com.capstone.metricapp.core.utils.divisionsItems
 import com.capstone.metricapp.core.utils.hideKeyboard
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityRegisterBinding
+import com.capstone.metricapp.features.home.HomeActivity
 import com.capstone.metricapp.features.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
@@ -102,7 +103,9 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.btnRegister.setOnClickListener {
             if (isFormFilled()) {
-
+                val intentToHome = Intent(this, HomeActivity::class.java)
+                startActivity(intentToHome)
+                finish()
             } else if (!isFormFilled())
                 showToast("Pastikan semua data telah terisi")
             else if (binding.edPass.text != binding.edPassConfirm) {
