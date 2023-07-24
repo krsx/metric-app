@@ -28,4 +28,6 @@
     <string name="fab_menu">FAB Menu</string>
     <string name="qr_scan">Scan QR</string>
     <string name="add_keypoints">Tambah Keypoints</string>
+    <string name="welcome_to">Selamat datang</string>
+    <string name="division">Divisi</string>
 </resources>
