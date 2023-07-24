@@ -15,11 +15,78 @@
         android:backgroundTint="@color/blue_600"
         android:clickable="true"
         android:contentDescription="@string/fab_menu"
-        android:tint="@color/white"
-        app:fabCustomSize="64dp"
+        android:focusable="true"
+        app:fabCustomSize="72dp"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:maxImageSize="36dp"
-        app:srcCompat="@drawable/ic_add_24" />
+        app:maxImageSize="40dp"
+        app:srcCompat="@drawable/ic_add_24"
+        app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:backgroundTint="@color/white"
+        app:fabCustomSize="64dp"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toTopOf="@+id/fab_menu"
+        app:layout_constraintEnd_toEndOf="@+id/fab_menu"
+        app:layout_constraintStart_toStartOf="@+id/fab_menu"
+        app:maxImageSize="32dp"
+        app:srcCompat="@drawable/ic_qr_code_24"
+        app:tint="@color/blue_600" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="invisible"
+        app:backgroundTint="@color/white"
+        app:fabCustomSize="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/fab_scan"
+        app:layout_constraintEnd_toEndOf="@+id/fab_scan"
+        app:layout_constraintStart_toStartOf="@+id/fab_scan"
+        app:maxImageSize="32dp"
+        app:srcCompat="@drawable/ic_edit_24"
+        app:tint="@color/blue_600" />
+
+    <TextView
+        android:id="@+id/tv_add_keypoints"
+        style="@style/textStyleFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/custom_fab_text_rounded"
+        android:padding="8dp"
+        android:text="@string/add_keypoints"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_add"
+        app:layout_constraintEnd_toStartOf="@+id/fab_add"
+        app:layout_constraintTop_toTopOf="@+id/fab_add" />
+
+    <TextView
+        android:id="@+id/tv_scan_qr"
+        style="@style/textStyleFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/custom_fab_text_rounded"
+        android:padding="8dp"
+        android:text="@string/qr_scan"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/fab_scan"
+        app:layout_constraintEnd_toStartOf="@+id/fab_scan"
+        app:layout_constraintTop_toTopOf="@+id/fab_scan" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

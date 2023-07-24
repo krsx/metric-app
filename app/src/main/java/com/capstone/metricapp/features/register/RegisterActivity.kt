@@ -103,8 +103,8 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.btnRegister.setOnClickListener {
             if (isFormFilled()) {
-                val intentToHome = Intent(this, HomeActivity::class.java)
-                startActivity(intentToHome)
+                val intentToLogin = Intent(this, LoginActivity::class.java)
+                startActivity(intentToLogin)
                 finish()
             } else if (!isFormFilled())
                 showToast("Pastikan semua data telah terisi")
