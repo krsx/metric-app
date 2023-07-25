@@ -22,9 +22,5 @@ class SettingsActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             finish()
         }
-
-
     }
-
-
 }

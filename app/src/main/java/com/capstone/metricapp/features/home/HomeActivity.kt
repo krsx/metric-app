@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.utils.FabMenuState
 import com.capstone.metricapp.databinding.ActivityHomeBinding
+import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
+import com.capstone.metricapp.features.scan.ScanActivity
 import com.capstone.metricapp.features.settings.SettingsActivity
 
 class HomeActivity : AppCompatActivity() {
@@ -29,6 +31,16 @@ class HomeActivity : AppCompatActivity() {
         binding.ivSetting.setOnClickListener {
             val intentToSetting = Intent(this, SettingsActivity::class.java)
             startActivity(intentToSetting)
+        }
+
+        binding.fabScan.setOnClickListener {
+            val intentToScan = Intent(this, ScanActivity::class.java)
+            startActivity(intentToScan)
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val intentToAdd = Intent(this, AddKeypointsDescActivity::class.java)
+            startActivity(intentToAdd)
         }
     }
 
