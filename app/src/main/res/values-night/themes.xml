@@ -74,4 +74,20 @@
         <item name="fontFamily">@font/poppinsmedium</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="textStyleMediumCustom">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/poppinsmedium</item>
+    </style>
+
+    <style name="textStyleSemiBoldCustom">
+        <item name="android:textColor">@color/black</item>
+        <item name="fontFamily">@font/poppinssemibold</item>
+    </style>
+
+    <style name="TransparentDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
 </resources>
