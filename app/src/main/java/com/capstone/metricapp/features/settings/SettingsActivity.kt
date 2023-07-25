@@ -13,6 +13,17 @@ class SettingsActivity : AppCompatActivity() {
 
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnLogout.setOnClickListener{
+            val logoutDialog = LogoutDialog()
+            logoutDialog.show(supportFragmentManager, "Dialog")
+        }
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
+
+
     }
 
 

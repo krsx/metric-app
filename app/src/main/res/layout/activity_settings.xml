@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tv_email_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -69,11 +69,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="@string/division"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintStart_toStartOf="@+id/tv_email_user"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email_user" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tv_division_user"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -83,24 +83,26 @@
             app:layout_constraintStart_toStartOf="@+id/textView10"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-        <ImageView
-            android:id="@+id/imageView2"
+        <LinearLayout
+            android:id="@+id/btn_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/textView11"
-            app:srcCompat="@drawable/ic_logout_24" />
+            app:layout_constraintStart_toStartOf="@+id/tv_division_user"
+            app:layout_constraintTop_toBottomOf="@+id/tv_division_user">
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="58dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="4dp"
-            android:text="@string/log_out"
-            style="@style/textStyleError"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:src="@drawable/ic_logout_24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textView12"
+                style="@style/textStyleError"
+                android:layout_width="58dp"
+                android:layout_height="25dp"
+                android:text="@string/log_out" />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

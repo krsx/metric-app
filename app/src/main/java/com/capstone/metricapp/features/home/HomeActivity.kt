@@ -1,5 +1,6 @@
 package com.capstone.metricapp.features.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.utils.FabMenuState
 import com.capstone.metricapp.databinding.ActivityHomeBinding
+import com.capstone.metricapp.features.settings.SettingsActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -22,6 +24,11 @@ class HomeActivity : AppCompatActivity() {
 
         binding.fabMenu.setOnClickListener {
             onFabMenuClick()
+        }
+
+        binding.ivSetting.setOnClickListener {
+            val intentToSetting = Intent(this, SettingsActivity::class.java)
+            startActivity(intentToSetting)
         }
     }
 
