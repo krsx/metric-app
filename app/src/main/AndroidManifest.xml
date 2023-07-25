@@ -13,6 +13,18 @@
         android:theme="@style/Theme.METRICApp"
         tools:targetApi="31">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.add_keypoints.specs.AddKeypointsSpecsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.add_keypoints.desc.AddKeypointsDescActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.scan.ScanActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.home.HomeActivity"
             android:exported="false" />
         <activity

@@ -30,4 +30,7 @@
     <string name="add_keypoints">Tambah Keypoints</string>
     <string name="welcome_to">Selamat datang</string>
     <string name="division">Divisi</string>
+    <string name="settings">Pengaturan</string>
+    <string name="template_email">user@gmail.com</string>
+    <string name="log_out">Keluar</string>
 </resources>

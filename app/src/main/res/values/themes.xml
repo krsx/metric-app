@@ -74,4 +74,10 @@
         <item name="fontFamily">@font/poppinsmedium</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="textStyleError">
+        <item name="android:textColor">@color/red</item>
+        <item name="fontFamily">@font/poppinsmedium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>
