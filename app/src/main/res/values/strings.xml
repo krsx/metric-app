@@ -38,4 +38,11 @@
     <string name="no">Tidak</string>
     <string name="yes">Ya</string>
     <string name="add_spec">Tambah Spesifikasi</string>
+    <string name="scan_desc">Lakukan scan QR untuk dapat melihat atau menambahkan spesifikasi keypoints</string>
+    <string name="scan_title">Arahkan Kamera ke Kode QR</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="template_date">1 Jan 2001</string>
+    <string name="detail">Detail</string>
+    <string name="add">Tambah</string>
 </resources>
