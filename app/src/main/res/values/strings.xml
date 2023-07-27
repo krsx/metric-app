@@ -46,4 +46,18 @@
     <string name="detail">Detail</string>
     <string name="add">Tambah</string>
     <string name="telekomunikasi">Telekomunikasi</string>
+    <string name="merk_modem_radio">Merk Modem/Radio</string>
+    <string name="type">Tipe</string>
+    <string name="range_voltage">Range Voltage</string>
+    <string name="s_n">S/N</string>
+    <string name="sim_card_main">SIM Card (Utama)</string>
+    <string name="provider_sim_card">Provider SIM Card</string>
+    <string name="sim_card_backup">SIM Card (Cadangan)</string>
+    <string name="no_sim_card">Nomor SIM Card</string>
+    <string name="rtu">RTU</string>
+    <string name="merk">Merk</string>
+    <string name="change_date">Tanggal Penggantian</string>
+    <string name="baterai">Baterai</string>
+    <string name="notes">Keterangan</string>
+    <string name="additional_notes">Catatan</string>
 </resources>
