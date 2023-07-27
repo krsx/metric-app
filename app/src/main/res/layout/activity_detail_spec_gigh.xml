@@ -6,4 +6,4 @@
     android:layout_height="match_parent"
     tools:context=".features.detail.spesifikasi.DetailSpecGIGHActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>

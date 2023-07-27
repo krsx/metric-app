@@ -60,4 +60,7 @@
     <string name="baterai">Baterai</string>
     <string name="notes">Keterangan</string>
     <string name="additional_notes">Catatan</string>
+    <string name="os">OS</string>
+    <string name="backup_volt">Backup Volt</string>
+    <string name="main_volt">Main Volt</string>
 </resources>
