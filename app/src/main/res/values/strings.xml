@@ -65,4 +65,5 @@
     <string name="main_volt">Main Volt</string>
     <string name="rectifier">Rectifier</string>
     <string name="gateaway">Gateaway</string>
+    <string name="spec">Spesifikasi</string>
 </resources>
