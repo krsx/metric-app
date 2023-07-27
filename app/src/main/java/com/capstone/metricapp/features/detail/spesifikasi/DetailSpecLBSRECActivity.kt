@@ -7,6 +7,6 @@ import com.capstone.metricapp.R
 class DetailSpecLBSRECActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_spec_lbsrecactivity)
+        setContentView(R.layout.activity_detail_spec_lbsrec)
     }
 }

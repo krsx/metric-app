@@ -15,6 +15,15 @@
         android:theme="@style/Theme.METRICApp"
         tools:targetApi="31">
         <activity
+            android:name=".features.add_spec.AddSpecLBSRECActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.add_spec.AddSpecScadatelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.add_spec.AddSpecGIGHActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.detail.spesifikasi.DetailSpecLBSRECActivity"
             android:exported="false" />
         <activity

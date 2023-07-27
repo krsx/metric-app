@@ -1,12 +1,12 @@
-package com.capstone.metricapp.features.detail.spesifikasi
+package com.capstone.metricapp.features.add_spec
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.capstone.metricapp.R
 
-class DetailSpecGIGHActivity : AppCompatActivity() {
+class AddSpecScadatelActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_spec_gigh)
+        setContentView(R.layout.activity_add_spec_scadatel)
     }
 }
