@@ -69,4 +69,9 @@
     <string name="change_spec">Perubahan spesifikasi %s</string>
     <string name="issue">Gangguan</string>
     <string name="default_issue_desc">Keypoints ini mengalami gangguan</string>
+    <string name="desc_keypoints">Deskripsi Keypoints</string>
+    <string name="choose_keypoints_type">Pilih Jenis Keypoints</string>
+    <string name="region_keypoints">Daerah Keypoints</string>
+    <string name="name_keypoints">Nama Keypoints</string>
+    <string name="next">Selanjutnya</string>
 </resources>
