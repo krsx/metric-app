@@ -64,7 +64,7 @@
     <string name="backup_volt">Backup Volt</string>
     <string name="main_volt">Main Volt</string>
     <string name="rectifier">Rectifier</string>
-    <string name="gateaway">Gateaway</string>
+    <string name="gateaway">Gateway</string>
     <string name="spec">Spesifikasi</string>
     <string name="change_spec">Perubahan spesifikasi %s</string>
     <string name="issue">Gangguan</string>
