@@ -74,4 +74,5 @@
     <string name="region_keypoints">Daerah Keypoints</string>
     <string name="name_keypoints">Nama Keypoints</string>
     <string name="next">Selanjutnya</string>
+    <string name="detail_spec">Detail Spesifikasi</string>
 </resources>
