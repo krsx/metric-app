@@ -24,15 +24,6 @@
             android:name=".features.add_spec.AddSpecGIGHActivity"
             android:exported="false" />
         <activity
-            android:name=".features.detail.spesifikasi.DetailSpecLBSRECActivity"
-            android:exported="false" />
-        <activity
-            android:name=".features.detail.spesifikasi.DetailSpecGIGHActivity"
-            android:exported="false" />
-        <activity
-            android:name=".features.detail.spesifikasi.DetailSpecScadatelActivity"
-            android:exported="false" />
-        <activity
             android:name=".features.settings.SettingsActivity"
             android:exported="false" />
         <activity
