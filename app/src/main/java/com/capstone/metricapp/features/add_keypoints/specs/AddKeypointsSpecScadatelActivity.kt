@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.capstone.metricapp.R
 
-class AddKeypointsSpecsActivity : AppCompatActivity() {
+class AddKeypointsSpecScadatelActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_keypoints_specs)
+        setContentView(R.layout.activity_add_keypoints_spec_scadatel)
     }
 }

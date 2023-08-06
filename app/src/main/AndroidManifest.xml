@@ -15,6 +15,12 @@
         android:theme="@style/Theme.METRICApp"
         tools:targetApi="31">
         <activity
+            android:name=".AddKeypointsSpecScadatelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddKeypointsSpecGIGHActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.add_spec.AddSpecLBSRECActivity"
             android:exported="false" />
         <activity
@@ -25,9 +31,6 @@
             android:exported="false" />
         <activity
             android:name=".features.settings.SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".features.add_keypoints.specs.AddKeypointsSpecsActivity"
             android:exported="false" />
         <activity
             android:name=".features.add_keypoints.desc.AddKeypointsDescActivity"
