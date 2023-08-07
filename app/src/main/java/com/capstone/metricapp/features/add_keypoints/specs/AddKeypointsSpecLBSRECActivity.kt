@@ -30,6 +30,7 @@ class AddKeypointsSpecLBSRECActivity : AppCompatActivity() {
                 showToast("Data keypoints baru telah tersimpan")
                 val intentToHome = Intent(this, HomeActivity::class.java)
                 startActivity(intentToHome)
+                finish()
             } else {
                 showToast("Tolong lengkapi semua data")
             }
