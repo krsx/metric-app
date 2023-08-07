@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/custom_background_top_rounded"
     tools:context=".features.scan.SuccessQRFragment">
 
     <ImageView
@@ -110,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_no"
+            android:id="@+id/btn_detail"
             style="@style/textStyleSemiBoldCustom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -122,7 +123,7 @@
             android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_yes"
+            android:id="@+id/btn_add"
             style="@style/textStyleSemiBoldCustom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
