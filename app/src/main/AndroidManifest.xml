@@ -15,10 +15,13 @@
         android:theme="@style/Theme.METRICApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddKeypointsSpecScadatelActivity"
+            android:name=".features.add_keypoints.specs.AddKeypointsSpecGIGHActivity"
             android:exported="false" />
         <activity
-            android:name=".AddKeypointsSpecGIGHActivity"
+            android:name=".features.add_keypoints.specs.AddKeypointsSpecLBSRECActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.add_keypoints.specs.AddKeypointsSpecScadatelActivity"
             android:exported="false" />
         <activity
             android:name=".features.add_spec.AddSpecLBSRECActivity"
