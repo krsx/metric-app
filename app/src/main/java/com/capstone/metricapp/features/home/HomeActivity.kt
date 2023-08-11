@@ -8,9 +8,14 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.domain.model.Scadatel
+import com.capstone.metricapp.core.ui.adapter.ScadatelKeypointsAdapter
 import com.capstone.metricapp.core.utils.FabMenuState
+import com.capstone.metricapp.core.utils.KeypointsType
+import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityHomeBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
 import com.capstone.metricapp.features.scan.ScanActivity
@@ -23,11 +28,43 @@ class HomeActivity : AppCompatActivity() {
     private var fabMenuState: FabMenuState = FabMenuState.COLLAPSED
     private val homeViewModel: HomeViewModel by viewModels()
 
+    private var keypointsType: KeypointsType = KeypointsType.SCADATEL
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        when (keypointsType) {
+            KeypointsType.LBSREC -> {
+
+            }
+            KeypointsType.GIGH -> {
+
+            }
+            KeypointsType.SCADATEL -> {
+                homeViewModel.getAllScadatel().observe(this) { scadatel ->
+                    when (scadatel) {
+                        is Resource.Error -> {
+                            binding.refKeypoints.isRefreshing = false
+                            showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                        }
+                        is Resource.Loading -> {
+                            binding.refKeypoints.isRefreshing = true
+                        }
+                        is Resource.Message -> {
+                            binding.refKeypoints.isRefreshing = false
+                            Log.e("HomeViewModel", scadatel.message.toString())
+                        }
+                        is Resource.Success -> {
+                            binding.refKeypoints.isRefreshing = false
+                            setupRecyclerViewScadatel(scadatel.data!!, keypointsType)
+                        }
+                    }
+                }
+            }
+        }
 
         binding.fabMenu.setOnClickListener {
             onFabMenuClick()
@@ -47,6 +84,19 @@ class HomeActivity : AppCompatActivity() {
             val intentToAdd = Intent(this, AddKeypointsDescActivity::class.java)
             startActivity(intentToAdd)
         }
+    }
+
+    private fun setupRecyclerViewScadatel(scadatelList: List<Scadatel>, type: KeypointsType) {
+        val layoutManager = LinearLayoutManager(this)
+        binding.rvKeypoints.layoutManager = layoutManager
+
+        val adapter = ScadatelKeypointsAdapter(scadatelList)
+        binding.rvKeypoints.adapter = adapter
+        adapter.setOnItemClickCallback(object : ScadatelKeypointsAdapter.OnItemClickCallback {
+            override fun onItemClicked(listScadatel: List<Scadatel>) {
+
+            }
+        })
     }
 
     private fun onFabMenuClick() {
