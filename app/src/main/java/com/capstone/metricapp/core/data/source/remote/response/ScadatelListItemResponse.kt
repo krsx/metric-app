@@ -5,53 +5,14 @@ import com.google.gson.annotations.SerializedName
 data class ScadatelListItemResponse(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	val data: ScadatelListData? = null,
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class ItemItem(
-
-	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
-
-	@field:SerializedName("merk")
-	val merk: String? = null,
-
-	@field:SerializedName("tanggalPemasangan")
-	val date: String? = null,
-
-	@field:SerializedName("os")
-	val os: String? = null,
-
-	@field:SerializedName("lokasi")
-	val region: String? = null,
-
-	@field:SerializedName("backupVolt")
-	val backupVolt: String? = null,
-
-	@field:SerializedName("__v")
-	val v: Int? = null,
-
-	@field:SerializedName("keypoint")
-	val keypoint: String? = null,
-
-	@field:SerializedName("mainVolt")
-	val mainVolt: String? = null,
-
-	@field:SerializedName("_id")
-	val id: String? = null,
-
-	@field:SerializedName("tipe")
-	val type: String? = null,
-
-	@field:SerializedName("uniqueID")
-	val uniqueID: String? = null
-)
-
-data class Data(
+data class ScadatelListData(
 
 	@field:SerializedName("item")
-	val item: List<ItemItem?>? = null
+	val item: List<ScadatelItem?>? = null
 )

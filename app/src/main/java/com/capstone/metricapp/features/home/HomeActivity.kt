@@ -6,17 +6,22 @@ import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
+import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.utils.FabMenuState
 import com.capstone.metricapp.databinding.ActivityHomeBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
 import com.capstone.metricapp.features.scan.ScanActivity
 import com.capstone.metricapp.features.settings.SettingsActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var fabMenuState: FabMenuState = FabMenuState.COLLAPSED
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +50,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun onFabMenuClick() {
-        fabMenuState = if (fabMenuState == FabMenuState.COLLAPSED){
+        fabMenuState = if (fabMenuState == FabMenuState.COLLAPSED) {
             FabMenuState.EXPANDED
-        }else{
+        } else {
             FabMenuState.COLLAPSED
         }
         Log.e("TEST", fabMenuState.toString())

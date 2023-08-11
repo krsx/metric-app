@@ -32,14 +32,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                tools:listitem="@layout/item_list_keypoints" />
+                />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginBottom="16dp"/>
-        </LinearLayout>
 
+        </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -79,7 +79,6 @@
         app:tint="@color/blue_600" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
