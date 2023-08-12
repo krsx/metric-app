@@ -93,7 +93,7 @@ class HomeActivity : AppCompatActivity() {
         val adapter = ScadatelKeypointsAdapter(scadatelList)
         binding.rvKeypoints.adapter = adapter
         adapter.setOnItemClickCallback(object : ScadatelKeypointsAdapter.OnItemClickCallback {
-            override fun onItemClicked(listScadatel: List<Scadatel>) {
+            override fun onItemClicked(listScadatel: Scadatel) {
 
             }
         })

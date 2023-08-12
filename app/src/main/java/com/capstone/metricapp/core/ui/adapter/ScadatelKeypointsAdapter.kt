@@ -1,5 +1,6 @@
 package com.capstone.metricapp.core.ui.adapter
 
+import android.content.Intent
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.diffutil.ScadatelListDiffUtil
 import com.capstone.metricapp.databinding.ItemListKeypointsBinding
+import com.capstone.metricapp.features.detail.DetailKeypointsActivity
 
 class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
     ListAdapter<Scadatel, ScadatelKeypointsAdapter.ViewHolder>(ScadatelListDiffUtil()) {
@@ -40,6 +42,14 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
                 Log.e("TEST", DateUtil.convertDateKeypoints(scadatel.dateCreated))
             }
         }
+
+        holder.itemView.setOnClickListener {
+            onItemCallback.onItemClicked(scadatel)
+
+            val intentToDetailKeypoints =
+                Intent(holder.itemView.context, DetailKeypointsActivity::class.java)
+            holder.itemView.context.startActivity(intentToDetailKeypoints)
+        }
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
@@ -47,6 +57,6 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(listScadatel: List<Scadatel>)
+        fun onItemClicked(listScadatel: Scadatel)
     }
 }
