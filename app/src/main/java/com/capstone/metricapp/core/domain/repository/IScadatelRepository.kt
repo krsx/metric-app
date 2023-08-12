@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface IScadatelRepository {
     fun getAllScadatel(): Flow<Resource<List<Scadatel>>>
     fun getScadatelById(id: String): Flow<Resource<Scadatel>>
+
 }

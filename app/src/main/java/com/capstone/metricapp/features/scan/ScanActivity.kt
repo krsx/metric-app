@@ -2,18 +2,29 @@ package com.capstone.metricapp.features.scan
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.*
+import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.utils.showLongToast
+import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityScanBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
+@FlowPreview
+@ExperimentalCoroutinesApi
 class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
     private lateinit var qrScanner: CodeScanner
+    private val scanViewModel: ScanViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -86,7 +97,25 @@ class ScanActivity : AppCompatActivity() {
             decodeCallback = DecodeCallback {
                 runOnUiThread {
                     SuccessQRFragment().isCancelable = true
-                    SuccessQRFragment().show(supportFragmentManager, "Success QR Fragment")
+                    scanViewModel.getScadatelById(it.text).observe(this@ScanActivity) {scadatel ->
+                        when(scadatel){
+                            is Resource.Error -> {
+                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                            }
+                            is Resource.Loading -> {
+
+                            }
+                            is Resource.Message -> {
+
+                            }
+                            is Resource.Success -> {
+                               lifecycleScope.launch {
+                                   scanViewModel.scadatelData.value = scadatel.data!!
+                               }
+                                SuccessQRFragment().show(supportFragmentManager, "Support QR Fragment")
+                            }
+                        }
+                    }
                 }
             }
 
@@ -97,7 +126,7 @@ class ScanActivity : AppCompatActivity() {
             }
         }
 
-        binding.qrScanner.setOnClickListener{
+        binding.qrScanner.setOnClickListener {
             qrScanner.startPreview()
         }
     }
