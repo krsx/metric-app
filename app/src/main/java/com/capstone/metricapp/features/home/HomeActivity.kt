@@ -28,6 +28,7 @@ class HomeActivity : AppCompatActivity() {
     private var fabMenuState: FabMenuState = FabMenuState.COLLAPSED
     private val homeViewModel: HomeViewModel by viewModels()
 
+    // changed after implementing Login System
     private var keypointsType: KeypointsType = KeypointsType.SCADATEL
 
     override fun onCreate(savedInstanceState: Bundle?) {

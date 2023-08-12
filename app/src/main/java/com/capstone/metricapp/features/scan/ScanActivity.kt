@@ -8,7 +8,9 @@ import androidx.core.content.ContextCompat
 import com.budiyev.android.codescanner.*
 import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.databinding.ActivityScanBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
     private lateinit var qrScanner: CodeScanner

@@ -21,10 +21,6 @@ class ScadatelRepository @Inject constructor(
     override fun getAllScadatel(): Flow<Resource<List<Scadatel>>> {
         return object : NetworkBoundResource<List<Scadatel>, ScadatelListItemResponse>() {
             override suspend fun fetchFromApi(response: ScadatelListItemResponse): List<Scadatel> {
-                Log.e("TEST",
-                    ScadatelDataMapper.mapListScadatelResponsesToDomain(response.data?.item)
-                        .toString()
-                )
                 return ScadatelDataMapper.mapListScadatelResponsesToDomain(response.data?.item)
             }
 

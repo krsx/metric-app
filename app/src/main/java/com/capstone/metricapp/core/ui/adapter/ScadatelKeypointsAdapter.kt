@@ -12,7 +12,7 @@ import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.diffutil.ScadatelListDiffUtil
 import com.capstone.metricapp.databinding.ItemListKeypointsBinding
-import com.capstone.metricapp.features.detail.DetailKeypointsActivity
+import com.capstone.metricapp.features.detail.DetailKeypointActivity
 
 class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
     ListAdapter<Scadatel, ScadatelKeypointsAdapter.ViewHolder>(ScadatelListDiffUtil()) {
@@ -47,7 +47,8 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
             onItemCallback.onItemClicked(scadatel)
 
             val intentToDetailKeypoints =
-                Intent(holder.itemView.context, DetailKeypointsActivity::class.java)
+                Intent(holder.itemView.context, DetailKeypointActivity::class.java)
+            intentToDetailKeypoints.putExtra(KEY_ID_SCADATEL, scadatel.uniqueId)
             holder.itemView.context.startActivity(intentToDetailKeypoints)
         }
     }
@@ -58,5 +59,9 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
 
     interface OnItemClickCallback {
         fun onItemClicked(listScadatel: Scadatel)
+    }
+
+    companion object{
+        const val KEY_ID_SCADATEL = "key_id_scadatel"
     }
 }

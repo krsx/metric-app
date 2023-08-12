@@ -17,7 +17,7 @@
         android:theme="@style/Theme.METRICApp"
         tools:targetApi="31">
         <activity
-            android:name=".features.detail.DetailKeypointsActivity"
+            android:name=".features.detail.DetailKeypointActivity"
             android:exported="false" />
         <activity
             android:name=".features.add_keypoints.specs.AddKeypointsSpecGIGHActivity"

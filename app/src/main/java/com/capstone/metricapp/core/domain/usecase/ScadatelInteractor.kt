@@ -14,7 +14,7 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
     }
 
     override fun getScadatelById(id: String): Flow<Resource<Scadatel>> {
-        TODO("Not yet implemented")
+        return scadatelRepository.getScadatelById(id)
     }
 
 }
