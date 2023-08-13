@@ -9,8 +9,10 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.capstone.metricapp.core.utils.DateUtil
+import com.capstone.metricapp.core.utils.KeypointsType
 import com.capstone.metricapp.databinding.FragmentSuccessQRBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
+import com.capstone.metricapp.features.detail.DetailKeypointActivity
 import com.capstone.metricapp.features.detail.spesifikasi.DetailSpecGIGHFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +27,9 @@ class SuccessQRFragment() : BottomSheetDialogFragment() {
     private var _binding: FragmentSuccessQRBinding? = null
     private val binding get() = _binding!!
     private val scanViewModel: ScanViewModel by viewModels()
+
+    //later will be changed to sharedPreferences
+    private var keypointsType: KeypointsType = KeypointsType.SCADATEL
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +49,8 @@ class SuccessQRFragment() : BottomSheetDialogFragment() {
         }
 
         binding.btnDetail.setOnClickListener {
-            val intentToDetailKeypoints =
-                Intent(requireContext(), DetailSpecGIGHFragment::class.java)
-            startActivity(intentToDetailKeypoints)
+            val intentToDetailKeypoint = Intent(requireContext(), DetailKeypointActivity::class.java)
+            startActivity(intentToDetailKeypoint)
         }
 
         setupKeypointInfo()

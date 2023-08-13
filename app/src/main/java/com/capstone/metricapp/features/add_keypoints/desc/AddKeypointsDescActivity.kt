@@ -14,7 +14,9 @@ import com.capstone.metricapp.databinding.ActivityAddKeypointsDescBinding
 import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecGIGHActivity
 import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecLBSRECActivity
 import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecScadatelActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddKeypointsDescActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddKeypointsDescBinding
 
@@ -32,7 +34,21 @@ class AddKeypointsDescActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             if (!binding.edAddKeypoints.text.isNullOrEmpty() && !binding.edAddKeypointsRegion.text.isNullOrEmpty() && !binding.dropdownMenu.text.isNullOrEmpty()) {
-                setupButtonNext()
+                val intentToAddKeypointSpec:Intent = when(binding.dropdownMenu.text.toString()){
+                    KeypointsType.SCADATEL.toString() -> {
+                        Intent(this, AddKeypointsSpecScadatelActivity::class.java)
+                    }
+                    KeypointsType.LBSREC.toString() -> {
+                        Intent(this, AddKeypointsSpecLBSRECActivity::class.java)
+                    }
+                    KeypointsType.GIGH.toString() -> {
+                        Intent(this, AddKeypointsSpecGIGHActivity::class.java)
+                    }
+                    else -> {
+                        Intent(this, AddKeypointsSpecScadatelActivity::class.java)
+                    }
+                }
+                startActivity(intentToAddKeypointSpec)
             } else {
                 showToast("Tolong lengkapi semua data")
             }
