@@ -5,13 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.databinding.ActivitySplashBinding
+import com.capstone.metricapp.features.home.HomeActivity
 import com.capstone.metricapp.features.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+    private val viewModel: ScanViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,12 +24,18 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intentToLogin = Intent(this, LoginActivity::class.java)
-            startActivity(intentToLogin)
-            intentToLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
-            finish()
-        }, DELAY.toLong())
+        viewModel.getUserToken().observe(this) { token ->
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intentFormSplash = if (token != "") {
+                    Intent(this, HomeActivity::class.java)
+                } else {
+                    Intent(this, LoginActivity::class.java)
+                }
+                startActivity(intentFormSplash)
+                intentFormSplash.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                finish()
+            }, DELAY.toLong())
+        }
     }
 
     companion object {
