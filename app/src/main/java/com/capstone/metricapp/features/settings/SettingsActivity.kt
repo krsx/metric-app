@@ -1,10 +1,11 @@
 package com.capstone.metricapp.features.settings
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.capstone.metricapp.R
+import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.databinding.ActivitySettingsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
 
@@ -14,7 +15,7 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnLogout.setOnClickListener{
+        binding.btnLogout.setOnClickListener {
             val logoutDialog = LogoutDialog()
             logoutDialog.show(supportFragmentManager, "Dialog")
         }

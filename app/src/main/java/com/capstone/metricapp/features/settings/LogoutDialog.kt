@@ -2,13 +2,18 @@ package com.capstone.metricapp.features.settings
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import com.capstone.metricapp.R
+import com.capstone.metricapp.features.splash.SplashActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LogoutDialog : DialogFragment() {
+    private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity.let {
@@ -27,7 +32,12 @@ class LogoutDialog : DialogFragment() {
             }
 
             yesButton?.setOnClickListener {
-                Toast.makeText(requireActivity(), "Keluar", Toast.LENGTH_SHORT).show()
+                viewModel.deleteCache()
+
+                val intentToSplash = Intent(requireContext(), SplashActivity::class.java)
+                intentToSplash.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intentToSplash)
+                activity?.finish()
             }
 
             builder.create()
