@@ -4,22 +4,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isNotEmpty
 import com.capstone.metricapp.R
-import com.capstone.metricapp.core.utils.divisionsItems
+import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.utils.constans.divisionsItems
 import com.capstone.metricapp.core.utils.hideKeyboard
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityRegisterBinding
-import com.capstone.metricapp.features.home.HomeActivity
 import com.capstone.metricapp.features.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,9 +96,7 @@ class RegisterActivity : AppCompatActivity() {
                     binding.btnRegister.isEnabled = true
                 }
             }
-
         })
-
 
         binding.edPassConfirm.setOnEditorActionListener { textView, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_NEXT || keyEvent?.keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -102,16 +107,40 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnRegister.setOnClickListener {
-            if (isFormFilled()) {
-                val intentToLogin = Intent(this, LoginActivity::class.java)
-                startActivity(intentToLogin)
-                finish()
-            } else if (!isFormFilled())
-                showToast("Pastikan semua data telah terisi")
-            else if (binding.edPass.text != binding.edPassConfirm) {
+            if (binding.edPass.text != binding.edPassConfirm) {
                 showToast("Pastikan password anda masukkan adalah sama")
+            } else if (isFormFilled()) {
+                val email = binding.edEmail.text.toString()
+                val password = binding.edPass.text.toString()
+                val division = binding.dropdownMenu.text.toString()
+
+                viewModel.registerUser(email, password, division).observe(this) { user ->
+                    when (user) {
+                        is Resource.Error -> {
+                            buttonEnabled(true)
+                            showLoading(false)
+                            showToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
+                        }
+                        is Resource.Loading -> {
+                            buttonEnabled(false)
+                            showLoading(true)
+                        }
+                        is Resource.Message -> {
+                            Log.e("Register", user.message.toString())
+                        }
+                        is Resource.Success -> {
+                            buttonEnabled(true)
+                            showLoading(false)
+                            showLongToast("Akun telah berhasil didaftarkan, silahkan login untuk dapat menggunakan aplikasi")
+
+                            val intentToLogin = Intent(this, LoginActivity::class.java)
+                            startActivity(intentToLogin)
+                            finish()
+                        }
+                    }
+                }
             } else {
-                showToast("Pastikan semua data telah terisi")
+                showToast("Pastikan semua data telah terisi!")
             }
         }
     }
@@ -150,5 +179,13 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         return isFilled
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun buttonEnabled(isEnabled: Boolean) {
+        binding.btnRegister.isEnabled = isEnabled
     }
 }

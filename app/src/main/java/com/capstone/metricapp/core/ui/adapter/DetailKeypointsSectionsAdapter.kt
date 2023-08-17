@@ -3,7 +3,7 @@ package com.capstone.metricapp.core.ui.adapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.capstone.metricapp.core.utils.KeypointsType
+import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.features.detail.gangguan.DetailIssueFragment
 import com.capstone.metricapp.features.detail.historis.DetailHistoryFragment
 import com.capstone.metricapp.features.detail.spesifikasi.DetailSpecGIGHFragment

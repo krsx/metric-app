@@ -9,11 +9,10 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.capstone.metricapp.core.utils.DateUtil
-import com.capstone.metricapp.core.utils.KeypointsType
+import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.databinding.FragmentSuccessQRBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
 import com.capstone.metricapp.features.detail.DetailKeypointActivity
-import com.capstone.metricapp.features.detail.spesifikasi.DetailSpecGIGHFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -49,7 +48,8 @@ class SuccessQRFragment() : BottomSheetDialogFragment() {
         }
 
         binding.btnDetail.setOnClickListener {
-            val intentToDetailKeypoint = Intent(requireContext(), DetailKeypointActivity::class.java)
+            val intentToDetailKeypoint =
+                Intent(requireContext(), DetailKeypointActivity::class.java)
             startActivity(intentToDetailKeypoint)
         }
 

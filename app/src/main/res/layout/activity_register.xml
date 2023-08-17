@@ -103,8 +103,7 @@
             android:layout_height="wrap_content"
             android:inputType="none"
             android:hint="@string/choose_division"
-            android:padding="12dp"
-            />
+            android:padding="12dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -152,4 +151,14 @@
             style="@style/textStyleCardCategory"
             android:textColor="@color/blue_600" />
     </LinearLayout>
+
+    <ProgressBar
+        android:visibility="invisible"
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,16 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
+import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityLoginBinding
 import com.capstone.metricapp.features.home.HomeActivity
 import com.capstone.metricapp.features.register.RegisterActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,29 +72,48 @@ class LoginActivity : AppCompatActivity() {
         })
 
         binding.btnLogin.setOnClickListener {
-            if (isFormFilled()) {
-                val intentToHome = Intent(this, HomeActivity::class.java)
-                startActivity(intentToHome)
-                finish()
+            if (!binding.edEmail.text.isNullOrEmpty() && !binding.edPass.text.isNullOrEmpty()) {
+                val email = binding.edEmail.text.toString()
+                val password = binding.edPass.text.toString()
+
+                viewModel.loginUser(email, password).observe(this) { user ->
+                    when (user) {
+                        is Resource.Error -> {
+                            showLoading(false)
+                            buttonEnabled(true)
+                            showToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
+                        }
+                        is Resource.Loading -> {
+                            showLoading(true)
+                            buttonEnabled(false)
+                        }
+                        is Resource.Message -> {
+                            Log.e("Login", user.message.toString())
+                        }
+                        is Resource.Success -> {
+                            showLoading(false)
+                            buttonEnabled(true)
+                            showToast("Selamat datang di aplikasi METRIC")
+
+                            viewModel.saveUserToken(user.data?.token!!)
+
+                            val intentToHome = Intent(this, HomeActivity::class.java)
+                            startActivity(intentToHome)
+                            finish()
+                        }
+                    }
+                }
             } else {
                 showToast("Tolong isi semua data")
             }
         }
     }
 
-    private fun isFormFilled(): Boolean {
-        val editTextList = listOf(
-            binding.edEmail,
-            binding.edPass,
-        )
-        var isFilled = false
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
 
-        for (editText in editTextList) {
-            if (editText.text.toString().isNotEmpty()) {
-                isFilled = true
-            }
-        }
-
-        return isFilled
+    private fun buttonEnabled(isEnabled: Boolean) {
+        binding.btnLogin.isEnabled = isEnabled
     }
 }

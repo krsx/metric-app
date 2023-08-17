@@ -1,4 +1,4 @@
-package com.capstone.metricapp.core.utils
+package com.capstone.metricapp.core.utils.datamapper
 
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelData
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelItem

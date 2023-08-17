@@ -1,4 +1,4 @@
-package com.capstone.metricapp.core.utils
+package com.capstone.metricapp.core.utils.constans
 
 enum class Divisions {
     RTU,

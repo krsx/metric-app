@@ -7,8 +7,8 @@ import android.text.TextWatcher
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
-import com.capstone.metricapp.core.utils.KeypointsType
-import com.capstone.metricapp.core.utils.keypointsType
+import com.capstone.metricapp.core.utils.constans.KeypointsType
+import com.capstone.metricapp.core.utils.constans.keypointsType
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityAddKeypointsDescBinding
 import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecGIGHActivity
@@ -34,7 +34,7 @@ class AddKeypointsDescActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             if (!binding.edAddKeypoints.text.isNullOrEmpty() && !binding.edAddKeypointsRegion.text.isNullOrEmpty() && !binding.dropdownMenu.text.isNullOrEmpty()) {
-                val intentToAddKeypointSpec:Intent = when(binding.dropdownMenu.text.toString()){
+                val intentToAddKeypointSpec: Intent = when (binding.dropdownMenu.text.toString()) {
                     KeypointsType.SCADATEL.toString() -> {
                         Intent(this, AddKeypointsSpecScadatelActivity::class.java)
                     }

@@ -1,6 +1,5 @@
 package com.capstone.metricapp.core.data.repository
 
-import android.util.Log
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.data.source.remote.NetworkBoundResource
 import com.capstone.metricapp.core.data.source.remote.datasource.RemoteDataSource
@@ -9,7 +8,7 @@ import com.capstone.metricapp.core.data.source.remote.response.ScadatelItemRespo
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelListItemResponse
 import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.domain.repository.IScadatelRepository
-import com.capstone.metricapp.core.utils.ScadatelDataMapper
+import com.capstone.metricapp.core.utils.datamapper.ScadatelDataMapper
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton

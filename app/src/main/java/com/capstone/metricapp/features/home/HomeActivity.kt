@@ -14,7 +14,7 @@ import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.ui.adapter.ScadatelKeypointsAdapter
 import com.capstone.metricapp.core.utils.FabMenuState
-import com.capstone.metricapp.core.utils.KeypointsType
+import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityHomeBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity

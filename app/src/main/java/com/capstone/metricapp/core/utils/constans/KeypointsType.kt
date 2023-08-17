@@ -1,4 +1,4 @@
-package com.capstone.metricapp.core.utils
+package com.capstone.metricapp.core.utils.constans
 
 enum class KeypointsType(val type: String) {
     LBSREC("LBS RECLOSER"),
