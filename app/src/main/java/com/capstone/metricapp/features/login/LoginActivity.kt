@@ -33,6 +33,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intentToRegister)
         }
 
+        if (binding.edEmail.text.isNullOrEmpty() || binding.edPass.text.isNullOrEmpty()) {
+            binding.btnLogin.isEnabled = false
+        }
+
         binding.edEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -46,9 +50,7 @@ class LoginActivity : AppCompatActivity() {
                 if (!Patterns.EMAIL_ADDRESS.matcher(p0!!).matches()) {
                     binding.edEmail.error = getString(R.string.invalid_email)
                     binding.btnLogin.isEnabled = false
-                } else {
-                    binding.btnLogin.isEnabled = true
-                }
+                } else binding.btnLogin.isEnabled = !binding.edPass.text.isNullOrEmpty()
             }
         })
 
@@ -65,9 +67,7 @@ class LoginActivity : AppCompatActivity() {
                 if (p0.toString().length < 8) {
                     binding.edPass.error = getString(R.string.invalid_pass)
                     binding.btnLogin.isEnabled = false
-                } else {
-                    binding.btnLogin.isEnabled = true
-                }
+                } else binding.btnLogin.isEnabled = !binding.edEmail.text.isNullOrEmpty()
             }
         })
 

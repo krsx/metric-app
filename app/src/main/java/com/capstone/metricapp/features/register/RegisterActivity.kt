@@ -12,7 +12,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isNotEmpty
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.utils.constans.divisionsItems
@@ -41,6 +40,10 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(intentToLogin)
         }
 
+        if (binding.edEmail.text.isNullOrEmpty() || binding.edPass.text.isNullOrEmpty() || binding.edPassConfirm.text.isNullOrEmpty() || binding.dropdownMenu.text.isNullOrEmpty()) {
+            binding.btnRegister.isEnabled = false
+        }
+
         binding.edEmail.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -54,9 +57,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (!Patterns.EMAIL_ADDRESS.matcher(p0!!).matches()) {
                     binding.edEmail.error = getString(R.string.invalid_email)
                     binding.btnRegister.isEnabled = false
-                } else {
-                    binding.btnRegister.isEnabled = true
-                }
+                } else binding.btnRegister.isEnabled =
+                    !(binding.edPass.text.isNullOrEmpty() || binding.edPassConfirm.text.isNullOrEmpty())
             }
         })
 
@@ -73,9 +75,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (p0.toString().length < 8) {
                     binding.edPass.error = getString(R.string.invalid_pass)
                     binding.btnRegister.isEnabled = false
-                } else {
-                    binding.btnRegister.isEnabled = true
-                }
+                } else binding.btnRegister.isEnabled =
+                    !(binding.edEmail.text.isNullOrEmpty() || binding.edPassConfirm.text.isNullOrEmpty())
             }
         })
 
@@ -92,9 +93,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (p0.toString().length < 8) {
                     binding.edPassConfirm.error = getString(R.string.invalid_pass)
                     binding.btnRegister.isEnabled = false
-                } else {
-                    binding.btnRegister.isEnabled = true
-                }
+                } else binding.btnRegister.isEnabled =
+                    !(binding.edPass.text.isNullOrEmpty() || binding.edEmail.text.isNullOrEmpty())
             }
         })
 
@@ -107,13 +107,16 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.btnRegister.setOnClickListener {
-            if (binding.edPass.text != binding.edPassConfirm) {
-                showToast("Pastikan password anda masukkan adalah sama")
-            } else if (isFormFilled()) {
-                val email = binding.edEmail.text.toString()
-                val password = binding.edPass.text.toString()
-                val division = binding.dropdownMenu.text.toString()
+            val email = binding.edEmail.text.toString()
+            val password = binding.edPass.text.toString()
+            val passwordConfirm = binding.edPassConfirm.text.toString()
+            val division = binding.dropdownMenu.text.toString()
 
+            if (password.isEmpty() && email.isEmpty() && passwordConfirm.isEmpty() && division.isEmpty()) {
+                showToast("Tolong isi semua data")
+            } else if (password != passwordConfirm) {
+                showToast("Pastikan password anda masukkan adalah sama ${binding.edPass.text} != ${binding.edPassConfirm.text}")
+            } else if (password.isNotEmpty() && email.isNotEmpty() && passwordConfirm.isNotEmpty() && division.isNotEmpty()) {
                 viewModel.registerUser(email, password, division).observe(this) { user ->
                     when (user) {
                         is Resource.Error -> {
@@ -159,26 +162,9 @@ class RegisterActivity : AppCompatActivity() {
 
             override fun afterTextChanged(p0: Editable?) {
                 binding.edDivision.isHintEnabled = p0.isNullOrEmpty()
+                showToast(binding.dropdownMenu.text.isNullOrEmpty().toString())
             }
-
         })
-    }
-
-    private fun isFormFilled(): Boolean {
-        val editTextList = listOf(
-            binding.edEmail,
-            binding.edPass,
-            binding.edPassConfirm,
-        )
-        var isFilled = false
-
-        for (editText in editTextList) {
-            if (editText.text.toString().isNotEmpty() and binding.edDivision.isNotEmpty()) {
-                isFilled = true
-            }
-        }
-
-        return isFilled
     }
 
     private fun showLoading(isLoading: Boolean) {
