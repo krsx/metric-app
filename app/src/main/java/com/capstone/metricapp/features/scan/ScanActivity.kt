@@ -6,16 +6,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
-import com.budiyev.android.codescanner.*
-import com.capstone.metricapp.core.data.Resource
+import com.budiyev.android.codescanner.CodeScanner
 import com.capstone.metricapp.core.utils.showLongToast
-import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityScanBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @FlowPreview
@@ -36,7 +32,7 @@ class ScanActivity : AppCompatActivity() {
         }
 
         setupPermissions()
-        qrScanner()
+//        qrScanner()
     }
 
     override fun onResume() {
@@ -82,54 +78,54 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-    private fun qrScanner() {
-        qrScanner = CodeScanner(this, binding.qrScanner)
-        qrScanner.apply {
-            camera = CodeScanner.CAMERA_BACK
-            formats = CodeScanner.ALL_FORMATS
-
-            autoFocusMode = AutoFocusMode.SAFE
-            scanMode = ScanMode.SINGLE
-
-            isAutoFocusEnabled = true
-            isFlashEnabled = false
-
-            decodeCallback = DecodeCallback {
-                runOnUiThread {
-                    SuccessQRFragment().isCancelable = true
-                    scanViewModel.getScadatelById(it.text).observe(this@ScanActivity) {scadatel ->
-                        when(scadatel){
-                            is Resource.Error -> {
-                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
-                            }
-                            is Resource.Loading -> {
-
-                            }
-                            is Resource.Message -> {
-
-                            }
-                            is Resource.Success -> {
-                               lifecycleScope.launch {
-                                   scanViewModel.scadatelData.value = scadatel.data!!
-                               }
-                                SuccessQRFragment().show(supportFragmentManager, "Support QR Fragment")
-                            }
-                        }
-                    }
-                }
-            }
-
-            errorCallback = ErrorCallback {
-                runOnUiThread {
-                    showLongToast("Terdapat permasalahan pada kamera, silahkan buka kembali halaman ini")
-                }
-            }
-        }
-
-        binding.qrScanner.setOnClickListener {
-            qrScanner.startPreview()
-        }
-    }
+//    private fun qrScanner() {
+//        qrScanner = CodeScanner(this, binding.qrScanner)
+//        qrScanner.apply {
+//            camera = CodeScanner.CAMERA_BACK
+//            formats = CodeScanner.ALL_FORMATS
+//
+//            autoFocusMode = AutoFocusMode.SAFE
+//            scanMode = ScanMode.SINGLE
+//
+//            isAutoFocusEnabled = true
+//            isFlashEnabled = false
+//
+//            decodeCallback = DecodeCallback {
+//                runOnUiThread {
+//                    SuccessQRFragment().isCancelable = true
+//                    scanViewModel.getScadatelById(it.text).observe(this@ScanActivity) {scadatel ->
+//                        when(scadatel){
+//                            is Resource.Error -> {
+//                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+//                            }
+//                            is Resource.Loading -> {
+//
+//                            }
+//                            is Resource.Message -> {
+//
+//                            }
+//                            is Resource.Success -> {
+//                               lifecycleScope.launch {
+//                                   scanViewModel.scadatelData.value = scadatel.data!!
+//                               }
+//                                SuccessQRFragment().show(supportFragmentManager, "Support QR Fragment")
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            errorCallback = ErrorCallback {
+//                runOnUiThread {
+//                    showLongToast("Terdapat permasalahan pada kamera, silahkan buka kembali halaman ini")
+//                }
+//            }
+//        }
+//
+//        binding.qrScanner.setOnClickListener {
+//            qrScanner.startPreview()
+//        }
+//    }
 
 
     companion object {

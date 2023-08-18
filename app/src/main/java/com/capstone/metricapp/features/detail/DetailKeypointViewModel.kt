@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailKeypointViewModel @Inject constructor(private val scadatelUseCase: ScadatelUseCase):ViewModel() {
-    fun getScadatelById(id: String) = scadatelUseCase.getScadatelById(id).asLiveData()
+class DetailKeypointViewModel @Inject constructor(private val scadatelUseCase: ScadatelUseCase) :
+    ViewModel() {
+    fun getScadatelById(token: String, id: String) =
+        scadatelUseCase.getScadatelById(token, id).asLiveData()
 }

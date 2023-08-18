@@ -35,6 +35,7 @@ class ScanViewModel @Inject constructor(
 
     val getScadatelData = scadatelData.asLiveData()
 
-    fun getScadatelById(id: String) = scadatelUseCase.getScadatelById(id).asLiveData()
+    fun getScadatelById(token: String, id: String) =
+        scadatelUseCase.getScadatelById(token, id).asLiveData()
 
 }

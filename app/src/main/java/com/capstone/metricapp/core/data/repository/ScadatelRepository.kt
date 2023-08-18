@@ -17,26 +17,26 @@ import javax.inject.Singleton
 class ScadatelRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : IScadatelRepository {
-    override fun getAllScadatel(): Flow<Resource<List<Scadatel>>> {
+    override fun getAllScadatel(token: String): Flow<Resource<List<Scadatel>>> {
         return object : NetworkBoundResource<List<Scadatel>, ScadatelListItemResponse>() {
             override suspend fun fetchFromApi(response: ScadatelListItemResponse): List<Scadatel> {
                 return ScadatelDataMapper.mapListScadatelResponsesToDomain(response.data?.item)
             }
 
             override suspend fun createCall(): Flow<ApiResponse<ScadatelListItemResponse>> {
-                return remoteDataSource.getAllScadatel()
+                return remoteDataSource.getAllScadatel(token)
             }
         }.asFlow()
     }
 
-    override fun getScadatelById(id: String): Flow<Resource<Scadatel>> {
+    override fun getScadatelById(token: String, id: String): Flow<Resource<Scadatel>> {
         return object : NetworkBoundResource<Scadatel, ScadatelItemResponse>() {
             override suspend fun fetchFromApi(response: ScadatelItemResponse): Scadatel {
                 return ScadatelDataMapper.mapScadatelResponseToDomain(response.data)
             }
 
             override suspend fun createCall(): Flow<ApiResponse<ScadatelItemResponse>> {
-                return remoteDataSource.getScadatelById(id)
+                return remoteDataSource.getScadatelById(token, id)
             }
         }.asFlow()
     }

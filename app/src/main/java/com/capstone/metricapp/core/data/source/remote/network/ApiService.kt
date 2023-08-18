@@ -4,11 +4,7 @@ import com.capstone.metricapp.core.data.source.remote.response.LoginResponse
 import com.capstone.metricapp.core.data.source.remote.response.RegisterResponse
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelItemResponse
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelListItemResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiService {
     //USER
@@ -29,11 +25,13 @@ interface ApiService {
 
     //SCADATEL
     @GET("scadatel")
-    suspend fun getAllScadatel(): ScadatelListItemResponse
+    suspend fun getAllScadatel(
+        @Header("Authorization") authorization: String,
+    ): ScadatelListItemResponse
 
     @GET("scadatel/{id}")
     suspend fun getScadatelById(
+        @Header("Authorization") authorization: String,
         @Path("id") id: String
     ): ScadatelItemResponse
-
 }

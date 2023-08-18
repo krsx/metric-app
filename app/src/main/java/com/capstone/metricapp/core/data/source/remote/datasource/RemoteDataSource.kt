@@ -57,10 +57,10 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     }
 
     //SCADATEL
-    suspend fun getAllScadatel(): Flow<ApiResponse<ScadatelListItemResponse>> {
+    suspend fun getAllScadatel(token: String): Flow<ApiResponse<ScadatelListItemResponse>> {
         return flow {
             try {
-                val response = apiService.getAllScadatel()
+                val response = apiService.getAllScadatel(token)
                 val dataArray = response.data?.item
                 if (dataArray!!.isNotEmpty()) {
                     emit(ApiResponse.Success(response))
@@ -74,10 +74,13 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getScadatelById(id: String): Flow<ApiResponse<ScadatelItemResponse>> {
+    suspend fun getScadatelById(
+        token: String,
+        id: String
+    ): Flow<ApiResponse<ScadatelItemResponse>> {
         return flow {
             try {
-                val response = apiService.getScadatelById(id)
+                val response = apiService.getScadatelById(token, id)
                 val data = response.data
                 if (data != null) {
                     emit(ApiResponse.Success(response))

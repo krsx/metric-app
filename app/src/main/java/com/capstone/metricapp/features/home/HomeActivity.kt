@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var fabMenuState: FabMenuState = FabMenuState.COLLAPSED
-    private val homeViewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
 
     // changed after implementing Login System
     private var keypointsType: KeypointsType = KeypointsType.SCADATEL
@@ -37,34 +37,38 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        when (keypointsType) {
-            KeypointsType.LBSREC -> {
+        viewModel.getUserToken().observe(this) { token ->
 
-            }
-            KeypointsType.GIGH -> {
+            when (keypointsType) {
+                KeypointsType.LBSREC -> {
 
-            }
-            KeypointsType.SCADATEL -> {
-                homeViewModel.getAllScadatel().observe(this) { scadatel ->
-                    when (scadatel) {
-                        is Resource.Error -> {
-                            binding.refKeypoints.isRefreshing = false
-                            showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
-                        }
-                        is Resource.Loading -> {
-                            binding.refKeypoints.isRefreshing = true
-                        }
-                        is Resource.Message -> {
-                            binding.refKeypoints.isRefreshing = false
-                            Log.e("HomeViewModel", scadatel.message.toString())
-                        }
-                        is Resource.Success -> {
-                            binding.refKeypoints.isRefreshing = false
-                            setupRecyclerViewScadatel(scadatel.data!!, keypointsType)
+                }
+                KeypointsType.GIGH -> {
+
+                }
+                KeypointsType.SCADATEL -> {
+                    viewModel.getAllScadatel(token).observe(this) { scadatel ->
+                        when (scadatel) {
+                            is Resource.Error -> {
+                                binding.refKeypoints.isRefreshing = false
+                                showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                            }
+                            is Resource.Loading -> {
+                                binding.refKeypoints.isRefreshing = true
+                            }
+                            is Resource.Message -> {
+                                binding.refKeypoints.isRefreshing = false
+                                Log.e("HomeViewModel", scadatel.message.toString())
+                            }
+                            is Resource.Success -> {
+                                binding.refKeypoints.isRefreshing = false
+                                setupRecyclerViewScadatel(scadatel.data!!, keypointsType)
+                            }
                         }
                     }
                 }
             }
+
         }
 
         binding.fabMenu.setOnClickListener {
