@@ -14,4 +14,8 @@ interface IUserRepository {
     suspend fun saveUserToken(token: String)
 
     suspend fun deleteCache()
+
+    fun getUserDivision(): Flow<String>
+
+    suspend fun saveUserDivision(division: String)
 }

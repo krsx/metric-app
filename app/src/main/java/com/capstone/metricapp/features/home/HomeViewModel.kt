@@ -16,4 +16,6 @@ class HomeViewModel @Inject constructor(
     fun getAllScadatel(token: String) = scadatelUseCase.getAllScadatel(token).asLiveData()
 
     fun getUserToken() = userUseCase.getUserToken().asLiveData()
+
+    fun getUserDivision() = userUseCase.getUserDivision().asLiveData()
 }

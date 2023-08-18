@@ -9,10 +9,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase):ViewModel() {
-    fun loginUser(email: String, password: String) = userUseCase.loginUser(email, password).asLiveData()
+class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase) : ViewModel() {
+    fun loginUser(email: String, password: String) =
+        userUseCase.loginUser(email, password).asLiveData()
 
     fun saveUserToken(token: String) = viewModelScope.launch {
         userUseCase.saveUserToken(token)
+    }
+
+    fun saveUserDivision(division: String) = viewModelScope.launch {
+        userUseCase.saveUserDivision(division)
     }
 }

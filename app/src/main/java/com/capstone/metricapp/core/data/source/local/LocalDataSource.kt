@@ -31,6 +31,18 @@ class LocalDataSource @Inject constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun saveUserDivision(division: String) {
+        dataStore.edit { preferences ->
+            preferences[USER_DIVISION_KEY] = division
+        }
+    }
+
+    fun getUserDivision(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[USER_DIVISION_KEY] ?: ""
+        }
+    }
+
 
     companion object {
         private val USER_TOKEN_KEY = stringPreferencesKey("user_token_key")

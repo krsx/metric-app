@@ -14,7 +14,9 @@ import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.ui.adapter.ScadatelKeypointsAdapter
 import com.capstone.metricapp.core.utils.FabMenuState
+import com.capstone.metricapp.core.utils.constans.Divisions
 import com.capstone.metricapp.core.utils.constans.KeypointsType
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityHomeBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
@@ -28,9 +30,6 @@ class HomeActivity : AppCompatActivity() {
     private var fabMenuState: FabMenuState = FabMenuState.COLLAPSED
     private val viewModel: HomeViewModel by viewModels()
 
-    // changed after implementing Login System
-    private var keypointsType: KeypointsType = KeypointsType.SCADATEL
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,37 +37,38 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel.getUserToken().observe(this) { token ->
+            viewModel.getUserDivision().observe(this) { division ->
+                showLongToast(division)
+                when (division) {
+                    Divisions.RTU.divisionName -> {
 
-            when (keypointsType) {
-                KeypointsType.LBSREC -> {
-
-                }
-                KeypointsType.GIGH -> {
-
-                }
-                KeypointsType.SCADATEL -> {
-                    viewModel.getAllScadatel(token).observe(this) { scadatel ->
-                        when (scadatel) {
-                            is Resource.Error -> {
-                                binding.refKeypoints.isRefreshing = false
-                                showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
-                            }
-                            is Resource.Loading -> {
-                                binding.refKeypoints.isRefreshing = true
-                            }
-                            is Resource.Message -> {
-                                binding.refKeypoints.isRefreshing = false
-                                Log.e("HomeViewModel", scadatel.message.toString())
-                            }
-                            is Resource.Success -> {
-                                binding.refKeypoints.isRefreshing = false
-                                setupRecyclerViewScadatel(scadatel.data!!, keypointsType)
+                    }
+                    Divisions.SCADATEL.divisionName -> {
+                        viewModel.getAllScadatel(token).observe(this) { scadatel ->
+                            when (scadatel) {
+                                is Resource.Error -> {
+                                    binding.refKeypoints.isRefreshing = false
+                                    showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                                }
+                                is Resource.Loading -> {
+                                    binding.refKeypoints.isRefreshing = true
+                                }
+                                is Resource.Message -> {
+                                    binding.refKeypoints.isRefreshing = false
+                                    Log.e("HomeViewModel", scadatel.message.toString())
+                                }
+                                is Resource.Success -> {
+                                    binding.refKeypoints.isRefreshing = false
+                                    setupRecyclerViewScadatel(
+                                        scadatel.data!!,
+                                        KeypointsType.SCADATEL
+                                    )
+                                }
                             }
                         }
                     }
                 }
             }
-
         }
 
         binding.fabMenu.setOnClickListener {

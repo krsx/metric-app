@@ -1,19 +1,22 @@
 package com.capstone.metricapp.core.domain.usecase
 
 import com.capstone.metricapp.core.data.Resource
-import com.capstone.metricapp.core.data.repository.UserRepository
 import com.capstone.metricapp.core.domain.model.User
-import com.capstone.metricapp.core.domain.repository.IScadatelRepository
 import com.capstone.metricapp.core.domain.repository.IUserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UserInteractor @Inject constructor(private val userRepository: IUserRepository): UserUseCase{
+class UserInteractor @Inject constructor(private val userRepository: IUserRepository) :
+    UserUseCase {
     override fun loginUser(email: String, password: String): Flow<Resource<User>> {
         return userRepository.loginUser(email, password)
     }
 
-    override fun registerUser(email: String, password: String, division: String): Flow<Resource<User>> {
+    override fun registerUser(
+        email: String,
+        password: String,
+        division: String
+    ): Flow<Resource<User>> {
         return userRepository.registerUser(email, password, division)
     }
 
@@ -27,5 +30,13 @@ class UserInteractor @Inject constructor(private val userRepository: IUserReposi
 
     override suspend fun deleteCache() {
         return userRepository.deleteCache()
+    }
+
+    override fun getUserDivision(): Flow<String> {
+        return userRepository.getUserDivision()
+    }
+
+    override suspend fun saveUserDivision(division: String) {
+        return userRepository.saveUserDivision(division)
     }
 }

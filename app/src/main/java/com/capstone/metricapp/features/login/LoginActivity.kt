@@ -96,6 +96,7 @@ class LoginActivity : AppCompatActivity() {
                             showToast("Selamat datang di aplikasi METRIC")
 
                             viewModel.saveUserToken("Bearer " + user.data?.token!!)
+                            viewModel.saveUserDivision(user.data.division)
 
                             val intentToHome = Intent(this, HomeActivity::class.java)
                             startActivity(intentToHome)

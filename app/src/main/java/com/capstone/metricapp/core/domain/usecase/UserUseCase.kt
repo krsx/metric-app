@@ -9,9 +9,13 @@ interface UserUseCase {
 
     fun registerUser(email: String, password: String, division: String): Flow<Resource<User>>
 
-    fun getUserToken():Flow<String>
+    fun getUserToken(): Flow<String>
 
     suspend fun saveUserToken(token: String)
 
     suspend fun deleteCache()
+
+    fun getUserDivision(): Flow<String>
+
+    suspend fun saveUserDivision(division: String)
 }
