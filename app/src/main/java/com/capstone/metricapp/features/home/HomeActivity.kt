@@ -1,11 +1,15 @@
 package com.capstone.metricapp.features.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +27,7 @@ import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivi
 import com.capstone.metricapp.features.scan.ScanActivity
 import com.capstone.metricapp.features.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -36,14 +41,83 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.ivSetting.setOnClickListener {
+            val intentToSetting = Intent(this, SettingsActivity::class.java)
+            startActivity(intentToSetting)
+        }
+
+        setupSearch()
+
+        setRecyclerView()
+
+        handleFab()
+
+        setupRefresh()
+    }
+
+    private fun setupRefresh() {
+        binding.refKeypoints.setOnRefreshListener {
+            val query = binding.edSearch.text.toString().trim()
+
+            if (query.isEmpty()) {
+                setRecyclerView()
+            } else {
+                viewModel.getUserToken().observe(this) { token ->
+                    viewModel.findScadatelKeypoints(token, query).observe(this) { scadatel ->
+                        when (scadatel) {
+                            is Resource.Error -> {
+                                binding.refKeypoints.isRefreshing = false
+                                showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                            }
+                            is Resource.Loading -> {
+                                binding.refKeypoints.isRefreshing = true
+                            }
+                            is Resource.Message -> {
+                                binding.refKeypoints.isRefreshing = false
+                                showLongToast("Keypoints yang dicari tidak ditemukan")
+                                Log.e("HomeViewModel", scadatel.message.toString())
+                            }
+                            is Resource.Success -> {
+                                binding.refKeypoints.isRefreshing = false
+                                initRecyclerViewScadatel(
+                                    scadatel.data!!,
+                                    KeypointsType.SCADATEL
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleFab() {
+        binding.fabMenu.setOnClickListener {
+            onFabMenuClick()
+        }
+
+        binding.fabScan.setOnClickListener {
+            val intentToScan = Intent(this, ScanActivity::class.java)
+            startActivity(intentToScan)
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val intentToAdd = Intent(this, AddKeypointsDescActivity::class.java)
+            startActivity(intentToAdd)
+        }
+    }
+
+    private fun setRecyclerView() {
         viewModel.getUserToken().observe(this) { token ->
             viewModel.getUserDivision().observe(this) { division ->
-                showLongToast(division)
+                binding.tvDivision.text = division.uppercase(Locale.getDefault())
+
                 when (division) {
                     Divisions.RTU.divisionName -> {
 
                     }
                     Divisions.SCADATEL.divisionName -> {
+                        Log.e("TEST", "Masuk")
                         viewModel.getAllScadatel(token).observe(this) { scadatel ->
                             when (scadatel) {
                                 is Resource.Error -> {
@@ -59,7 +133,7 @@ class HomeActivity : AppCompatActivity() {
                                 }
                                 is Resource.Success -> {
                                     binding.refKeypoints.isRefreshing = false
-                                    setupRecyclerViewScadatel(
+                                    initRecyclerViewScadatel(
                                         scadatel.data!!,
                                         KeypointsType.SCADATEL
                                     )
@@ -70,28 +144,54 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
-        binding.fabMenu.setOnClickListener {
-            onFabMenuClick()
-        }
+    private fun setupSearch() {
+        binding.edSearch.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                event?.action == KeyEvent.ACTION_DOWN &&
+                event.keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                val query = binding.edSearch.text.toString().trim()
+                if (query.isNotEmpty()) {
+                    viewModel.getUserToken().observe(this) { token ->
+                        viewModel.findScadatelKeypoints(token, query).observe(this) { scadatel ->
+                            when (scadatel) {
+                                is Resource.Error -> {
+                                    binding.refKeypoints.isRefreshing = false
+                                    showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                                }
+                                is Resource.Loading -> {
+                                    binding.refKeypoints.isRefreshing = true
+                                }
+                                is Resource.Message -> {
+                                    binding.refKeypoints.isRefreshing = false
+                                    showLongToast("Keypoints yang dicari tidak ditemukan")
+                                }
+                                is Resource.Success -> {
+                                    binding.refKeypoints.isRefreshing = false
+                                    initRecyclerViewScadatel(
+                                        scadatel.data!!,
+                                        KeypointsType.SCADATEL
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
 
-        binding.ivSetting.setOnClickListener {
-            val intentToSetting = Intent(this, SettingsActivity::class.java)
-            startActivity(intentToSetting)
-        }
+                val inputMethodManager =
+                    this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.edSearch.windowToken, 0)
 
-        binding.fabScan.setOnClickListener {
-            val intentToScan = Intent(this, ScanActivity::class.java)
-            startActivity(intentToScan)
-        }
+                return@setOnEditorActionListener true
+            }
 
-        binding.fabAdd.setOnClickListener {
-            val intentToAdd = Intent(this, AddKeypointsDescActivity::class.java)
-            startActivity(intentToAdd)
+            return@setOnEditorActionListener false
         }
     }
 
-    private fun setupRecyclerViewScadatel(scadatelList: List<Scadatel>, type: KeypointsType) {
+    private fun initRecyclerViewScadatel(scadatelList: List<Scadatel>, type: KeypointsType) {
         val layoutManager = LinearLayoutManager(this)
         binding.rvKeypoints.layoutManager = layoutManager
 
@@ -110,7 +210,6 @@ class HomeActivity : AppCompatActivity() {
         } else {
             FabMenuState.COLLAPSED
         }
-        Log.e("TEST", fabMenuState.toString())
         setVisibility(fabMenuState == FabMenuState.EXPANDED)
         setAnimation(fabMenuState == FabMenuState.EXPANDED)
         setClickable(fabMenuState == FabMenuState.EXPANDED)
@@ -168,6 +267,4 @@ class HomeActivity : AppCompatActivity() {
             binding.fabScan.isClickable = false
         }
     }
-
-
 }

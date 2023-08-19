@@ -9,4 +9,5 @@ interface IScadatelRepository {
 
     fun getScadatelById(token: String, id: String): Flow<Resource<Scadatel>>
 
+    fun findScadatelKeypoints(token: String, keyword: String): Flow<Resource<List<Scadatel>>>
 }

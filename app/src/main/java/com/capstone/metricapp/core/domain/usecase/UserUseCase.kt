@@ -18,4 +18,5 @@ interface UserUseCase {
     fun getUserDivision(): Flow<String>
 
     suspend fun saveUserDivision(division: String)
+
 }

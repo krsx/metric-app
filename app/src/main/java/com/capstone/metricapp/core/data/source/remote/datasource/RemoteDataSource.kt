@@ -93,4 +93,24 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun findScadatelKeypoints(
+        token: String,
+        keyword: String
+    ): Flow<ApiResponse<ScadatelListItemResponse>> {
+        return flow {
+            try {
+                val response = apiService.findScadatelKeypoint(token, keyword)
+                val data = response.data?.item
+                if (data!!.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("findScadatelKeypoints", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }

@@ -40,4 +40,21 @@ class ScadatelRepository @Inject constructor(
             }
         }.asFlow()
     }
+
+    override fun findScadatelKeypoints(
+        token: String,
+        keyword: String
+    ): Flow<Resource<List<Scadatel>>> {
+        return object : NetworkBoundResource<List<Scadatel>, ScadatelListItemResponse>() {
+            override suspend fun fetchFromApi(response: ScadatelListItemResponse): List<Scadatel> {
+                return ScadatelDataMapper.mapListScadatelResponsesToDomain(response.data?.item)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<ScadatelListItemResponse>> {
+                return remoteDataSource.findScadatelKeypoints(token, keyword)
+            }
+
+        }.asFlow()
+
+    }
 }

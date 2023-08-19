@@ -34,4 +34,10 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Path("id") id: String
     ): ScadatelItemResponse
+
+    @GET("scadatel")
+    suspend fun findScadatelKeypoint(
+        @Header("Authorization") authorization: String,
+        @Query("keyword") keyword: String,
+    ): ScadatelListItemResponse
 }

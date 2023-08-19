@@ -26,20 +26,18 @@
 
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                />
+                android:layout_height="32dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_keypoints"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                />
+                android:layout_marginHorizontal="16dp" />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp" />
 
         </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
@@ -168,16 +166,18 @@
     <EditText
         android:id="@+id/ed_search"
         android:layout_width="0dp"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:imeOptions="actionSearch"
         android:background="@drawable/custom_search_rounded"
         android:drawableStart="@drawable/ic_search_24"
         android:drawablePadding="12sp"
         android:ems="10"
+        android:maxLines="1"
         android:hint="@string/password"
-        android:inputType="textPassword"
         android:padding="16dp"
         android:textColorHint="@color/white"
         android:textSize="14sp"

@@ -16,4 +16,11 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
         return scadatelRepository.getScadatelById(token, id)
     }
 
+    override fun findScadatelKeypoints(
+        token: String,
+        keyword: String
+    ): Flow<Resource<List<Scadatel>>> {
+        return scadatelRepository.findScadatelKeypoints(token, keyword)
+    }
+
 }

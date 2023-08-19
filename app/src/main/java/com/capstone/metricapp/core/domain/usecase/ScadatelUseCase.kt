@@ -6,5 +6,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface ScadatelUseCase {
     fun getAllScadatel(token: String): Flow<Resource<List<Scadatel>>>
+
     fun getScadatelById(token: String, id: String): Flow<Resource<Scadatel>>
+
+    fun findScadatelKeypoints(token: String, keyword: String): Flow<Resource<List<Scadatel>>>
+
+
 }
