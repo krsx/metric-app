@@ -19,4 +19,7 @@ interface UserUseCase {
 
     suspend fun saveUserDivision(division: String)
 
+    fun getUserEmail(): Flow<String>
+
+    suspend fun saveUserEmail(email: String)
 }

@@ -20,4 +20,8 @@ class LoginViewModel @Inject constructor(private val userUseCase: UserUseCase) :
     fun saveUserDivision(division: String) = viewModelScope.launch {
         userUseCase.saveUserDivision(division)
     }
+
+    fun saveUserEmail(email: String) = viewModelScope.launch {
+        userUseCase.saveUserEmail(email)
+    }
 }

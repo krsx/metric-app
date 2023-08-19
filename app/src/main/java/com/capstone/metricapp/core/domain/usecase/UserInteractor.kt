@@ -39,4 +39,12 @@ class UserInteractor @Inject constructor(private val userRepository: IUserReposi
     override suspend fun saveUserDivision(division: String) {
         return userRepository.saveUserDivision(division)
     }
+
+    override fun getUserEmail(): Flow<String> {
+        return userRepository.getUserEmail()
+    }
+
+    override suspend fun saveUserEmail(email: String) {
+        return userRepository.saveUserEmail(email)
+    }
 }

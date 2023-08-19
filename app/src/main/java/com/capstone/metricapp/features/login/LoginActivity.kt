@@ -97,6 +97,7 @@ class LoginActivity : AppCompatActivity() {
 
                             viewModel.saveUserToken("Bearer " + user.data?.token!!)
                             viewModel.saveUserDivision(user.data.division)
+                            viewModel.saveUserEmail(user.data.email)
 
                             val intentToHome = Intent(this, HomeActivity::class.java)
                             startActivity(intentToHome)

@@ -1,6 +1,7 @@
 package com.capstone.metricapp.features.settings
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.capstone.metricapp.core.domain.usecase.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,4 +13,8 @@ class SettingsViewModel @Inject constructor(private var userUseCase: UserUseCase
     fun deleteCache() = viewModelScope.launch {
         userUseCase.deleteCache()
     }
+
+    fun getUserDivision() = userUseCase.getUserDivision().asLiveData()
+
+    fun getUserEmail() = userUseCase.getUserEmail().asLiveData()
 }

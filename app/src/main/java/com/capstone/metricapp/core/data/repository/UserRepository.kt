@@ -67,5 +67,13 @@ class UserRepository @Inject constructor(
         return localDataSource.saveUserDivision(division)
     }
 
+    override fun getUserEmail(): Flow<String> {
+        return localDataSource.getUserEmail()
+    }
+
+    override suspend fun saveUserEmail(email: String) {
+        return localDataSource.saveUserEmail(email)
+    }
+
 
 }
