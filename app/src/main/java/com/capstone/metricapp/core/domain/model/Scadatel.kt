@@ -5,15 +5,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Scadatel(
-    val id: String,
-    val uniqueId: String,
-    val keypoint: String,
-    val region: String,
-    val merk: String,
-    val type: String,
-    val mainVolt: String,
-    val backupVolt: String,
-    val os: String,
-    val date: String,
-    val dateCreated: String,
+    var id: String,
+    var uniqueId: String,
+    var keypoint: String,
+    var region: String,
+    var merk: String,
+    var type: String,
+    var mainVolt: String,
+    var backupVolt: String,
+    var os: String,
+    var date: String,
+    var dateCreated: String,
 ) : Parcelable

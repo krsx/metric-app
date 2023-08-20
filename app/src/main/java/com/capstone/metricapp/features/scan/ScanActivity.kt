@@ -1,17 +1,25 @@
 package com.capstone.metricapp.features.scan
 
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.budiyev.android.codescanner.CodeScanner
+import androidx.lifecycle.lifecycleScope
+import com.budiyev.android.codescanner.*
+import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.utils.showLongToast
+import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityScanBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 @FlowPreview
@@ -19,8 +27,10 @@ import kotlinx.coroutines.FlowPreview
 class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
     private lateinit var qrScanner: CodeScanner
-    private val scanViewModel: ScanViewModel by viewModels()
+    private var scadatelData: Scadatel? = null
+    private val viewModel: ScanViewModel by viewModels()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,7 +42,7 @@ class ScanActivity : AppCompatActivity() {
         }
 
         setupPermissions()
-//        qrScanner()
+        qrScanner()
     }
 
     override fun onResume() {
@@ -78,57 +88,94 @@ class ScanActivity : AppCompatActivity() {
         }
     }
 
-//    private fun qrScanner() {
-//        qrScanner = CodeScanner(this, binding.qrScanner)
-//        qrScanner.apply {
-//            camera = CodeScanner.CAMERA_BACK
-//            formats = CodeScanner.ALL_FORMATS
-//
-//            autoFocusMode = AutoFocusMode.SAFE
-//            scanMode = ScanMode.SINGLE
-//
-//            isAutoFocusEnabled = true
-//            isFlashEnabled = false
-//
-//            decodeCallback = DecodeCallback {
-//                runOnUiThread {
-//                    SuccessQRFragment().isCancelable = true
-//                    scanViewModel.getScadatelById(it.text).observe(this@ScanActivity) {scadatel ->
-//                        when(scadatel){
-//                            is Resource.Error -> {
-//                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
-//                            }
-//                            is Resource.Loading -> {
-//
-//                            }
-//                            is Resource.Message -> {
-//
-//                            }
-//                            is Resource.Success -> {
-//                               lifecycleScope.launch {
-//                                   scanViewModel.scadatelData.value = scadatel.data!!
-//                               }
-//                                SuccessQRFragment().show(supportFragmentManager, "Support QR Fragment")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            errorCallback = ErrorCallback {
-//                runOnUiThread {
-//                    showLongToast("Terdapat permasalahan pada kamera, silahkan buka kembali halaman ini")
-//                }
-//            }
-//        }
-//
-//        binding.qrScanner.setOnClickListener {
-//            qrScanner.startPreview()
-//        }
-//    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun qrScanner() {
+        qrScanner = CodeScanner(this, binding.qrScanner)
+        qrScanner.apply {
+            camera = CodeScanner.CAMERA_BACK
+            formats = CodeScanner.ALL_FORMATS
+
+            autoFocusMode = AutoFocusMode.SAFE
+            scanMode = ScanMode.SINGLE
+
+            isAutoFocusEnabled = true
+            isFlashEnabled = false
+
+            decodeCallback = DecodeCallback {
+                runOnUiThread {
+                    viewModel.getUserToken().observe(this@ScanActivity) { token ->
+                        viewModel.getScadatelById(token, it.text)
+                            .observe(this@ScanActivity) { scadatel ->
+                                when (scadatel) {
+                                    is Resource.Error -> {
+                                        showLoading(false)
+                                        showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                    }
+                                    is Resource.Loading -> {
+                                        showLoading(true)
+                                    }
+                                    is Resource.Message -> {
+                                        showLoading(false)
+                                    }
+                                    is Resource.Success -> {
+                                        showLoading(false)
+
+                                        lifecycleScope.launch {
+                                            scadatelData = Scadatel(
+                                                id = scadatel.data?.id!!,
+                                                uniqueId = scadatel.data.uniqueId,
+                                                keypoint = scadatel.data.keypoint,
+                                                region = scadatel.data.region,
+                                                merk = scadatel.data.merk,
+                                                type = scadatel.data.type,
+                                                mainVolt = scadatel.data.mainVolt,
+                                                backupVolt = scadatel.data.backupVolt,
+                                                os = scadatel.data.os,
+                                                date = scadatel.data.date,
+                                                dateCreated = scadatel.data.dateCreated
+                                            )
+                                            val fragment =
+                                                SuccessQRFragment.newInstance(scadatelData!!)
+
+                                            fragment.show(
+                                                supportFragmentManager,
+                                                SUCCESS_FRAGMENT_TAG
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                    }
+                }
+            }
+
+            errorCallback = ErrorCallback {
+                runOnUiThread {
+                    showLongToast("Terdapat permasalahan pada kamera, silahkan buka kembali halaman ini")
+                }
+            }
+        }
+
+        startPreview()
+    }
+
+    private fun startPreview() {
+        binding.qrScanner.setOnClickListener {
+            val existingFragment = supportFragmentManager.findFragmentByTag(SUCCESS_FRAGMENT_TAG)
+
+            if (!(existingFragment != null && existingFragment.isAdded)) {
+                qrScanner.startPreview()
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
 
 
     companion object {
         private const val CAMERA_REQUEST_CODE = 101
+        private const val SUCCESS_FRAGMENT_TAG = "Support QR Fragment"
     }
 }

@@ -7,25 +7,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.viewModels
+import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.databinding.FragmentSuccessQRBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
 import com.capstone.metricapp.features.detail.DetailKeypointActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 
-@AndroidEntryPoint
-@FlowPreview
-@ExperimentalCoroutinesApi
 @RequiresApi(Build.VERSION_CODES.O)
-class SuccessQRFragment() : BottomSheetDialogFragment() {
+class SuccessQRFragment(private val scadatel: Scadatel) : BottomSheetDialogFragment() {
     private var _binding: FragmentSuccessQRBinding? = null
     private val binding get() = _binding!!
-    private val scanViewModel: ScanViewModel by viewModels()
 
     //later will be changed to sharedPreferences
     private var keypointsType: KeypointsType = KeypointsType.SCADATEL
@@ -50,6 +43,7 @@ class SuccessQRFragment() : BottomSheetDialogFragment() {
         binding.btnDetail.setOnClickListener {
             val intentToDetailKeypoint =
                 Intent(requireContext(), DetailKeypointActivity::class.java)
+
             startActivity(intentToDetailKeypoint)
         }
 
@@ -58,12 +52,10 @@ class SuccessQRFragment() : BottomSheetDialogFragment() {
 
 
     private fun setupKeypointInfo() {
-        scanViewModel.getScadatelData.observe(viewLifecycleOwner) { scadatel ->
-            binding.apply {
-                tvDialogRegion.text = scadatel.region
-                tvDialogKeypoint.text = scadatel.keypoint
-                tvDialogDate.text = DateUtil.convertDateKeypoints(scadatel.dateCreated)
-            }
+        binding.apply {
+            tvDialogRegion.text = scadatel.region
+            tvDialogKeypoint.text = scadatel.keypoint
+            tvDialogDate.text = DateUtil.convertDateKeypoints(scadatel.dateCreated)
         }
     }
 
@@ -72,4 +64,11 @@ class SuccessQRFragment() : BottomSheetDialogFragment() {
         _binding = null
     }
 
+    companion object {
+        fun newInstance(scadatel: Scadatel): SuccessQRFragment {
+            return SuccessQRFragment(scadatel)
+        }
+
+        const val KEY_ID_SCADATEL = "key_id_scadatel"
+    }
 }
