@@ -2,7 +2,6 @@ package com.capstone.metricapp.core.ui.adapter
 
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
@@ -39,7 +38,6 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
                 tvListKeypointsRegion.text = scadatel.region
                 tvListKeypoints.text = scadatel.keypoint
                 tvListKeypointsDate.text = DateUtil.convertDateKeypoints(scadatel.dateCreated)
-                Log.e("TEST", DateUtil.convertDateKeypoints(scadatel.dateCreated))
             }
         }
 
@@ -48,7 +46,7 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
 
             val intentToDetailKeypoints =
                 Intent(holder.itemView.context, DetailKeypointActivity::class.java)
-            intentToDetailKeypoints.putExtra(KEY_ID_SCADATEL, scadatel.uniqueId)
+            intentToDetailKeypoints.putExtra(KEY_ID_KEYPOINTS, scadatel.uniqueId)
             holder.itemView.context.startActivity(intentToDetailKeypoints)
         }
     }
@@ -61,7 +59,7 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
         fun onItemClicked(listScadatel: Scadatel)
     }
 
-    companion object{
-        const val KEY_ID_SCADATEL = "key_id_scadatel"
+    companion object {
+        const val KEY_ID_KEYPOINTS = "key_id_keypoints"
     }
 }

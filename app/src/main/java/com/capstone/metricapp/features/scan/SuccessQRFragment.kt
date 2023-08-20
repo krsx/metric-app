@@ -65,10 +65,10 @@ class SuccessQRFragment(private val scadatel: Scadatel) : BottomSheetDialogFragm
     }
 
     companion object {
+        const val KEY_ID_KEYPOINTS = "key_id_keypoints"
+
         fun newInstance(scadatel: Scadatel): SuccessQRFragment {
             return SuccessQRFragment(scadatel)
         }
-
-        const val KEY_ID_SCADATEL = "key_id_scadatel"
     }
 }

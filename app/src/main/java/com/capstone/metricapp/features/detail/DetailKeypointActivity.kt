@@ -31,7 +31,7 @@ class DetailKeypointActivity : AppCompatActivity() {
         }
 
         viewModel.getUserToken().observe(this) { token ->
-            val keypointsId = (intent.getStringExtra(KEY_ID_SCADATEL)!!)
+            val keypointsId = (intent.getStringExtra(KEY_ID_KEYPOINTS)!!)
             setupHeaderInfo(token, keypointsId)
         }
     }
@@ -64,6 +64,6 @@ class DetailKeypointActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val KEY_ID_SCADATEL = "key_id_scadatel"
+        const val KEY_ID_KEYPOINTS = "key_id_keypoints"
     }
 }
