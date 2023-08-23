@@ -1,6 +1,7 @@
 package com.capstone.metricapp.core.domain.usecase
 
 import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.domain.model.Common
 import com.capstone.metricapp.core.domain.model.Scadatel
 import kotlinx.coroutines.flow.Flow
 
@@ -14,13 +15,14 @@ interface ScadatelUseCase {
     fun createScadatelKeypoint(
         token: String,
         uniqueId: String,
-        region: String?,
-        merk: String?,
-        type: String?,
-        mainVolt: String?,
-        backupVolt: String?,
-        os: String?,
-        date: String?
+        keypoint: String,
+        region: String,
+        merk: String,
+        type: String,
+        mainVolt: String,
+        backupVolt: String,
+        os: String,
+        date: String
     ): Flow<Resource<Scadatel>>
 
     fun updateSpecScadatel(
@@ -28,6 +30,7 @@ interface ScadatelUseCase {
 
         token: String,
         id: String,
+        keypoint: String,
         region: String?,
         merk: String?,
         type: String?,
@@ -37,5 +40,5 @@ interface ScadatelUseCase {
         date: String?
     ): Flow<Resource<Scadatel>>
 
-    fun deleteScadatelKeypoint(token: String, id: String): Flow<Resource<String>>
+    fun deleteScadatelKeypoint(token: String, id: String): Flow<Resource<Common>>
 }
