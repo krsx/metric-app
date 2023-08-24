@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class LBSREC(
+data class RTU(
     var id: String,
     var uniqueId: String,
     var keypoint: String,
@@ -30,6 +30,17 @@ data class LBSREC(
     var bar_merk: String,
     var bat_type: String,
     var bat_date: String,
+
+    var rect_merk: String,
+    var rect_type: String,
+    var rect_rangeVolt: String,
+    var rect_date: String,
+    var rect_sn: String,
+
+    var gat_merk: String,
+    var gat_type: String,
+    var gat_date: String,
+    var gat_sn: String,
 
     var date: String,
     var dateCreated: String,
