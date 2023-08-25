@@ -209,4 +209,77 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             }
         }.flowOn(Dispatchers.IO)
     }
+
+    //RTU
+    suspend fun getAllRTU(token: String): Flow<ApiResponse<RTUListItemResponse>> {
+        return flow {
+            try {
+                val response = apiService.getAllRTU(token)
+                val data = response.data?.item
+                if (data!!.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("getAllRTU", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getRTUById(token: String, id: String): Flow<ApiResponse<RTUItemResponse>> {
+        return flow {
+            try {
+                val response = apiService.getRTUById(token, id)
+                val data = response.data
+                if (data != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("getRTUById", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun findRTUKeypoints(
+        token: String,
+        keyword: String
+    ): Flow<ApiResponse<RTUListItemResponse>> {
+        return flow {
+            try {
+                val response = apiService.findRTUKeypoint(token, keyword)
+                val data = response.data?.item
+
+                if (data!!.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("findRTUKeypoints", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun deleteRTUKeypoint(token: String, id: String): Flow<ApiResponse<CommonResponse>> {
+        return flow {
+            try {
+                val response = apiService.deleteRTUKeypoint(token, id)
+                val data = response.status
+                if (data!!.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("deleteRTUKeypoint", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 }

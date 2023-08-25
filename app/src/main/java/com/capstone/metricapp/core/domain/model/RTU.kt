@@ -27,7 +27,7 @@ data class RTU(
     var rtu_date: String,
     var rtu_sn: String,
 
-    var bar_merk: String,
+    var bat_merk: String,
     var bat_type: String,
     var bat_date: String,
 
@@ -42,6 +42,5 @@ data class RTU(
     var gat_date: String,
     var gat_sn: String,
 
-    var date: String,
     var dateCreated: String,
 ) : Parcelable

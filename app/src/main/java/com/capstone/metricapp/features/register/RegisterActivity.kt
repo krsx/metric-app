@@ -17,7 +17,6 @@ import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.utils.constans.divisionsItems
 import com.capstone.metricapp.core.utils.hideKeyboard
 import com.capstone.metricapp.core.utils.showLongToast
-import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityRegisterBinding
 import com.capstone.metricapp.features.login.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -113,16 +112,16 @@ class RegisterActivity : AppCompatActivity() {
             val division = binding.dropdownMenu.text.toString()
 
             if (password.isEmpty() && email.isEmpty() && passwordConfirm.isEmpty() && division.isEmpty()) {
-                showToast("Tolong isi semua data")
+                showLongToast("Tolong isi semua data")
             } else if (password != passwordConfirm) {
-                showToast("Pastikan password anda masukkan adalah sama ${binding.edPass.text} != ${binding.edPassConfirm.text}")
+                showLongToast("Pastikan password anda masukkan adalah sama ${binding.edPass.text} != ${binding.edPassConfirm.text}")
             } else if (password.isNotEmpty() && email.isNotEmpty() && passwordConfirm.isNotEmpty() && division.isNotEmpty()) {
                 viewModel.registerUser(email, password, division).observe(this) { user ->
                     when (user) {
                         is Resource.Error -> {
                             buttonEnabled(true)
                             showLoading(false)
-                            showToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
+                            showLongToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
                         }
                         is Resource.Loading -> {
                             buttonEnabled(false)
@@ -143,7 +142,7 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                showToast("Pastikan semua data telah terisi!")
+                showLongToast("Pastikan semua data telah terisi!")
             }
         }
     }
@@ -162,7 +161,6 @@ class RegisterActivity : AppCompatActivity() {
 
             override fun afterTextChanged(p0: Editable?) {
                 binding.edDivision.isHintEnabled = p0.isNullOrEmpty()
-                showToast(binding.dropdownMenu.text.isNullOrEmpty().toString())
             }
         })
     }

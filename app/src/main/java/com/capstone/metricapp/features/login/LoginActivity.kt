@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityLoginBinding
 import com.capstone.metricapp.features.home.HomeActivity
@@ -81,7 +82,7 @@ class LoginActivity : AppCompatActivity() {
                         is Resource.Error -> {
                             showLoading(false)
                             buttonEnabled(true)
-                            showToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
+                            showLongToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
                         }
                         is Resource.Loading -> {
                             showLoading(true)
@@ -93,9 +94,10 @@ class LoginActivity : AppCompatActivity() {
                         is Resource.Success -> {
                             showLoading(false)
                             buttonEnabled(true)
-                            showToast("Selamat datang di aplikasi METRIC")
+                            showLongToast("Selamat datang di aplikasi METRIC")
 
                             viewModel.saveUserToken("Bearer " + user.data?.token!!)
+                            Log.e("DIVISI", user.data.division)
                             viewModel.saveUserDivision(user.data.division)
                             viewModel.saveUserEmail(user.data.email)
 

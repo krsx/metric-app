@@ -1,9 +1,6 @@
 package com.capstone.metricapp.di
 
-import com.capstone.metricapp.core.domain.usecase.ScadatelInteractor
-import com.capstone.metricapp.core.domain.usecase.ScadatelUseCase
-import com.capstone.metricapp.core.domain.usecase.UserInteractor
-import com.capstone.metricapp.core.domain.usecase.UserUseCase
+import com.capstone.metricapp.core.domain.usecase.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,5 +17,11 @@ abstract class AppModule {
 
     @Binds
     @ViewModelScoped
+    abstract fun provideRTUUseCase(rtuInteractor: RTUInteractor): RTUUseCase
+
+    @Binds
+    @ViewModelScoped
     abstract fun provideUserUseCase(userInteractor: UserInteractor): UserUseCase
+
+
 }

@@ -69,7 +69,6 @@ interface ApiService {
         @Field("tanggalPemasangan") date: String,
     ): ScadatelItemResponse
 
-
     @DELETE
     suspend fun deleteScadatelKeypoint(
         @Header("Authorization") authorization: String,
@@ -93,4 +92,10 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Query("keyword") keyword: String,
     ): RTUListItemResponse
+
+    @DELETE
+    suspend fun deleteRTUKeypoint(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): CommonResponse
 }

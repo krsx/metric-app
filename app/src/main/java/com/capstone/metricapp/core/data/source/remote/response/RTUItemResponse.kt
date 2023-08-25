@@ -20,7 +20,7 @@ data class RTUItem(
     val rtuSn: String? = null,
 
     @field:SerializedName("btr_tanggalPenggatian")
-    val btrDate: String? = null,
+    val batDate: String? = null,
 
     @field:SerializedName("providerSimCadangan")
     val backupSimProvider: String? = null,
