@@ -75,4 +75,22 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
     ): CommonResponse
+
+    //RTU
+    @GET("rtu")
+    suspend fun getAllRTU(
+        @Header("Authorization") authorization: String,
+    ): RTUListItemResponse
+
+    @GET("rtu/{id}")
+    suspend fun getRTUById(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): RTUItemResponse
+
+    @GET("rtu")
+    suspend fun findRTUKeypoint(
+        @Header("Authorization") authorization: String,
+        @Query("keyword") keyword: String,
+    ): RTUListItemResponse
 }
