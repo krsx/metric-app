@@ -33,7 +33,7 @@ class RTUKeypointsAdapter(private val listRTU: List<RTU>) :
         holder.apply {
             binding.apply {
                 tvListKeypoints.text = rtu.keypoint
-                tvListKeypointsRegion.text = rtu.keypoint
+                tvListKeypointsRegion.text = rtu.region
                 tvListKeypointsDate.text = DateUtil.convertDateKeypoints(rtu.dateCreated)
             }
         }

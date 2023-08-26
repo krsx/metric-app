@@ -11,6 +11,7 @@ import com.capstone.metricapp.features.detail.spesifikasi.DetailSpecScadatelFrag
 
 class DetailKeypointsSectionsAdapter(activity: AppCompatActivity, var type: KeypointsType) :
     FragmentStateAdapter(activity) {
+
     override fun getItemCount(): Int {
         return 3
     }
