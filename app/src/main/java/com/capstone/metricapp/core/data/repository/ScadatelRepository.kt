@@ -1,12 +1,11 @@
 package com.capstone.metricapp.core.data.repository
 
+import android.util.Log
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.data.source.remote.NetworkBoundResource
 import com.capstone.metricapp.core.data.source.remote.datasource.RemoteDataSource
 import com.capstone.metricapp.core.data.source.remote.network.ApiResponse
-import com.capstone.metricapp.core.data.source.remote.response.CommonResponse
-import com.capstone.metricapp.core.data.source.remote.response.ScadatelItemResponse
-import com.capstone.metricapp.core.data.source.remote.response.ScadatelListItemResponse
+import com.capstone.metricapp.core.data.source.remote.response.*
 import com.capstone.metricapp.core.domain.model.Common
 import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.domain.repository.IScadatelRepository
@@ -73,12 +72,13 @@ class ScadatelRepository @Inject constructor(
         os: String,
         date: String
     ): Flow<Resource<Scadatel>> {
-        return object : NetworkBoundResource<Scadatel, ScadatelItemResponse>() {
-            override suspend fun fetchFromApi(response: ScadatelItemResponse): Scadatel {
-                return ScadatelDataMapper.mapScadatelResponseToDomain(response.data)
+        return object : NetworkBoundResource<Scadatel, CreateScadatelItemResponse>() {
+            override suspend fun fetchFromApi(response: CreateScadatelItemResponse): Scadatel {
+                Log.e("tester", response.data.toString())
+                return ScadatelDataMapper.mapCreateScadatelResponseToDomain(response.data)
             }
 
-            override suspend fun createCall(): Flow<ApiResponse<ScadatelItemResponse>> {
+            override suspend fun createCall(): Flow<ApiResponse<CreateScadatelItemResponse>> {
                 return remoteDataSource.createScadatelKeypoint(
                     token,
                     uniqueId,
@@ -107,12 +107,12 @@ class ScadatelRepository @Inject constructor(
         os: String?,
         date: String?
     ): Flow<Resource<Scadatel>> {
-        return object : NetworkBoundResource<Scadatel, ScadatelItemResponse>() {
-            override suspend fun fetchFromApi(response: ScadatelItemResponse): Scadatel {
+        return object : NetworkBoundResource<Scadatel, UpdateScadatelItemResponse>() {
+            override suspend fun fetchFromApi(response: UpdateScadatelItemResponse): Scadatel {
                 return ScadatelDataMapper.mapScadatelResponseToDomain(response.data)
             }
 
-            override suspend fun createCall(): Flow<ApiResponse<ScadatelItemResponse>> {
+            override suspend fun createCall(): Flow<ApiResponse<UpdateScadatelItemResponse>> {
                 return remoteDataSource.updateSpecScadatel(
                     token,
                     id,

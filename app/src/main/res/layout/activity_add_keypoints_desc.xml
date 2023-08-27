@@ -114,7 +114,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ed_add_keypoints" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/btn_next"
             style="@style/textStyleTitleWhite"
             android:layout_width="0dp"
@@ -125,12 +125,11 @@
             android:layout_marginBottom="32dp"
             android:background="@drawable/custom_button_rounded"
             android:elevation="0dp"
-            android:paddingVertical="12dp"
+            android:paddingVertical="8dp"
             android:text="@string/next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

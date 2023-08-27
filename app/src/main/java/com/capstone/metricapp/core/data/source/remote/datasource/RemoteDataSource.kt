@@ -122,7 +122,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         backupVolt: String,
         os: String,
         date: String,
-    ): Flow<ApiResponse<ScadatelItemResponse>> {
+    ): Flow<ApiResponse<CreateScadatelItemResponse>> {
         return flow {
             try {
                 val response = apiService.createScadatelKeypoint(
@@ -161,7 +161,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         backupVolt: String?,
         os: String?,
         date: String?
-    ): Flow<ApiResponse<ScadatelItemResponse>> {
+    ): Flow<ApiResponse<UpdateScadatelItemResponse>> {
         return flow {
             try {
                 val response = apiService.updateSpecScadatel(

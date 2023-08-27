@@ -51,7 +51,7 @@ interface ApiService {
         @Field("backupVolt") backupVolt: String,
         @Field("os") os: String,
         @Field("tanggalPemasangan") date: String,
-    ): ScadatelItemResponse
+    ): CreateScadatelItemResponse
 
     @PUT("scadatel{id}")
     @FormUrlEncoded
@@ -67,7 +67,7 @@ interface ApiService {
         @Field("backupVolt") backupVolt: String,
         @Field("os") os: String,
         @Field("tanggalPemasangan") date: String,
-    ): ScadatelItemResponse
+    ): UpdateScadatelItemResponse
 
     @DELETE
     suspend fun deleteScadatelKeypoint(

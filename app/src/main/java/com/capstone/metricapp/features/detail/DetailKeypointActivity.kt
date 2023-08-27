@@ -12,7 +12,7 @@ import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.ui.adapter.DetailKeypointsSectionsAdapter
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.constans.Divisions
-import com.capstone.metricapp.core.utils.constans.extractId
+import com.capstone.metricapp.core.utils.extractId
 import com.capstone.metricapp.databinding.ActivityDetailKeypointsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +35,6 @@ class DetailKeypointActivity : AppCompatActivity() {
 
         val keypointsId = (intent.getStringExtra(KEY_ID_KEYPOINTS)!!)
         setupTabs(keypointsId)
-
 
         viewModel.getUserToken().observe(this) { token ->
             viewModel.getUserDivision().observe(this) { division ->
@@ -125,9 +124,9 @@ class DetailKeypointActivity : AppCompatActivity() {
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
+            R.string.tab_spec,
             R.string.tab_history,
             R.string.tab_issue,
-            R.string.tab_spec,
         )
     }
 }
