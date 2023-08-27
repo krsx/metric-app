@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.ui.adapter.DetailKeypointsSectionsAdapter
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.constans.Divisions
+import com.capstone.metricapp.core.utils.constans.extractId
 import com.capstone.metricapp.databinding.ActivityDetailKeypointsBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,12 +33,34 @@ class DetailKeypointActivity : AppCompatActivity() {
             finish()
         }
 
+        val keypointsId = (intent.getStringExtra(KEY_ID_KEYPOINTS)!!)
+        setupTabs(keypointsId)
+
+
         viewModel.getUserToken().observe(this) { token ->
             viewModel.getUserDivision().observe(this) { division ->
-                val keypointsId = (intent.getStringExtra(KEY_ID_KEYPOINTS)!!)
                 setupHeaderInfo(token, keypointsId, division)
             }
         }
+
+
+    }
+
+    private fun setupTabs(id: String) {
+        val extractedId = extractId(id)
+        val detailKeypointsSectionsAdapter = DetailKeypointsSectionsAdapter(this, extractedId)
+
+        binding.viewPager.adapter = detailKeypointsSectionsAdapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = resources.getString(TAB_TITLES[position])
+        }.attach()
+
+        supportActionBar?.elevation = 0f
+
+//        TAB_TITLES.forEach { tabs ->
+//            val textView = LayoutInflater.from(this).inflate(R.layout.tab_titles, null) as TextView
+//            binding.tabLayout.getTabAt(tabs)?.customView = textView
+//        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -95,5 +122,12 @@ class DetailKeypointActivity : AppCompatActivity() {
 
     companion object {
         const val KEY_ID_KEYPOINTS = "key_id_keypoints"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+            R.string.tab_history,
+            R.string.tab_issue,
+            R.string.tab_spec,
+        )
     }
 }
