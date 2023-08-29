@@ -1,12 +1,16 @@
 package com.capstone.metricapp.features.add_spec
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.capstone.metricapp.R
+import androidx.appcompat.app.AppCompatActivity
+import com.capstone.metricapp.databinding.ActivityAddKeypointsSpecGighBinding
 
 class AddSpecGIGHActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAddKeypointsSpecGighBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_spec_gigh)
+        binding = ActivityAddKeypointsSpecGighBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
     }
 }

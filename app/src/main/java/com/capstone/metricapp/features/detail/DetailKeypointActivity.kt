@@ -55,11 +55,6 @@ class DetailKeypointActivity : AppCompatActivity() {
         }.attach()
 
         supportActionBar?.elevation = 0f
-
-//        TAB_TITLES.forEach { tabs ->
-//            val textView = LayoutInflater.from(this).inflate(R.layout.tab_titles, null) as TextView
-//            binding.tabLayout.getTabAt(tabs)?.customView = textView
-//        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

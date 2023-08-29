@@ -7,21 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import com.capstone.metricapp.core.domain.model.Scadatel
+import androidx.fragment.app.activityViewModels
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.databinding.FragmentSuccessQRBinding
-import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
+import com.capstone.metricapp.features.add_spec.AddSpecGIGHActivity
+import com.capstone.metricapp.features.add_spec.AddSpecLBSRECActivity
+import com.capstone.metricapp.features.add_spec.AddSpecScadatelActivity
 import com.capstone.metricapp.features.detail.DetailKeypointActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 @RequiresApi(Build.VERSION_CODES.O)
-class SuccessQRFragment(private val scadatel: Scadatel) : BottomSheetDialogFragment() {
+class SuccessQRFragment(private val type: KeypointsType) :
+    BottomSheetDialogFragment() {
     private var _binding: FragmentSuccessQRBinding? = null
     private val binding get() = _binding!!
-
-    //later will be changed to sharedPreferences
-    private var keypointsType: KeypointsType = KeypointsType.SCADATEL
+    private val viewModel: ScanViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,28 +38,91 @@ class SuccessQRFragment(private val scadatel: Scadatel) : BottomSheetDialogFragm
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnAdd.setOnClickListener {
-            val intentToAddKeypointsDesc =
-                Intent(requireContext(), AddKeypointsDescActivity::class.java)
-            startActivity(intentToAddKeypointsDesc)
-        }
+        setupButtonAdd()
 
-        binding.btnDetail.setOnClickListener {
-            val intentToDetailKeypoint =
-                Intent(requireContext(), DetailKeypointActivity::class.java)
-
-            startActivity(intentToDetailKeypoint)
-        }
+        setupButtonDetail()
 
         setupKeypointInfo()
     }
 
+    private fun setupButtonDetail() {
+        binding.btnDetail.setOnClickListener {
+            when (type) {
+                KeypointsType.LBSREC -> {
+                    viewModel.rtu.observe(this) { rtu ->
+                        val intentToDetailRTU =
+                            Intent(requireContext(), DetailKeypointActivity::class.java)
+                        intentToDetailRTU.putExtra(KEY_ID_KEYPOINTS, rtu.id)
+                        startActivity(intentToDetailRTU)
+                    }
+                }
+                KeypointsType.GIGH -> {
+                    viewModel.rtu.observe(this) { rtu ->
+                        val intentToDetailGIGH =
+                            Intent(requireContext(), DetailKeypointActivity::class.java)
+                        intentToDetailGIGH.putExtra(KEY_ID_KEYPOINTS, rtu.id)
+                        startActivity(intentToDetailGIGH)
+                    }
+                }
+                KeypointsType.SCADATEL -> {
+                    viewModel.scadatel.observe(this) { scadatel ->
+                        val intentToDetailScadatel =
+                            Intent(requireContext(), DetailKeypointActivity::class.java)
+                        intentToDetailScadatel.putExtra(KEY_ID_KEYPOINTS, scadatel.id)
+                        startActivity(intentToDetailScadatel)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupButtonAdd() {
+        binding.btnAdd.setOnClickListener {
+            val intentToAddSpec: Intent = when (type) {
+                KeypointsType.LBSREC -> {
+                    Intent(requireContext(), AddSpecLBSRECActivity::class.java)
+                }
+                KeypointsType.GIGH -> {
+                    Intent(requireContext(), AddSpecGIGHActivity::class.java)
+                }
+                KeypointsType.SCADATEL -> {
+                    Intent(requireContext(), AddSpecScadatelActivity::class.java)
+                }
+            }
+            startActivity(intentToAddSpec)
+        }
+    }
 
     private fun setupKeypointInfo() {
-        binding.apply {
-            tvDialogRegion.text = scadatel.region
-            tvDialogKeypoint.text = scadatel.keypoint
-            tvDialogDate.text = DateUtil.convertDateKeypoints(scadatel.dateCreated)
+        when (type) {
+            KeypointsType.LBSREC -> {
+                viewModel.rtu.observe(this) { rtu ->
+                    binding.apply {
+                        binding.tvDialogKeypoint.text = rtu.keypoint
+                        binding.tvDialogDate.text = DateUtil.convertDateKeypoints(rtu.dateCreated)
+                        binding.tvDialogRegion.text = rtu.region
+                    }
+                }
+            }
+            KeypointsType.GIGH -> {
+                viewModel.rtu.observe(this) { rtu ->
+                    binding.apply {
+                        binding.tvDialogKeypoint.text = rtu.keypoint
+                        binding.tvDialogDate.text = DateUtil.convertDateKeypoints(rtu.dateCreated)
+                        binding.tvDialogRegion.text = rtu.region
+                    }
+                }
+            }
+            KeypointsType.SCADATEL -> {
+                viewModel.scadatel.observe(this) { scadatel ->
+                    binding.apply {
+                        binding.tvDialogKeypoint.text = scadatel.keypoint
+                        binding.tvDialogDate.text =
+                            DateUtil.convertDateKeypoints(scadatel.dateCreated)
+                        binding.tvDialogRegion.text = scadatel.region
+                    }
+                }
+            }
         }
     }
 
@@ -67,8 +134,5 @@ class SuccessQRFragment(private val scadatel: Scadatel) : BottomSheetDialogFragm
     companion object {
         const val KEY_ID_KEYPOINTS = "key_id_keypoints"
 
-        fun newInstance(scadatel: Scadatel): SuccessQRFragment {
-            return SuccessQRFragment(scadatel)
-        }
     }
 }

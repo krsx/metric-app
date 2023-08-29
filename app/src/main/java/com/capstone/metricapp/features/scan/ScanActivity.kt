@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.*
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Scadatel
+import com.capstone.metricapp.core.utils.constans.KeypointsType
+import com.capstone.metricapp.core.utils.extractId
 import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityScanBinding
@@ -24,6 +26,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 @FlowPreview
 @ExperimentalCoroutinesApi
+@RequiresApi(Build.VERSION_CODES.O)
+
 class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
     private lateinit var qrScanner: CodeScanner
@@ -101,50 +105,64 @@ class ScanActivity : AppCompatActivity() {
             isAutoFocusEnabled = true
             isFlashEnabled = false
 
-            decodeCallback = DecodeCallback {
+            decodeCallback = DecodeCallback { result ->
                 runOnUiThread {
                     viewModel.getUserToken().observe(this@ScanActivity) { token ->
-                        viewModel.getScadatelById(token, it.text)
-                            .observe(this@ScanActivity) { scadatel ->
-                                when (scadatel) {
-                                    is Resource.Error -> {
-                                        showLoading(false)
-                                        showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
-                                    }
-                                    is Resource.Loading -> {
-                                        showLoading(true)
-                                    }
-                                    is Resource.Message -> {
-                                        showLoading(false)
-                                    }
-                                    is Resource.Success -> {
-                                        showLoading(false)
+                        val id = extractId(result.text)
 
-                                        lifecycleScope.launch {
-                                            scadatelData = Scadatel(
-                                                id = scadatel.data?.id!!,
-                                                uniqueId = scadatel.data.uniqueId,
-                                                keypoint = scadatel.data.keypoint,
-                                                region = scadatel.data.region,
-                                                merk = scadatel.data.merk,
-                                                type = scadatel.data.type,
-                                                mainVolt = scadatel.data.mainVolt,
-                                                backupVolt = scadatel.data.backupVolt,
-                                                os = scadatel.data.os,
-                                                date = scadatel.data.date,
-                                                dateCreated = scadatel.data.dateCreated
-                                            )
-                                            val fragment =
-                                                SuccessQRFragment.newInstance(scadatelData!!)
+                        when (id) {
+                            KeypointsType.LBSREC -> {
 
-                                            fragment.show(
-                                                supportFragmentManager,
-                                                SUCCESS_FRAGMENT_TAG
-                                            )
+                            }
+                            KeypointsType.GIGH -> {
+
+                            }
+                            KeypointsType.SCADATEL -> {
+                                viewModel.getScadatelById(token, result.text)
+                                    .observe(this@ScanActivity) { scadatel ->
+                                        when (scadatel) {
+                                            is Resource.Error -> {
+                                                showLoading(false)
+                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                            }
+                                            is Resource.Loading -> {
+                                                showLoading(true)
+                                            }
+                                            is Resource.Message -> {
+                                                showLoading(false)
+                                            }
+                                            is Resource.Success -> {
+                                                showLoading(false)
+
+                                                lifecycleScope.launch {
+                                                    scadatelData = Scadatel(
+                                                        id = scadatel.data?.id!!,
+                                                        uniqueId = scadatel.data.uniqueId,
+                                                        keypoint = scadatel.data.keypoint,
+                                                        region = scadatel.data.region,
+                                                        merk = scadatel.data.merk,
+                                                        type = scadatel.data.type,
+                                                        mainVolt = scadatel.data.mainVolt,
+                                                        backupVolt = scadatel.data.backupVolt,
+                                                        os = scadatel.data.os,
+                                                        date = scadatel.data.date,
+                                                        dateCreated = scadatel.data.dateCreated
+                                                    )
+
+                                                    viewModel.setScadatelData(scadatelData!!)
+                                                    showToast(scadatelData.toString())
+
+                                                    SuccessQRFragment(KeypointsType.SCADATEL).show(
+                                                        supportFragmentManager,
+                                                        SUCCESS_FRAGMENT_TAG
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
                             }
+                        }
+
                     }
                 }
             }
