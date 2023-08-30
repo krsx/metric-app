@@ -53,8 +53,6 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
     override fun updateSpecScadatel(
         token: String,
         id: String,
-        keypoint: String,
-        region: String?,
         merk: String?,
         type: String?,
         mainVolt: String?,
@@ -62,17 +60,15 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
         os: String?,
         date: String?
     ): Flow<Resource<Scadatel>> {
-        return updateSpecScadatel(
+        return scadatelRepository.updateSpecScadatel(
             token,
             id,
-            keypoint,
-            region ?: "",
-            merk ?: "",
-            type ?: "",
-            mainVolt ?: "",
-            backupVolt ?: "",
-            os ?: "",
-            date ?: "",
+            merk,
+            type,
+            mainVolt,
+            backupVolt,
+            os,
+            date
         )
     }
 

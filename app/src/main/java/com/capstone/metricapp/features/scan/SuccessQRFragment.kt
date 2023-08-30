@@ -3,6 +3,7 @@ package com.capstone.metricapp.features.scan
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,18 +79,32 @@ class SuccessQRFragment(private val type: KeypointsType) :
 
     private fun setupButtonAdd() {
         binding.btnAdd.setOnClickListener {
-            val intentToAddSpec: Intent = when (type) {
+            when (type) {
                 KeypointsType.LBSREC -> {
-                    Intent(requireContext(), AddSpecLBSRECActivity::class.java)
+                    viewModel.rtu.observe(this) { rtu ->
+                        val intentToAddSpecLBSREC =
+                            Intent(requireContext(), AddSpecLBSRECActivity::class.java)
+                        intentToAddSpecLBSREC.putExtra(KEY_ID_KEYPOINTS, rtu.uniqueId)
+                        startActivity(intentToAddSpecLBSREC)
+                    }
                 }
                 KeypointsType.GIGH -> {
-                    Intent(requireContext(), AddSpecGIGHActivity::class.java)
+                    viewModel.rtu.observe(this) { rtu ->
+                        val intentToAddSpecGIGH =
+                            Intent(requireContext(), AddSpecGIGHActivity::class.java)
+                        intentToAddSpecGIGH.putExtra(KEY_ID_KEYPOINTS, rtu.uniqueId)
+                        startActivity(intentToAddSpecGIGH)
+                    }
                 }
                 KeypointsType.SCADATEL -> {
-                    Intent(requireContext(), AddSpecScadatelActivity::class.java)
+                    viewModel.scadatel.observe(this) { scadatel ->
+                        val intentToAddSpecScadatel =
+                            Intent(requireContext(), AddSpecScadatelActivity::class.java)
+                        intentToAddSpecScadatel.putExtra(KEY_ID_KEYPOINTS, scadatel.uniqueId)
+                        startActivity(intentToAddSpecScadatel)
+                    }
                 }
             }
-            startActivity(intentToAddSpec)
         }
     }
 
@@ -115,6 +130,7 @@ class SuccessQRFragment(private val type: KeypointsType) :
             }
             KeypointsType.SCADATEL -> {
                 viewModel.scadatel.observe(this) { scadatel ->
+                    Log.e("INI SUDAH", "INI SUDAH")
                     binding.apply {
                         binding.tvDialogKeypoint.text = scadatel.keypoint
                         binding.tvDialogDate.text =
@@ -133,6 +149,5 @@ class SuccessQRFragment(private val type: KeypointsType) :
 
     companion object {
         const val KEY_ID_KEYPOINTS = "key_id_keypoints"
-
     }
 }

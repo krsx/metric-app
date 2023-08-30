@@ -24,17 +24,17 @@ object ScadatelDataMapper {
         }
 
     fun mapScadatelResponseToDomain(input: ScadatelData?): Scadatel = Scadatel(
-        id = input?.scadatelItem?.id!!,
-        uniqueId = input.scadatelItem.uniqueID!!,
-        keypoint = input.scadatelItem.keypoint!!,
-        region = input.scadatelItem.region!!,
-        merk = input.scadatelItem.merk!!,
-        type = input.scadatelItem.type!!,
-        mainVolt = input.scadatelItem.mainVolt!!,
-        backupVolt = input.scadatelItem.backupVolt!!,
-        os = input.scadatelItem.os!!,
-        date = input.scadatelItem.date!!,
-        dateCreated = input.scadatelItem.createdAt!!
+        id = input?.scadatelItem?.id ?: "",
+        uniqueId = input?.scadatelItem?.uniqueID ?: "",
+        keypoint = input?.scadatelItem?.keypoint ?: "",
+        region = input?.scadatelItem?.region ?: "",
+        merk = input?.scadatelItem?.merk ?: "",
+        type = input?.scadatelItem?.type ?: "",
+        mainVolt = input?.scadatelItem?.mainVolt ?: "",
+        backupVolt = input?.scadatelItem?.backupVolt ?: "",
+        os = input?.scadatelItem?.os ?: "",
+        date = input?.scadatelItem?.date ?: "",
+        dateCreated = input?.scadatelItem?.createdAt ?: ""
     )
 
     fun mapCreateScadatelResponseToDomain(input: CreateScadatelData?): Scadatel = Scadatel(

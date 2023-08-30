@@ -17,11 +17,12 @@ class AddSpecViewModel @Inject constructor(
 
     fun getUserToken() = userUseCase.getUserToken().asLiveData()
 
+    fun getScadatelById(token: String, id: String) =
+        scadatelUseCase.getScadatelById(token, id).asLiveData()
+
     fun updateSpecScadatel(
         token: String,
         id: String,
-        keypoint: String,
-        region: String?,
         merk: String?,
         type: String?,
         mainVolt: String?,
@@ -31,13 +32,13 @@ class AddSpecViewModel @Inject constructor(
     ) = scadatelUseCase.updateSpecScadatel(
         token,
         id,
-        keypoint,
-        region,
         merk,
         type,
         mainVolt,
         backupVolt,
         os,
         date
-    )
+    ).asLiveData()
+
+    fun getRTUById(token: String, id: String) = rtuUseCase.getRTUById(token, id).asLiveData()
 }

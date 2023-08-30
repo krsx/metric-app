@@ -150,7 +150,6 @@ class ScanActivity : AppCompatActivity() {
                                                     )
 
                                                     viewModel.setScadatelData(scadatelData!!)
-                                                    showToast(scadatelData.toString())
 
                                                     SuccessQRFragment(KeypointsType.SCADATEL).show(
                                                         supportFragmentManager,

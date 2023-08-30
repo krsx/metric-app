@@ -27,11 +27,8 @@ interface ScadatelUseCase {
 
     fun updateSpecScadatel(
         //unique ID should not be changed
-
         token: String,
         id: String,
-        keypoint: String,
-        region: String?,
         merk: String?,
         type: String?,
         mainVolt: String?,

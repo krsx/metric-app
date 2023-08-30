@@ -98,8 +98,6 @@ class ScadatelRepository @Inject constructor(
     override fun updateSpecScadatel(
         token: String,
         id: String,
-        keypoint: String,
-        region: String?,
         merk: String?,
         type: String?,
         mainVolt: String?,
@@ -116,8 +114,6 @@ class ScadatelRepository @Inject constructor(
                 return remoteDataSource.updateSpecScadatel(
                     token,
                     id,
-                    keypoint,
-                    region ?: "",
                     merk ?: "",
                     type ?: "",
                     mainVolt ?: "",

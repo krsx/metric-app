@@ -153,8 +153,6 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun updateSpecScadatel(
         token: String,
         id: String,
-        keypoint: String,
-        region: String?,
         merk: String?,
         type: String?,
         mainVolt: String?,
@@ -168,8 +166,6 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     token,
                     id,
                     id,
-                    keypoint,
-                    region ?: "",
                     merk ?: "",
                     type ?: "",
                     mainVolt ?: "",

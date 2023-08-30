@@ -53,14 +53,12 @@ interface ApiService {
         @Field("tanggalPemasangan") date: String,
     ): CreateScadatelItemResponse
 
-    @PUT("scadatel{id}")
+    @PUT("scadatel/{id}")
     @FormUrlEncoded
     suspend fun updateSpecScadatel(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
         @Field("uniqueID") uniqueID: String,
-        @Field("keypoint") keypoint: String,
-        @Field("lokasi") region: String,
         @Field("merk") merk: String,
         @Field("tipe") type: String,
         @Field("mainVolt") mainVolt: String,
