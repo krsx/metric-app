@@ -1,5 +1,7 @@
 package com.capstone.metricapp.features.detail
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.capstone.metricapp.core.domain.usecase.RTUUseCase
@@ -15,6 +17,16 @@ class DetailKeypointViewModel @Inject constructor(
     private val rtuUseCase: RTUUseCase,
 ) :
     ViewModel() {
+    private var _id = MutableLiveData<String>()
+    var id: LiveData<String> = _id
+
+    private var _isLoading = MutableLiveData<Boolean>()
+    var isLoading: LiveData<Boolean> = _isLoading
+
+    fun setId(id: String) {
+        _id.value = id
+    }
+
     fun getScadatelById(token: String, id: String) =
         scadatelUseCase.getScadatelById(token, id).asLiveData()
 

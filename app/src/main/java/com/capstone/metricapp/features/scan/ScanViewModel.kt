@@ -19,9 +19,9 @@ class ScanViewModel @Inject constructor(
     private val rtuUseCase: RTUUseCase,
 ) : ViewModel() {
     private var _scadatel = MutableLiveData<Scadatel>()
-    private var _rtu = MutableLiveData<RTU>()
-
     var scadatel: LiveData<Scadatel> = _scadatel
+
+    private var _rtu = MutableLiveData<RTU>()
     var rtu: LiveData<RTU> = _rtu
 
     fun setScadatelData(input: Scadatel) {

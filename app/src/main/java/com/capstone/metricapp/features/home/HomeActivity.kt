@@ -2,6 +2,7 @@ package com.capstone.metricapp.features.home
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -11,6 +12,7 @@ import android.view.animation.AnimationUtils
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.metricapp.R
@@ -25,16 +27,19 @@ import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityHomeBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
+import com.capstone.metricapp.features.detail.DetailKeypointViewModel
 import com.capstone.metricapp.features.scan.ScanActivity
 import com.capstone.metricapp.features.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private var fabMenuState: FabMenuState = FabMenuState.COLLAPSED
     private val viewModel: HomeViewModel by viewModels()
+    private val detailViewModel: DetailKeypointViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,11 +114,7 @@ class HomeActivity : AppCompatActivity() {
         viewModel.getUserToken().observe(this) { token ->
             viewModel.getUserDivision().observe(this) { division ->
                 binding.tvDivision.text = division.uppercase(Locale.getDefault())
-                Log.e(
-                    "TEST",
-                    division.toString() + Divisions.RTU.divisionName + Divisions.SCADATEL.divisionName
-                )
-             
+
                 when (division) {
                     Divisions.RTU.divisionName -> {
                         viewModel.getAllRTU(token).observe(this) { rtu ->
@@ -240,7 +241,8 @@ class HomeActivity : AppCompatActivity() {
         binding.rvKeypoints.adapter = adapter
         adapter.setOnItemClickCallback(object : ScadatelKeypointsAdapter.OnItemClickCallback {
             override fun onItemClicked(listScadatel: Scadatel) {
-
+                Log.e("ID", listScadatel.uniqueId)
+                detailViewModel.setId(listScadatel.uniqueId)
             }
         })
     }
@@ -252,8 +254,8 @@ class HomeActivity : AppCompatActivity() {
         val adapter = RTUKeypointsAdapter(rtuList)
         binding.rvKeypoints.adapter = adapter
         adapter.setOnItemClickCallback(object : RTUKeypointsAdapter.OnItemClickCallback {
-            override fun onItemClicked(listScadatel: RTU) {
-
+            override fun onItemClicked(listRTU: RTU) {
+                detailViewModel.setId(listRTU.uniqueId)
             }
         })
     }

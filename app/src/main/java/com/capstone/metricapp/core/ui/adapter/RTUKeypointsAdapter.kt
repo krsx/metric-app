@@ -60,7 +60,7 @@ class RTUKeypointsAdapter(private val listRTU: List<RTU>) :
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(listScadatel: RTU)
+        fun onItemClicked(listRTU: RTU)
     }
 
     companion object {

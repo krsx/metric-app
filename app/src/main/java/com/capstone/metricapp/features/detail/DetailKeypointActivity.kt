@@ -71,7 +71,6 @@ class DetailKeypointActivity : AppCompatActivity() {
                         }
                         is Resource.Message -> {
                             Log.e("TEST", "MESSAGE")
-
                         }
                         is Resource.Success -> {
                             Log.e("TEST", "SUCCESS")
@@ -100,6 +99,8 @@ class DetailKeypointActivity : AppCompatActivity() {
                         }
                         is Resource.Success -> {
                             Log.e("TEST", "SUCCESS")
+
+                            viewModel.setId(scadatel.data?.uniqueId!!)
 
                             binding.apply {
                                 tvDetailRegion.text = scadatel.data?.region
