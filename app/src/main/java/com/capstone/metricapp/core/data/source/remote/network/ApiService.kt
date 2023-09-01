@@ -67,6 +67,12 @@ interface ApiService {
         @Field("tanggalPemasangan") date: String,
     ): UpdateScadatelItemResponse
 
+    @GET("scadatel/history/{id}")
+    suspend fun getScadatelHistory(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): ScadatelHistoryResponse
+
     @DELETE
     suspend fun deleteScadatelKeypoint(
         @Header("Authorization") authorization: String,

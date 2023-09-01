@@ -186,6 +186,26 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun getHistoryScadatel(
+        token: String,
+        id: String
+    ): Flow<ApiResponse<ScadatelHistoryResponse>> {
+        return flow {
+            try {
+                val response = apiService.getScadatelHistory(token, id)
+                val data = response.data
+                if (data != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("getHistoryScadatel", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun deleteScadatelKeypoint(
         token: String,
         id: String

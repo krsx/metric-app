@@ -2,8 +2,11 @@ package com.capstone.metricapp.core.utils.datamapper
 
 import com.capstone.metricapp.core.data.source.remote.response.CreateScadatelData
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelData
+import com.capstone.metricapp.core.data.source.remote.response.ScadatelHistoryItem
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelItem
 import com.capstone.metricapp.core.domain.model.Scadatel
+import com.capstone.metricapp.core.domain.model.ScadatelHistory
+import org.json.JSONObject
 
 object ScadatelDataMapper {
     fun mapListScadatelResponsesToDomain(input: List<ScadatelItem?>?): List<Scadatel> =
@@ -50,4 +53,47 @@ object ScadatelDataMapper {
         date = input.item.date!!,
         dateCreated = input.item.createdAt!!
     )
+
+    fun mapHistoryScadatelResponseToDomain(input: List<ScadatelHistoryItem?>?): List<ScadatelHistory> =
+        input!!.map {
+            ScadatelHistory(
+                id = it?.id!!,
+                documentId = it.documentId!!,
+                modelName = it.modelName!!,
+                fieldName = it.fieldName!!,
+                oldValue = it.oldValue!!,
+                newValue = it.newValue!!,
+            )
+        }
+
+    fun getNewValueFieldFromJSON(input: String): Scadatel {
+        input.let { newValue ->
+            val newValueJSON = JSONObject(newValue)
+            return Scadatel(
+                id = newValueJSON.getString("_id"),
+                uniqueId = newValueJSON.getString("uniqueID"),
+                keypoint = newValueJSON.getString("keypoint"),
+                region = newValueJSON.getString("lokasi"),
+                merk = newValueJSON.getString("merk"),
+                type = newValueJSON.getString("tipe"),
+                mainVolt = newValueJSON.getString("mainVolt"),
+                backupVolt = newValueJSON.getString("backupVolt"),
+                os = newValueJSON.getString("os"),
+                date = newValueJSON.getString("tanggalPemasangan"),
+
+                //dateCreated in history shows when the spec get updated
+                //the "createdAt" field will only show the creation of the scadatel keypoint
+                dateCreated = newValueJSON.getString("updatedAt")
+            )
+        }
+    }
+
+    //Only to get a date for "Perubahan Spesifikasi (this value)"
+    fun getHistoryDateOnly(input: String): String {
+        input.let {
+            val newValueJSON = JSONObject(it)
+            return newValueJSON.getString("updatedAt")
+        }
+    }
 }
+

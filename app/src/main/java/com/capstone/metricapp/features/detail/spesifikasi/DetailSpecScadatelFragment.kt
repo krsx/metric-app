@@ -40,10 +40,7 @@ class DetailSpecScadatelFragment : Fragment() {
         }
 
         viewModel.getUserToken().observe(this) { token ->
-            Log.e("TOKEN BRO", token.toString())
             viewModel.id.observe(this) { id ->
-                Log.e("ID BRO", id.toString())
-
                 viewModel.getScadatelById(token, id).observe(this) { scadatel ->
                     checkScadatelData(scadatel)
                 }
@@ -79,7 +76,6 @@ class DetailSpecScadatelFragment : Fragment() {
             }
             is Resource.Success -> {
                 showLoading(false)
-                Log.e("SCADATEL DATA", scadatel.data.toString())
                 setupInfo(scadatel.data!!)
             }
         }
@@ -87,7 +83,6 @@ class DetailSpecScadatelFragment : Fragment() {
 
 
     private fun setupInfo(scadatel: Scadatel) {
-        Log.e("TEST SCADATEL", scadatel.toString())
         binding.apply {
             tvDetailScadatelMerk.text = scadatel.merk
             tvDetailScadatelType.text = scadatel.type

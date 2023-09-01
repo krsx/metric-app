@@ -30,6 +30,9 @@ class DetailKeypointViewModel @Inject constructor(
     fun getScadatelById(token: String, id: String) =
         scadatelUseCase.getScadatelById(token, id).asLiveData()
 
+    fun getHistoryScadatel(token: String, id: String) =
+        scadatelUseCase.getHistoryScadatel(token, id).asLiveData()
+
     fun getRTUById(token: String, id: String) = rtuUseCase.getRTUById(token, id).asLiveData()
 
     fun getUserToken() = userUseCase.getUserToken().asLiveData()

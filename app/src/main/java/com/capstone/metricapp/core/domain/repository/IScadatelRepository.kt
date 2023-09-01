@@ -3,6 +3,7 @@ package com.capstone.metricapp.core.domain.repository
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Common
 import com.capstone.metricapp.core.domain.model.Scadatel
+import com.capstone.metricapp.core.domain.model.ScadatelHistory
 import kotlinx.coroutines.flow.Flow
 
 interface IScadatelRepository {
@@ -27,7 +28,6 @@ interface IScadatelRepository {
 
     fun updateSpecScadatel(
         //unique ID should not be changed
-
         token: String,
         id: String,
         merk: String?,
@@ -37,6 +37,11 @@ interface IScadatelRepository {
         os: String?,
         date: String?
     ): Flow<Resource<Scadatel>>
+
+    fun getHistoryScadatel(
+        token: String,
+        uniqueId: String,
+    ): Flow<Resource<List<ScadatelHistory>>>
 
     fun deleteScadatelKeypoint(token: String, id: String): Flow<Resource<Common>>
 }

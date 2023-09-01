@@ -66,7 +66,7 @@
     <string name="rectifier">Rectifier</string>
     <string name="gateway">Gateway</string>
     <string name="spec">Spesifikasi</string>
-    <string name="change_spec">Perubahan spesifikasi %s</string>
+    <string name="change_spec">Perubahan Spesifikasi %d</string>
     <string name="issue">Gangguan</string>
     <string name="default_issue_desc">Keypoints ini mengalami gangguan</string>
     <string name="desc_keypoints">Deskripsi Keypoints</string>

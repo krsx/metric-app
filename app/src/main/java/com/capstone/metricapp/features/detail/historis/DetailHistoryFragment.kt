@@ -1,60 +1,90 @@
 package com.capstone.metricapp.features.detail.historis
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.capstone.metricapp.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.domain.model.ScadatelHistory
+import com.capstone.metricapp.core.ui.adapter.ScadatelHistoryKeypointAdapter
+import com.capstone.metricapp.core.utils.showToast
+import com.capstone.metricapp.databinding.FragmentDetailHistoryBinding
+import com.capstone.metricapp.features.detail.DetailKeypointViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailHistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class DetailHistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentDetailHistoryBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: DetailKeypointViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_history, container, false)
+        _binding = FragmentDetailHistoryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailHistoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailHistoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        viewModel.getUserToken().observe(this) { token ->
+            Log.e("TEST BRO", token)
+            viewModel.id.observe(this) { id ->
+                Log.e("TEST BRO", id)
+                viewModel.getHistoryScadatel(token, id).observe(viewLifecycleOwner) { history ->
+                    when (history) {
+                        is Resource.Error -> {
+                            showLoading(false)
+                            context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                        }
+                        is Resource.Loading -> {
+                            showLoading(true)
+                        }
+                        is Resource.Message -> {
+                            Log.e("DetailHistoryFragment", history.message.toString())
+                        }
+                        is Resource.Success -> {
+                            showLoading(false)
+                            Log.e("SCADATEL DATA", history.data.toString())
+                            initRecyclerView(history.data!!)
+                        }
+                    }
+
                 }
             }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initRecyclerView(scadatelHistory: List<ScadatelHistory>) {
+        val layoutManager = LinearLayoutManager(context)
+        binding.rvHistory.layoutManager = layoutManager
+
+        val adapter = ScadatelHistoryKeypointAdapter(scadatelHistory)
+        binding.rvHistory.adapter = adapter
+
+        adapter.setOnItemClickCallback(object : ScadatelHistoryKeypointAdapter.OnItemClickCallback {
+            override fun onItemClicked(history: ScadatelHistory) {
+
+            }
+        })
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.refHistory.isRefreshing = isLoading
     }
 }

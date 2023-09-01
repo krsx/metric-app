@@ -1,5 +1,7 @@
 package com.capstone.metricapp.core.ui.adapter
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -16,6 +18,7 @@ class DetailKeypointsSectionsAdapter(activity: AppCompatActivity, var type: Keyp
         return 3
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun createFragment(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {

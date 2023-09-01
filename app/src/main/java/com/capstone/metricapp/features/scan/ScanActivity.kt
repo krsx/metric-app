@@ -108,9 +108,7 @@ class ScanActivity : AppCompatActivity() {
             decodeCallback = DecodeCallback { result ->
                 runOnUiThread {
                     viewModel.getUserToken().observe(this@ScanActivity) { token ->
-                        val id = extractId(result.text)
-
-                        when (id) {
+                        when (extractId(result.text)) {
                             KeypointsType.LBSREC -> {
 
                             }
