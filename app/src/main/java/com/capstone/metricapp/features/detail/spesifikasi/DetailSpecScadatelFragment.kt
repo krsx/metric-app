@@ -35,14 +35,14 @@ class DetailSpecScadatelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.id.observe(this) {
-            context?.showToast(it)
+        viewModel.isLoading.observe(this) {
+            showLoading(it)
         }
 
         viewModel.getUserToken().observe(this) { token ->
             viewModel.id.observe(this) { id ->
-                viewModel.getScadatelById(token, id).observe(this) { scadatel ->
-                    checkScadatelData(scadatel)
+                viewModel.scadatel.observe(this) { scadatel ->
+                    setupInfo(scadatel)
                 }
             }
         }
@@ -65,17 +65,17 @@ class DetailSpecScadatelFragment : Fragment() {
     private fun checkScadatelData(scadatel: Resource<Scadatel>) {
         when (scadatel) {
             is Resource.Error -> {
-                showLoading(false)
+                viewModel.setLoading(false)
                 context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
             }
             is Resource.Loading -> {
-                showLoading(true)
+                viewModel.setLoading(true)
             }
             is Resource.Message -> {
                 Log.e("DetailSpecScadatel", scadatel.message.toString())
             }
             is Resource.Success -> {
-                showLoading(false)
+                viewModel.setLoading(false)
                 setupInfo(scadatel.data!!)
             }
         }

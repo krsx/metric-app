@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.domain.usecase.RTUUseCase
 import com.capstone.metricapp.core.domain.usecase.ScadatelUseCase
 import com.capstone.metricapp.core.domain.usecase.UserUseCase
@@ -23,8 +24,19 @@ class DetailKeypointViewModel @Inject constructor(
     private var _isLoading = MutableLiveData<Boolean>()
     var isLoading: LiveData<Boolean> = _isLoading
 
+    private var _scadatel = MutableLiveData<Scadatel>()
+    var scadatel: LiveData<Scadatel> = _scadatel
+
     fun setId(id: String) {
         _id.value = id
+    }
+
+    fun setLoading(isLoading: Boolean) {
+        _isLoading.value = isLoading
+    }
+
+    fun setScadatelData(input: Scadatel) {
+        _scadatel.value = input
     }
 
     fun getScadatelById(token: String, id: String) =

@@ -13,6 +13,7 @@ import com.capstone.metricapp.core.ui.adapter.DetailKeypointsSectionsAdapter
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.constans.Divisions
 import com.capstone.metricapp.core.utils.extractId
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.databinding.ActivityDetailKeypointsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,18 +90,20 @@ class DetailKeypointActivity : AppCompatActivity() {
                 viewModel.getScadatelById(token, id).observe(this) { scadatel ->
                     when (scadatel) {
                         is Resource.Error -> {
-                            Log.e("TEST", "ERROR")
+                            viewModel.setLoading(false)
+                            showLongToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
                         }
                         is Resource.Loading -> {
-                            Log.e("TEST", "LOADING")
+                            viewModel.setLoading(true)
                         }
                         is Resource.Message -> {
-                            Log.e("TEST", "MESSAGE")
+                            Log.e("DetailKeypointActivity", scadatel.message.toString())
                         }
                         is Resource.Success -> {
-                            Log.e("TEST", "SUCCESS")
+                            viewModel.setLoading(false)
 
                             viewModel.setId(scadatel.data?.uniqueId!!)
+                            viewModel.setScadatelData(scadatel.data)
 
                             binding.apply {
                                 tvDetailRegion.text = scadatel.data?.region
@@ -114,6 +117,7 @@ class DetailKeypointActivity : AppCompatActivity() {
             }
         }
     }
+
 
     companion object {
         const val KEY_ID_KEYPOINTS = "key_id_keypoints"
