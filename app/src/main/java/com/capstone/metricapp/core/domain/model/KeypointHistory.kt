@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class ScadatelHistory(
+data class KeypointHistory(
     var id: String,
     var documentId: String,
     var modelName: String,
