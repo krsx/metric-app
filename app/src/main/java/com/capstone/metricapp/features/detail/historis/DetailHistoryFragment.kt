@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.ScadatelHistory
 import com.capstone.metricapp.core.ui.adapter.ScadatelHistoryKeypointAdapter
+import com.capstone.metricapp.core.utils.constans.KeypointsType
+import com.capstone.metricapp.core.utils.extractId
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.FragmentDetailHistoryBinding
 import com.capstone.metricapp.features.detail.DetailKeypointViewModel
@@ -38,28 +40,35 @@ class DetailHistoryFragment : Fragment() {
 
     private fun setupRecyclerView() {
         viewModel.getUserToken().observe(this) { token ->
-            Log.e("TEST BRO", token)
             viewModel.id.observe(this) { id ->
-                Log.e("TEST BRO", id)
-                viewModel.getHistoryScadatel(token, id).observe(viewLifecycleOwner) { history ->
-                    when (history) {
-                        is Resource.Error -> {
-                            showLoading(false)
-                            context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
-                        }
-                        is Resource.Loading -> {
-                            showLoading(true)
-                        }
-                        is Resource.Message -> {
-                            Log.e("DetailHistoryFragment", history.message.toString())
-                        }
-                        is Resource.Success -> {
-                            showLoading(false)
-                            Log.e("SCADATEL DATA", history.data.toString())
-                            initRecyclerView(history.data!!)
-                        }
-                    }
+                when (extractId(id)) {
+                    KeypointsType.LBSREC -> {
 
+                    }
+                    KeypointsType.GIGH -> {
+
+                    }
+                    KeypointsType.SCADATEL -> {
+                        viewModel.getHistoryScadatel(token, id)
+                            .observe(viewLifecycleOwner) { history ->
+                                when (history) {
+                                    is Resource.Error -> {
+                                        showLoading(false)
+                                        context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                    }
+                                    is Resource.Loading -> {
+                                        showLoading(true)
+                                    }
+                                    is Resource.Message -> {
+                                        Log.e("DetailHistoryFragment", history.message.toString())
+                                    }
+                                    is Resource.Success -> {
+                                        showLoading(false)
+                                        initScadatelRecyclerView(history.data!!)
+                                    }
+                                }
+                            }
+                    }
                 }
             }
         }
@@ -70,7 +79,7 @@ class DetailHistoryFragment : Fragment() {
         _binding = null
     }
 
-    private fun initRecyclerView(scadatelHistory: List<ScadatelHistory>) {
+    private fun initScadatelRecyclerView(scadatelHistory: List<ScadatelHistory>) {
         val layoutManager = LinearLayoutManager(context)
         binding.rvHistory.layoutManager = layoutManager
 
@@ -86,5 +95,11 @@ class DetailHistoryFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.refHistory.isRefreshing = isLoading
+    }
+
+    companion object {
+        private const val SCADATEL_HISTORY_FRAGMENT_TAG = "Detail History Scadatel"
+        private const val LBSREC_HISTORY_FRAGMENT_TAG = "Detail History LBS REC"
+        private const val GIGH_HISTORY_FRAGMENT_TAG = "Detail History  GI GH"
     }
 }
