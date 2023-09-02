@@ -83,7 +83,7 @@ class DetailHistoryFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context)
         binding.rvHistory.layoutManager = layoutManager
 
-        val adapter = ScadatelHistoryKeypointAdapter(scadatelHistory)
+        val adapter = ScadatelHistoryKeypointAdapter(scadatelHistory, parentFragmentManager)
         binding.rvHistory.adapter = adapter
 
         adapter.setOnItemClickCallback(object : ScadatelHistoryKeypointAdapter.OnItemClickCallback {

@@ -78,6 +78,7 @@
     <string name="tab_spec">Spesifikasi</string>
     <string name="tab_history">Historis</string>
     <string name="tab_issue">Gangguan</string>
+    <string name="change_detail">Detail Perubahan</string>
 
 
 </resources>
