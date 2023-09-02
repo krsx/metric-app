@@ -45,12 +45,12 @@ class ScadatelHistoryKeypointAdapter(
                 tvListSpecChangeDate.text =
                     DateUtil.convertDateKeypoints(ScadatelDataMapper.getHistoryDateOnly(history.newValue))
                 tvListSpecChange.text =
-                    holder.itemView.context.getString(R.string.change_spec, position)
+                    holder.itemView.context.getString(R.string.change_spec, position + 1)
             }
         }
 
         holder.itemView.setOnClickListener {
-            DetailHistorySpecScadatelFragment().show(
+            DetailHistorySpecScadatelFragment(position, history).show(
                 fragmentManager,
                 SCADATEL_HISTORY_FRAGMENT_TAG
             )
@@ -66,8 +66,6 @@ class ScadatelHistoryKeypointAdapter(
     }
 
     companion object {
-        const val KEY_POSITION_HISTORY = "key_position_history"
-
         private const val SCADATEL_HISTORY_FRAGMENT_TAG = "Detail History Scadatel"
         private const val LBSREC_HISTORY_FRAGMENT_TAG = "Detail History LBS REC"
         private const val GIGH_HISTORY_FRAGMENT_TAG = "Detail History  GI GH"

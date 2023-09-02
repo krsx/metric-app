@@ -64,7 +64,9 @@ class DetailHistoryFragment : Fragment() {
                                     }
                                     is Resource.Success -> {
                                         showLoading(false)
-                                        initScadatelRecyclerView(history.data!!)
+                                        viewModel.setScadatelHistoryData(history.data!!)
+                                        Log.e("MASUK", history.data.toString())
+                                        initScadatelRecyclerView(history.data)
                                     }
                                 }
                             }
