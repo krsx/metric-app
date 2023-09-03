@@ -37,7 +37,7 @@ interface RTUUseCase {
         rtu_date: String,
         rtu_sn: String,
 
-        bar_merk: String,
+        bat_merk: String,
         bat_type: String,
         bat_date: String,
     ): Flow<Resource<RTU>>
@@ -63,7 +63,7 @@ interface RTUUseCase {
         rtu_date: String?,
         rtu_sn: String?,
 
-        bar_merk: String?,
+        bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
     ): Flow<Resource<RTU>>
@@ -91,7 +91,7 @@ interface RTUUseCase {
         rtu_date: String,
         rtu_sn: String,
 
-        bar_merk: String,
+        bat_merk: String,
         bat_type: String,
         bat_date: String,
 
@@ -122,7 +122,7 @@ interface RTUUseCase {
         rtu_date: String?,
         rtu_sn: String?,
 
-        bar_merk: String?,
+        bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
 
@@ -138,40 +138,4 @@ interface RTUUseCase {
     ): Flow<Resource<List<KeypointHistory>>>
 
     fun deleteRTUKeypoint(token: String, id: String): Flow<Resource<Common>>
-
-//    fun createLBSRECKeypoint(
-//        token: String,
-//        uniqueId: String,
-//        keypoint: String,
-//        region: String,
-//
-//        telkom_merk: String,
-//        telkom_type: String,
-//        telkom_rangeVolt: String,
-//        telkom_date: String,
-//        telkom_sn: String,
-//
-//        main_sim_provider: String,
-//        main_sim_number: String,
-//
-//        backup_sim_provider: String,
-//        backup_sim_number: String,
-//
-//        rtu_merk: String,
-//        rtu_type: String,
-//        rtu_date: String,
-//        rtu_sn: String,
-//
-//        bar_merk: String,
-//        bat_type: String,
-//        bat_date: String,
-//
-//        ): Flow<Resource<RTU>>
-//
-//    fun updateSpecLBSREC(
-//        token: String,
-//        id: String,
-//        keypoint: String,
-//
-//        ): Flow<Resource<RTU>>
 }

@@ -98,7 +98,7 @@ interface ApiService {
         @Query("keyword") keyword: String,
     ): RTUListItemResponse
 
-    @POST
+    @POST("rtu")
     @FormUrlEncoded
     suspend fun createLBSRECKeypoint(
         @Header("Authorization") authorization: String,
@@ -127,7 +127,7 @@ interface ApiService {
         @Field("btr_tanggalPenggatian") bat_date: String,
     ): CreateRTUItemResponse
 
-    @POST
+    @POST("rtu")
     @FormUrlEncoded
     suspend fun createGIGHKeypoint(
         @Header("Authorization") authorization: String,

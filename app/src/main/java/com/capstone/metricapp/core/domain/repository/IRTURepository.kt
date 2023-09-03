@@ -42,7 +42,7 @@ interface IRTURepository {
         bat_date: String,
     ): Flow<Resource<RTU>>
 
-    fun updateSpecLBSREC(
+    fun updateSpecLBSRECKeypoint(
         token: String,
         uniqueId: String,
 

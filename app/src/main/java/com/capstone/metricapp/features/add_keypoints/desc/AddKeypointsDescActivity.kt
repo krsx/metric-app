@@ -1,10 +1,12 @@
 package com.capstone.metricapp.features.add_keypoints.desc
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.utils.constans.KeypointsType
@@ -18,6 +20,7 @@ import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecScada
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class AddKeypointsDescActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddKeypointsDescBinding
 

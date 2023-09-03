@@ -108,7 +108,7 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         }.asFlow()
     }
 
-    override fun updateSpecLBSREC(
+    override fun updateSpecLBSRECKeypoint(
         token: String,
         uniqueId: String,
         telkom_merk: String?,
