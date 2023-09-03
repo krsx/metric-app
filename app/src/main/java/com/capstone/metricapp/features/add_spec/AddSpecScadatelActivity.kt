@@ -30,13 +30,46 @@ class AddSpecScadatelActivity : AppCompatActivity() {
         val id = intent.getStringExtra(KEY_ID_KEYPOINTS) ?: "bruh"
 
         viewModel.getUserToken().observe(this) { token ->
-            Log.e("TEST 123", token.toString())
             setupHeaderInfo(token, id)
 
+            setupInitialSpecData(token, id)
+
             setupButtonAdd(token, id)
+
         }
 
 
+    }
+
+    private fun setupInitialSpecData(token: String, id: String) {
+        viewModel.getScadatelById(token, id).observe(this) { scadatel ->
+            when (scadatel) {
+                is Resource.Error -> {
+                    showLoading(false)
+                    showLongToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
+                }
+                is Resource.Loading -> {
+                    showLoading(true)
+                }
+                is Resource.Message -> {
+                    Log.e("setupInitialSpecData", scadatel.message.toString())
+                }
+                is Resource.Success -> {
+                    showLoading(false)
+
+                    binding.apply {
+                        edScadatelMerk.setText(scadatel.data?.merk)
+                        edScadatelType.setText(scadatel.data?.type)
+                        edScadatelMainVolt.setText(scadatel.data?.mainVolt)
+                        edScadatelBackupVolt.setText(scadatel.data?.backupVolt)
+                        edScadatelOs.setText(scadatel.data?.os)
+                        edScadatelDate.setText(scadatel.data?.date)
+                        edScadatelOs.setText("") //later will be added
+                    }
+
+                }
+            }
+        }
     }
 
     private fun setupButtonAdd(token: String, id: String) {
@@ -48,8 +81,7 @@ class AddSpecScadatelActivity : AppCompatActivity() {
             val edOS = binding.edScadatelOs.text.toString()
             val edDate = binding.edScadatelDate.text.toString()
             val edNote = binding.edNotes.text.toString()
-            
-            Log.e("TEST", edMerk)
+
             viewModel.updateSpecScadatel(
                 token,
                 id,

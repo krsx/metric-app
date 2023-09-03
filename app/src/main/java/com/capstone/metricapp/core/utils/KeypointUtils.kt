@@ -35,3 +35,7 @@ fun extractId(id: String): KeypointsType {
         KeypointsType.SCADATEL
     }
 }
+
+fun cleanId(id: String): String {
+    return id.removeSuffix("%0A").trim()
+}

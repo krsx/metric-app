@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.*
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Scadatel
+import com.capstone.metricapp.core.utils.cleanId
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.extractId
 import com.capstone.metricapp.core.utils.showLongToast
@@ -116,12 +117,13 @@ class ScanActivity : AppCompatActivity() {
 
                             }
                             KeypointsType.SCADATEL -> {
-                                viewModel.getScadatelById(token, result.text)
+                                val cleanId = cleanId(result.text)
+                                viewModel.getScadatelById(token, cleanId)
                                     .observe(this@ScanActivity) { scadatel ->
                                         when (scadatel) {
                                             is Resource.Error -> {
                                                 showLoading(false)
-                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang $cleanId")
                                             }
                                             is Resource.Loading -> {
                                                 showLoading(true)
@@ -159,7 +161,6 @@ class ScanActivity : AppCompatActivity() {
                                     }
                             }
                         }
-
                     }
                 }
             }
