@@ -35,7 +35,7 @@ class ScadatelKeypointsAdapter(private val listScadatel: List<Scadatel>) :
         val scadatel = listScadatel[position]
         holder.apply {
             binding.apply {
-                tvListKeypointsRegion.text = scadatel.region
+                tvListKeypointsRegion.text = scadatel.region + " - ${scadatel.uniqueId}"
                 tvListKeypoints.text = scadatel.keypoint
                 tvListKeypointsDate.text = DateUtil.convertDateKeypoints(scadatel.dateCreated)
             }

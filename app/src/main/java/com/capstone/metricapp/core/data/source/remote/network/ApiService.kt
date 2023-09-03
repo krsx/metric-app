@@ -72,7 +72,7 @@ interface ApiService {
     suspend fun getScadatelHistory(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
-    ): ScadatelHistoryResponse
+    ): KeypointHistoryResponse
 
     @DELETE
     suspend fun deleteScadatelKeypoint(
@@ -161,6 +161,64 @@ interface ApiService {
         @Field("gtwy_tanggalPenggatian") gat_date: String,
         @Field("gtwy_sn") gat_sn: String,
     ): CreateRTUItemResponse
+
+    @PUT("rtu/{id}")
+    suspend fun updateSpecLBSREC(
+        @Header("Authorization") authorization: String,
+        @Path("id") uniqueID: String,
+
+        @Field("telkom_merk") telkom_merk: String,
+        @Field("telkom_tipe") telkom_type: String,
+        @Field("telkom_rangeVolt") telkom_rangeVolt: String,
+        @Field("telkom_tanggalPenggantian") telkom_date: String,
+        @Field("telkom_sn") telkom_sn: String,
+
+        @Field("providerSimUtama") main_sim_provider: String,
+        @Field("nomorSimUtama") main_sim_number: String,
+        @Field("providerSimCadangan") backup_sim_provider: String,
+        @Field("nomorSimCadangan") backup_sim_number: String,
+
+        @Field("rtu_merk") rtu_merk: String,
+        @Field("rtu_tipe") rtu_type: String,
+        @Field("rtu_tanggalPenggatian") rtu_date: String,
+        @Field("rtu_sn") rtu_sn: String,
+
+        @Field("btr_merk") bat_merk: String,
+        @Field("btr_tipe") bat_type: String,
+        @Field("btr_tanggalPenggatian") bat_date: String,
+    ): UpdateRTUResponse
+
+    @PUT("rtu/{id}")
+    fun updateSpecGIGH(
+        @Header("Authorization") authorization: String,
+        @Path("id") uniqueID: String,
+
+        @Field("telkom_merk") telkom_merk: String,
+        @Field("telkom_tipe") telkom_type: String,
+        @Field("telkom_rangeVolt") telkom_rangeVolt: String,
+        @Field("telkom_tanggalPenggantian") telkom_date: String,
+        @Field("telkom_sn") telkom_sn: String,
+
+        @Field("rect_merk") rect_merk: String,
+        @Field("rect_tipe") rect_type: String,
+        @Field("rect_rangeVolt") rect_rangeVolt: String,
+        @Field("rect_tanggalPenggantian") rect_date: String,
+        @Field("rect_sn") rect_sn: String,
+
+        @Field("rtu_merk") rtu_merk: String,
+        @Field("rtu_tipe") rtu_type: String,
+        @Field("rtu_tanggalPenggatian") rtu_date: String,
+        @Field("rtu_sn") rtu_sn: String,
+
+        @Field("btr_merk") bat_merk: String,
+        @Field("btr_tipe") bat_type: String,
+        @Field("btr_tanggalPenggatian") bat_date: String,
+
+        @Field("gtwy_merk") gat_merk: String,
+        @Field("gtwy_tipe") gat_type: String,
+        @Field("gtwy_tanggalPenggatian") gat_date: String,
+        @Field("gtwy_sn") gat_sn: String,
+    ): UpdateRTUResponse
 
     @GET("rtu/history/{id}")
     suspend fun getRTUHistory(

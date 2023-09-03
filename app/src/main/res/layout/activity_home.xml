@@ -7,7 +7,6 @@
     android:background="@color/blue_600"
     tools:context=".features.home.HomeActivity">
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/ref_keypoints"
         android:layout_width="match_parent"

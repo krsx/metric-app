@@ -37,12 +37,12 @@ interface IRTURepository {
         rtu_date: String,
         rtu_sn: String,
 
-        bar_merk: String,
+        bat_merk: String,
         bat_type: String,
         bat_date: String,
     ): Flow<Resource<RTU>>
 
-    fun updateSpecLBS(
+    fun updateSpecLBSREC(
         token: String,
         uniqueId: String,
 
@@ -63,7 +63,7 @@ interface IRTURepository {
         rtu_date: String?,
         rtu_sn: String?,
 
-        bar_merk: String?,
+        bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
     ): Flow<Resource<RTU>>
@@ -91,7 +91,7 @@ interface IRTURepository {
         rtu_date: String,
         rtu_sn: String,
 
-        bar_merk: String,
+        bat_merk: String,
         bat_type: String,
         bat_date: String,
 
@@ -122,7 +122,7 @@ interface IRTURepository {
         rtu_date: String?,
         rtu_sn: String?,
 
-        bar_merk: String?,
+        bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
 

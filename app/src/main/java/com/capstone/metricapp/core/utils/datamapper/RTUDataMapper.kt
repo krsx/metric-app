@@ -1,7 +1,10 @@
 package com.capstone.metricapp.core.utils.datamapper
 
+import com.capstone.metricapp.core.data.source.remote.response.CreateRTUData
+import com.capstone.metricapp.core.data.source.remote.response.KeypointHistoryItem
 import com.capstone.metricapp.core.data.source.remote.response.RTUData
 import com.capstone.metricapp.core.data.source.remote.response.RTUItem
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.RTU
 
 object RTUDataMapper {
@@ -88,4 +91,57 @@ object RTUDataMapper {
 
         dateCreated = input.rtuItem.createdAt!!,
     )
+
+    fun mapCreateRTUResponse(input: CreateRTUData?): RTU = RTU(
+        id = input?.id!!,
+        uniqueId = input.uniqueID!!,
+        keypoint = input.keypoint!!,
+        region = input.region!!,
+
+        telkom_date = input.telkom_date ?: "",
+        telkom_merk = input.telkom_merk ?: "",
+        telkom_rangeVolt = input.telkom_rangeVolt ?: "",
+        telkom_sn = input.telkom_sn ?: "",
+        telkom_type = input.telkom_type ?: "",
+
+        main_sim_provider = input.main_sim_provider ?: "",
+        main_sim_number = input.main_sim_number ?: "",
+
+        backup_sim_number = input.backup_sim_number ?: "",
+        backup_sim_provider = input.backup_sim_provider ?: "",
+
+        rtu_date = input.rtu_date ?: "",
+        rtu_merk = input.rtu_merk ?: "",
+        rtu_sn = input.rtu_sn ?: "",
+        rtu_type = input.rtu_type ?: "",
+
+        bat_merk = input.bat_merk ?: "",
+        bat_date = input.bat_date ?: "",
+        bat_type = input.bat_type ?: "",
+
+        rect_date = input.rect_date ?: "",
+        rect_type = input.rect_type ?: "",
+        rect_merk = input.rect_merk ?: "",
+        rect_rangeVolt = input.rect_rangeVolt ?: "",
+        rect_sn = input.rect_sn ?: "",
+
+        gat_date = input.gat_date ?: "",
+        gat_type = input.gat_type ?: "",
+        gat_merk = input.gat_merk ?: "",
+        gat_sn = input.gat_sn ?: "",
+
+        dateCreated = input.createdAt!!,
+    )
+
+    fun mapHistoryRTUResponseToDomain(input: List<KeypointHistoryItem?>?): List<KeypointHistory> =
+        input!!.map {
+            KeypointHistory(
+                id = it?.id!!,
+                documentId = it.documentId!!,
+                modelName = it.modelName!!,
+                fieldName = it.fieldName!!,
+                oldValue = it.oldValue!!,
+                newValue = it.newValue!!,
+            )
+        }
 }

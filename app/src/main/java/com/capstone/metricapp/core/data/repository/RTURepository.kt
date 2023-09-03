@@ -4,9 +4,7 @@ import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.data.source.remote.NetworkBoundResource
 import com.capstone.metricapp.core.data.source.remote.datasource.RemoteDataSource
 import com.capstone.metricapp.core.data.source.remote.network.ApiResponse
-import com.capstone.metricapp.core.data.source.remote.response.CommonResponse
-import com.capstone.metricapp.core.data.source.remote.response.RTUItemResponse
-import com.capstone.metricapp.core.data.source.remote.response.RTUListItemResponse
+import com.capstone.metricapp.core.data.source.remote.response.*
 import com.capstone.metricapp.core.domain.model.Common
 import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.RTU
@@ -74,14 +72,43 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         rtu_type: String,
         rtu_date: String,
         rtu_sn: String,
-        bar_merk: String,
+        bat_merk: String,
         bat_type: String,
         bat_date: String
     ): Flow<Resource<RTU>> {
-        TODO("Not yet implemented")
+        return object : NetworkBoundResource<RTU, CreateRTUItemResponse>() {
+            override suspend fun fetchFromApi(response: CreateRTUItemResponse): RTU {
+                return RTUDataMapper.mapCreateRTUResponse(response.data)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<CreateRTUItemResponse>> {
+                return remoteDataSource.createLBSRECKeypoint(
+                    token,
+                    uniqueId,
+                    keypoint,
+                    region,
+                    telkom_merk,
+                    telkom_type,
+                    telkom_rangeVolt,
+                    telkom_date,
+                    telkom_sn,
+                    main_sim_provider,
+                    main_sim_number,
+                    backup_sim_provider,
+                    backup_sim_number,
+                    rtu_merk,
+                    rtu_type,
+                    rtu_date,
+                    rtu_sn,
+                    bat_merk,
+                    bat_type,
+                    bat_date,
+                )
+            }
+        }.asFlow()
     }
 
-    override fun updateSpecLBS(
+    override fun updateSpecLBSREC(
         token: String,
         uniqueId: String,
         telkom_merk: String?,
@@ -97,11 +124,38 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         rtu_type: String?,
         rtu_date: String?,
         rtu_sn: String?,
-        bar_merk: String?,
+        bat_merk: String?,
         bat_type: String?,
         bat_date: String?
     ): Flow<Resource<RTU>> {
-        TODO("Not yet implemented")
+        return object : NetworkBoundResource<RTU, UpdateRTUResponse>() {
+            override suspend fun fetchFromApi(response: UpdateRTUResponse): RTU {
+                return RTUDataMapper.mapCreateRTUResponse(response.data)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<UpdateRTUResponse>> {
+                return remoteDataSource.updateSpecLBSREC(
+                    token,
+                    uniqueId,
+                    telkom_merk ?: "",
+                    telkom_type ?: "",
+                    telkom_rangeVolt ?: "",
+                    telkom_date ?: "",
+                    telkom_sn ?: "",
+                    main_sim_provider ?: "",
+                    main_sim_number ?: "",
+                    backup_sim_provider ?: "",
+                    backup_sim_number ?: "",
+                    rtu_merk ?: "",
+                    rtu_type ?: "",
+                    rtu_date ?: "",
+                    rtu_sn ?: "",
+                    bat_merk ?: "",
+                    bat_type ?: "",
+                    bat_date ?: ""
+                )
+            }
+        }.asFlow()
     }
 
     override fun createGIGHKeypoint(
@@ -123,7 +177,7 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         rtu_type: String,
         rtu_date: String,
         rtu_sn: String,
-        bar_merk: String,
+        bat_merk: String,
         bat_type: String,
         bat_date: String,
         gat_merk: String,
@@ -131,7 +185,41 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         gat_date: String,
         gat_sn: String
     ): Flow<Resource<RTU>> {
-        TODO("Not yet implemented")
+        return object : NetworkBoundResource<RTU, CreateRTUItemResponse>() {
+            override suspend fun fetchFromApi(response: CreateRTUItemResponse): RTU {
+                return RTUDataMapper.mapCreateRTUResponse(response.data)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<CreateRTUItemResponse>> {
+                return remoteDataSource.createGIGHKeypoint(
+                    token,
+                    uniqueId,
+                    keypoint,
+                    region,
+                    telkom_merk,
+                    telkom_type,
+                    telkom_rangeVolt,
+                    telkom_date,
+                    telkom_sn,
+                    rect_merk,
+                    rect_type,
+                    rect_rangeVolt,
+                    rect_date,
+                    rect_sn,
+                    rtu_merk,
+                    rtu_type,
+                    rtu_date,
+                    rtu_sn,
+                    bat_merk,
+                    bat_type,
+                    bat_date,
+                    gat_merk,
+                    gat_type,
+                    gat_date,
+                    gat_sn
+                )
+            }
+        }.asFlow()
     }
 
     override fun updateSpecGIGHKeypoint(
@@ -151,7 +239,7 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         rtu_type: String?,
         rtu_date: String?,
         rtu_sn: String?,
-        bar_merk: String?,
+        bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
         gat_merk: String?,
@@ -159,14 +247,54 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         gat_date: String?,
         gat_sn: String?
     ): Flow<Resource<RTU>> {
-        TODO("Not yet implemented")
+        return object : NetworkBoundResource<RTU, UpdateRTUResponse>() {
+            override suspend fun fetchFromApi(response: UpdateRTUResponse): RTU {
+                return RTUDataMapper.mapCreateRTUResponse(response.data)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<UpdateRTUResponse>> {
+                return remoteDataSource.updateSpecGIGH(
+                    token,
+                    uniqueId,
+                    telkom_merk ?: "",
+                    telkom_type ?: "",
+                    telkom_rangeVolt ?: "",
+                    telkom_date ?: "",
+                    telkom_sn ?: "",
+                    rect_merk ?: "",
+                    rect_type ?: "",
+                    rect_rangeVolt ?: "",
+                    rect_date ?: "",
+                    rect_sn ?: "",
+                    rtu_merk ?: "",
+                    rtu_type ?: "",
+                    rtu_date ?: "",
+                    rtu_sn ?: "",
+                    bat_merk ?: "",
+                    bat_type ?: "",
+                    bat_date ?: "",
+                    gat_merk ?: "",
+                    gat_type ?: "",
+                    gat_date ?: "",
+                    gat_sn ?: "",
+                )
+            }
+        }.asFlow()
     }
 
     override fun getHistoryRTU(
         token: String,
         uniqueId: String
     ): Flow<Resource<List<KeypointHistory>>> {
-        TODO("Not yet implemented")
+        return object : NetworkBoundResource<List<KeypointHistory>, KeypointHistoryResponse>() {
+            override suspend fun fetchFromApi(response: KeypointHistoryResponse): List<KeypointHistory> {
+                return RTUDataMapper.mapHistoryRTUResponseToDomain(response.data?.allHistory)
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<KeypointHistoryResponse>> {
+                return remoteDataSource.getHistoryScadatel(token, uniqueId)
+            }
+        }.asFlow()
     }
 
     override fun deleteRTUKeypoint(token: String, id: String): Flow<Resource<Common>> {

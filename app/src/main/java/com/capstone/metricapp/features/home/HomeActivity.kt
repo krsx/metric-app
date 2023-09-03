@@ -241,7 +241,6 @@ class HomeActivity : AppCompatActivity() {
         binding.rvKeypoints.adapter = adapter
         adapter.setOnItemClickCallback(object : ScadatelKeypointsAdapter.OnItemClickCallback {
             override fun onItemClicked(listScadatel: Scadatel) {
-                Log.e("ID", listScadatel.uniqueId)
                 detailViewModel.setId(listScadatel.uniqueId)
             }
         })

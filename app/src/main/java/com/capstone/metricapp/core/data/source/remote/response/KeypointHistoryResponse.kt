@@ -2,16 +2,16 @@ package com.capstone.metricapp.core.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class ScadatelHistoryResponse(
+data class KeypointHistoryResponse(
 
     @field:SerializedName("data")
-    val data: ScadatelHistoryData? = null,
+    val data: KeypointHistoryData? = null,
 
     @field:SerializedName("status")
     val status: String? = null
 )
 
-data class ScadatelHistoryItem(
+data class KeypointHistoryItem(
 
     @field:SerializedName("modelName")
     val modelName: String? = null,
@@ -38,8 +38,8 @@ data class ScadatelHistoryItem(
     val timestamp: String? = null
 )
 
-data class ScadatelHistoryData(
+data class KeypointHistoryData(
 
     @field:SerializedName("allHistory")
-    val allHistory: List<ScadatelHistoryItem?>? = null
+    val allHistory: List<KeypointHistoryItem?>? = null
 )

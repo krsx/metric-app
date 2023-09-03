@@ -1,6 +1,5 @@
 package com.capstone.metricapp.core.data.repository
 
-import android.util.Log
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.data.source.remote.NetworkBoundResource
 import com.capstone.metricapp.core.data.source.remote.datasource.RemoteDataSource
@@ -75,7 +74,6 @@ class ScadatelRepository @Inject constructor(
     ): Flow<Resource<Scadatel>> {
         return object : NetworkBoundResource<Scadatel, CreateScadatelItemResponse>() {
             override suspend fun fetchFromApi(response: CreateScadatelItemResponse): Scadatel {
-                Log.e("tester", response.data.toString())
                 return ScadatelDataMapper.mapCreateScadatelResponseToDomain(response.data)
             }
 
@@ -130,12 +128,12 @@ class ScadatelRepository @Inject constructor(
         token: String,
         uniqueId: String,
     ): Flow<Resource<List<KeypointHistory>>> {
-        return object : NetworkBoundResource<List<KeypointHistory>, ScadatelHistoryResponse>() {
-            override suspend fun fetchFromApi(response: ScadatelHistoryResponse): List<KeypointHistory> {
+        return object : NetworkBoundResource<List<KeypointHistory>, KeypointHistoryResponse>() {
+            override suspend fun fetchFromApi(response: KeypointHistoryResponse): List<KeypointHistory> {
                 return ScadatelDataMapper.mapHistoryScadatelResponseToDomain(response.data?.allHistory)
             }
 
-            override suspend fun createCall(): Flow<ApiResponse<ScadatelHistoryResponse>> {
+            override suspend fun createCall(): Flow<ApiResponse<KeypointHistoryResponse>> {
                 return remoteDataSource.getHistoryScadatel(token, uniqueId)
             }
         }.asFlow()

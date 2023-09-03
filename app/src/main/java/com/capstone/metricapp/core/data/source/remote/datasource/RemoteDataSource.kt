@@ -189,7 +189,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun getHistoryScadatel(
         token: String,
         id: String
-    ): Flow<ApiResponse<ScadatelHistoryResponse>> {
+    ): Flow<ApiResponse<KeypointHistoryResponse>> {
         return flow {
             try {
                 val response = apiService.getScadatelHistory(token, id)
@@ -282,7 +282,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun createLBSKeypoint(
+    suspend fun createLBSRECKeypoint(
         token: String,
         uniqueId: String,
         keypoint: String,
@@ -414,10 +414,134 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
+    suspend fun updateSpecLBSREC(
+        token: String,
+        uniqueId: String,
+
+        telkom_merk: String,
+        telkom_type: String,
+        telkom_rangeVolt: String,
+        telkom_date: String,
+        telkom_sn: String,
+
+        main_sim_provider: String,
+        main_sim_number: String,
+
+        backup_sim_provider: String,
+        backup_sim_number: String,
+
+        rtu_merk: String,
+        rtu_type: String,
+        rtu_date: String,
+        rtu_sn: String,
+
+        bat_merk: String,
+        bat_type: String,
+        bat_date: String,
+    ): Flow<ApiResponse<UpdateRTUResponse>> {
+        return flow {
+            try {
+                val response = apiService.updateSpecLBSREC(
+                    token,
+                    uniqueId,
+                    telkom_merk,
+                    telkom_type,
+                    telkom_rangeVolt,
+                    telkom_date,
+                    telkom_sn,
+                    main_sim_provider,
+                    main_sim_number,
+                    backup_sim_provider,
+                    backup_sim_number,
+                    rtu_merk,
+                    rtu_type,
+                    rtu_date,
+                    rtu_sn,
+                    bat_merk,
+                    bat_type,
+                    bat_date
+                )
+                val data = response.data
+                if (data != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("updateSpecLBSREC", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun updateSpecGIGH(
+        token: String,
+        uniqueId: String,
+
+        telkom_merk: String,
+        telkom_type: String,
+        telkom_rangeVolt: String,
+        telkom_date: String,
+        telkom_sn: String,
+
+        rect_merk: String,
+        rect_type: String,
+        rect_rangeVolt: String,
+        rect_date: String,
+        rect_sn: String,
+
+        rtu_merk: String,
+        rtu_type: String,
+        rtu_date: String,
+        rtu_sn: String,
+
+        bat_merk: String,
+        bat_type: String,
+        bat_date: String,
+
+        gat_merk: String,
+        gat_type: String,
+        gat_date: String,
+        gat_sn: String,
+    ): Flow<ApiResponse<UpdateRTUResponse>> {
+        return flow<ApiResponse<UpdateRTUResponse>> {
+            try {
+                val response = apiService.updateSpecGIGH(
+                    token,
+                    uniqueId,
+                    telkom_merk,
+                    telkom_type,
+                    telkom_rangeVolt,
+                    telkom_date,
+                    telkom_sn,
+                    rect_merk,
+                    rect_type,
+                    rect_rangeVolt,
+                    rect_date,
+                    rect_sn,
+                    rtu_merk,
+                    rtu_type,
+                    rtu_date,
+                    rtu_sn,
+                    bat_merk,
+                    bat_type,
+                    bat_date,
+                    gat_merk,
+                    gat_type,
+                    gat_date,
+                    gat_sn,
+                )
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("updateSpecGIGH", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
     suspend fun getHistoryRTU(
         token: String,
         id: String
-    ): Flow<ApiResponse<ScadatelHistoryResponse>> {
+    ): Flow<ApiResponse<KeypointHistoryResponse>> {
         return flow {
             try {
                 val response = apiService.getScadatelHistory(token, id)

@@ -20,7 +20,7 @@
             style="@style/textStyleMediumCustom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/are_you_sure" />
+            android:text="@string/are_you_sure_delete" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +45,6 @@
             android:layout_weight="1"
             android:background="@drawable/custom_button_rounded"
             android:text="@string/no"
-
             android:textColor="@color/white"
             android:textSize="12sp" />
 
@@ -63,4 +62,13 @@
             android:textSize="12sp" />
     </LinearLayout>
 
+    <ProgressBar
+        android:visibility="invisible"
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
