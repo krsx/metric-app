@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class DetailKeypointActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailKeypointsBinding
     private val viewModel: DetailKeypointViewModel by viewModels()
@@ -44,12 +45,10 @@ class DetailKeypointActivity : AppCompatActivity() {
             }
         }
 
-        setupDropdownMenu()
-
-
+        setupDropdownMenu(keypointsId)
     }
 
-    private fun setupDropdownMenu() {
+    private fun setupDropdownMenu(id: String) {
         binding.btnMenu.setOnClickListener {
             val popUpMenu = PopupMenu(this, binding.btnMenu)
             popUpMenu.menuInflater.inflate(R.menu.keypoint_detail_menu, popUpMenu.menu)
@@ -64,7 +63,8 @@ class DetailKeypointActivity : AppCompatActivity() {
                         true
                     }
                     R.id.menuKeypointDelete -> {
-
+                        val deleteKeypointDialog = DeleteKeypointFragment(id)
+                        deleteKeypointDialog.show(supportFragmentManager, "Delete Dialog")
                         true
                     }
                     else -> false

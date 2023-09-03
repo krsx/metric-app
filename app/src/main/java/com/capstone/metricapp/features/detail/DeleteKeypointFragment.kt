@@ -28,7 +28,7 @@ class DeleteKeypointFragment(private val id: String) : DialogFragment() {
             val builder = AlertDialog.Builder(it, R.style.TransparentDialogTheme)
             val inflater = requireActivity().layoutInflater
 
-            val view = inflater.inflate(R.layout.dialog_logout, null)
+            val view = inflater.inflate(R.layout.fragment_delete_keypoint, null)
             builder.setView(view)
             builder.setCancelable(false)
 
@@ -44,7 +44,7 @@ class DeleteKeypointFragment(private val id: String) : DialogFragment() {
                     viewModel.getUserDivision().observe(this) { division ->
                         when (division) {
                             Divisions.RTU.divisionName -> {
-                            
+
                             }
                             Divisions.SCADATEL.divisionName -> {
                                 viewModel.deleteScadatelKeypoint(token, id)

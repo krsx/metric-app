@@ -18,7 +18,7 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.btnLogout.setOnClickListener {
             val logoutDialog = LogoutDialog()
-            logoutDialog.show(supportFragmentManager, "Dialog")
+            logoutDialog.show(supportFragmentManager, "Logout Dialog")
         }
 
         binding.btnBack.setOnClickListener {
