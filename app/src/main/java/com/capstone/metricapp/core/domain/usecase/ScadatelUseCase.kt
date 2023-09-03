@@ -2,8 +2,8 @@ package com.capstone.metricapp.core.domain.usecase
 
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Common
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.Scadatel
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
 import kotlinx.coroutines.flow.Flow
 
 interface ScadatelUseCase {
@@ -41,7 +41,7 @@ interface ScadatelUseCase {
     fun getHistoryScadatel(
         token: String,
         uniqueId: String,
-    ): Flow<Resource<List<ScadatelHistory>>>
+    ): Flow<Resource<List<KeypointHistory>>>
 
     fun deleteScadatelKeypoint(token: String, id: String): Flow<Resource<Common>>
 }

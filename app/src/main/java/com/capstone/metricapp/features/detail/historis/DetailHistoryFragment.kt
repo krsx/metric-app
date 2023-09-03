@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.metricapp.core.data.Resource
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.ui.adapter.ScadatelHistoryKeypointAdapter
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.extractId
@@ -81,15 +81,15 @@ class DetailHistoryFragment : Fragment() {
         _binding = null
     }
 
-    private fun initScadatelRecyclerView(scadatelHistory: List<ScadatelHistory>) {
+    private fun initScadatelRecyclerView(keypointHistory: List<KeypointHistory>) {
         val layoutManager = LinearLayoutManager(context)
         binding.rvHistory.layoutManager = layoutManager
 
-        val adapter = ScadatelHistoryKeypointAdapter(scadatelHistory, parentFragmentManager)
+        val adapter = ScadatelHistoryKeypointAdapter(keypointHistory, parentFragmentManager)
         binding.rvHistory.adapter = adapter
 
         adapter.setOnItemClickCallback(object : ScadatelHistoryKeypointAdapter.OnItemClickCallback {
-            override fun onItemClicked(history: ScadatelHistory) {
+            override fun onItemClicked(history: KeypointHistory) {
 
             }
         })

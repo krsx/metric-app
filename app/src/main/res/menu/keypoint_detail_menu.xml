@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  
+    <item
+        android:id="@+id/menuPdf"
+        android:title="@string/menu_pdf"
+        />
+    <item
+        android:id="@+id/menuExcel"
+        android:title="@string/menu_excel"
+        />
+    <item
+        android:id="@+id/menuKeypointDelete"
+        android:title="@string/menu_keypoint_delete"
+        android:iconTint="@color/red"
+        />
 </menu>

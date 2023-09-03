@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.Scadatel
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
 import com.capstone.metricapp.core.domain.usecase.RTUUseCase
 import com.capstone.metricapp.core.domain.usecase.ScadatelUseCase
 import com.capstone.metricapp.core.domain.usecase.UserUseCase
@@ -28,8 +28,8 @@ class DetailKeypointViewModel @Inject constructor(
     private var _scadatel = MutableLiveData<Scadatel>()
     var scadatel: LiveData<Scadatel> = _scadatel
 
-    private var _scadatelListHistory = MutableLiveData<List<ScadatelHistory>>()
-    var scadatelListHistory: LiveData<List<ScadatelHistory>> = _scadatelListHistory
+    private var _scadatelListHistory = MutableLiveData<List<KeypointHistory>>()
+    var scadatelListHistory: LiveData<List<KeypointHistory>> = _scadatelListHistory
 
     fun setId(id: String) {
         _id.value = id
@@ -43,7 +43,7 @@ class DetailKeypointViewModel @Inject constructor(
         _scadatel.value = input
     }
 
-    fun setScadatelHistoryData(input: List<ScadatelHistory>) {
+    fun setScadatelHistoryData(input: List<KeypointHistory>) {
         _scadatelListHistory.value = input
     }
 

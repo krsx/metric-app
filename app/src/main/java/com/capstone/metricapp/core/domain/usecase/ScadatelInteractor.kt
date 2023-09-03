@@ -2,8 +2,8 @@ package com.capstone.metricapp.core.domain.usecase
 
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Common
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.Scadatel
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
 import com.capstone.metricapp.core.domain.repository.IScadatelRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -76,7 +76,7 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
     override fun getHistoryScadatel(
         token: String,
         uniqueId: String,
-    ): Flow<Resource<List<ScadatelHistory>>> {
+    ): Flow<Resource<List<KeypointHistory>>> {
         return scadatelRepository.getHistoryScadatel(token, uniqueId)
     }
 

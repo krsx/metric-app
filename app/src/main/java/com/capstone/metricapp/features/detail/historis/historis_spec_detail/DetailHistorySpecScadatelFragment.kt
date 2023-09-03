@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.utils.datamapper.ScadatelDataMapper
 import com.capstone.metricapp.databinding.FragmentDetailHistorySpecScadatelBinding
 import com.capstone.metricapp.features.detail.DetailKeypointViewModel
@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class DetailHistorySpecScadatelFragment(
     private val position: Int,
-    private val historyData: ScadatelHistory
+    private val historyData: KeypointHistory
 ) : BottomSheetDialogFragment() {
     private var _binding: FragmentDetailHistorySpecScadatelBinding? = null
     private val binding get() = _binding!!

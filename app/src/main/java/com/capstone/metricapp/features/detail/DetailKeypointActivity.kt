@@ -3,6 +3,7 @@ package com.capstone.metricapp.features.detail
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
@@ -43,7 +44,34 @@ class DetailKeypointActivity : AppCompatActivity() {
             }
         }
 
+        setupDropdownMenu()
 
+
+    }
+
+    private fun setupDropdownMenu() {
+        binding.btnMenu.setOnClickListener {
+            val popUpMenu = PopupMenu(this, binding.btnMenu)
+            popUpMenu.menuInflater.inflate(R.menu.keypoint_detail_menu, popUpMenu.menu)
+            popUpMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.menuExcel -> {
+
+                        true
+                    }
+                    R.id.menuPdf -> {
+
+                        true
+                    }
+                    R.id.menuKeypointDelete -> {
+
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popUpMenu.show()
+        }
     }
 
     private fun setupTabs(id: String) {

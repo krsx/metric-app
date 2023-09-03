@@ -1,14 +1,14 @@
 package com.capstone.metricapp.core.utils.diffutil
 
 import androidx.recyclerview.widget.DiffUtil
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 
-class ScadatelHistoryDiffUtil : DiffUtil.ItemCallback<ScadatelHistory>() {
-    override fun areItemsTheSame(oldItem: ScadatelHistory, newItem: ScadatelHistory): Boolean {
+class ScadatelHistoryDiffUtil : DiffUtil.ItemCallback<KeypointHistory>() {
+    override fun areItemsTheSame(oldItem: KeypointHistory, newItem: KeypointHistory): Boolean {
         return false
     }
 
-    override fun areContentsTheSame(oldItem: ScadatelHistory, newItem: ScadatelHistory): Boolean {
+    override fun areContentsTheSame(oldItem: KeypointHistory, newItem: KeypointHistory): Boolean {
         return when {
             oldItem.id != newItem.id -> false
             oldItem.modelName != newItem.modelName -> false

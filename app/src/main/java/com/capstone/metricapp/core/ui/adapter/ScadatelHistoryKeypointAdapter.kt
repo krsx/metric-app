@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.metricapp.R
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.datamapper.ScadatelDataMapper
 import com.capstone.metricapp.core.utils.diffutil.ScadatelHistoryDiffUtil
@@ -16,10 +16,10 @@ import com.capstone.metricapp.databinding.ItemListSpecChangeBinding
 import com.capstone.metricapp.features.detail.historis.historis_spec_detail.DetailHistorySpecScadatelFragment
 
 class ScadatelHistoryKeypointAdapter(
-    private val listHistory: List<ScadatelHistory>,
+    private val listHistory: List<KeypointHistory>,
     private val fragmentManager: FragmentManager
 ) :
-    ListAdapter<ScadatelHistory, ScadatelHistoryKeypointAdapter.ViewHolder>(ScadatelHistoryDiffUtil()) {
+    ListAdapter<KeypointHistory, ScadatelHistoryKeypointAdapter.ViewHolder>(ScadatelHistoryDiffUtil()) {
 
     private lateinit var onItemCallback: OnItemClickCallback
 
@@ -62,12 +62,10 @@ class ScadatelHistoryKeypointAdapter(
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(history: ScadatelHistory)
+        fun onItemClicked(history: KeypointHistory)
     }
 
     companion object {
         private const val SCADATEL_HISTORY_FRAGMENT_TAG = "Detail History Scadatel"
-        private const val LBSREC_HISTORY_FRAGMENT_TAG = "Detail History LBS REC"
-        private const val GIGH_HISTORY_FRAGMENT_TAG = "Detail History  GI GH"
     }
 }

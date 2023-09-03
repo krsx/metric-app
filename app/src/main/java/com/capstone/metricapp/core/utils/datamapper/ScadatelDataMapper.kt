@@ -4,8 +4,8 @@ import com.capstone.metricapp.core.data.source.remote.response.CreateScadatelDat
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelData
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelHistoryItem
 import com.capstone.metricapp.core.data.source.remote.response.ScadatelItem
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.Scadatel
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
 import org.json.JSONObject
 
 object ScadatelDataMapper {
@@ -54,9 +54,9 @@ object ScadatelDataMapper {
         dateCreated = input.item.createdAt!!
     )
 
-    fun mapHistoryScadatelResponseToDomain(input: List<ScadatelHistoryItem?>?): List<ScadatelHistory> =
+    fun mapHistoryScadatelResponseToDomain(input: List<ScadatelHistoryItem?>?): List<KeypointHistory> =
         input!!.map {
-            ScadatelHistory(
+            KeypointHistory(
                 id = it?.id!!,
                 documentId = it.documentId!!,
                 modelName = it.modelName!!,

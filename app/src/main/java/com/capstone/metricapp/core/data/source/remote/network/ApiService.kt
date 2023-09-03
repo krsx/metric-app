@@ -1,6 +1,7 @@
 package com.capstone.metricapp.core.data.source.remote.network
 
 import com.capstone.metricapp.core.data.source.remote.response.*
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import retrofit2.http.*
 
 interface ApiService {
@@ -96,6 +97,76 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Query("keyword") keyword: String,
     ): RTUListItemResponse
+
+    @POST
+    @FormUrlEncoded
+    suspend fun createLBSRECKeypoint(
+        @Header("Authorization") authorization: String,
+        @Field("uniqueID") uniqueID: String,
+        @Field("keypoint") keypoint: String,
+        @Field("lokasi") region: String,
+
+        @Field("telkom_merk") telkom_merk: String,
+        @Field("telkom_tipe") telkom_type: String,
+        @Field("telkom_rangeVolt") telkom_rangeVolt: String,
+        @Field("telkom_tanggalPenggantian") telkom_date: String,
+        @Field("telkom_sn") telkom_sn: String,
+
+        @Field("providerSimUtama") main_sim_provider: String,
+        @Field("nomorSimUtama") main_sim_number: String,
+        @Field("providerSimCadangan") backup_sim_provider: String,
+        @Field("nomorSimCadangan") backup_sim_number: String,
+
+        @Field("rtu_merk") rtu_merk: String,
+        @Field("rtu_tipe") rtu_type: String,
+        @Field("rtu_tanggalPenggatian") rtu_date: String,
+        @Field("rtu_sn") rtu_sn: String,
+
+        @Field("btr_merk") bat_merk: String,
+        @Field("btr_tipe") bat_type: String,
+        @Field("btr_tanggalPenggatian") bat_date: String,
+    ): CreateRTUItemResponse
+
+    @POST
+    @FormUrlEncoded
+    suspend fun createGIGHKeypoint(
+        @Header("Authorization") authorization: String,
+        @Field("uniqueID") uniqueID: String,
+        @Field("keypoint") keypoint: String,
+        @Field("lokasi") region: String,
+
+        @Field("telkom_merk") telkom_merk: String,
+        @Field("telkom_tipe") telkom_type: String,
+        @Field("telkom_rangeVolt") telkom_rangeVolt: String,
+        @Field("telkom_tanggalPenggantian") telkom_date: String,
+        @Field("telkom_sn") telkom_sn: String,
+
+        @Field("rect_merk") rect_merk: String,
+        @Field("rect_tipe") rect_type: String,
+        @Field("rect_rangeVolt") rect_rangeVolt: String,
+        @Field("rect_tanggalPenggantian") rect_date: String,
+        @Field("rect_sn") rect_sn: String,
+
+        @Field("rtu_merk") rtu_merk: String,
+        @Field("rtu_tipe") rtu_type: String,
+        @Field("rtu_tanggalPenggatian") rtu_date: String,
+        @Field("rtu_sn") rtu_sn: String,
+
+        @Field("btr_merk") bat_merk: String,
+        @Field("btr_tipe") bat_type: String,
+        @Field("btr_tanggalPenggatian") bat_date: String,
+
+        @Field("gtwy_merk") gat_merk: String,
+        @Field("gtwy_tipe") gat_type: String,
+        @Field("gtwy_tanggalPenggatian") gat_date: String,
+        @Field("gtwy_sn") gat_sn: String,
+    ): CreateRTUItemResponse
+
+    @GET("rtu/history/{id}")
+    suspend fun getRTUHistory(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): KeypointHistory
 
     @DELETE
     suspend fun deleteRTUKeypoint(

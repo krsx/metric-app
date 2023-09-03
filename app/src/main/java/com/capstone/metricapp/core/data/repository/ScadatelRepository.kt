@@ -7,8 +7,8 @@ import com.capstone.metricapp.core.data.source.remote.datasource.RemoteDataSourc
 import com.capstone.metricapp.core.data.source.remote.network.ApiResponse
 import com.capstone.metricapp.core.data.source.remote.response.*
 import com.capstone.metricapp.core.domain.model.Common
+import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.Scadatel
-import com.capstone.metricapp.core.domain.model.ScadatelHistory
 import com.capstone.metricapp.core.domain.repository.IScadatelRepository
 import com.capstone.metricapp.core.utils.datamapper.CommonDataMapper
 import com.capstone.metricapp.core.utils.datamapper.ScadatelDataMapper
@@ -129,9 +129,9 @@ class ScadatelRepository @Inject constructor(
     override fun getHistoryScadatel(
         token: String,
         uniqueId: String,
-    ): Flow<Resource<List<ScadatelHistory>>> {
-        return object : NetworkBoundResource<List<ScadatelHistory>, ScadatelHistoryResponse>() {
-            override suspend fun fetchFromApi(response: ScadatelHistoryResponse): List<ScadatelHistory> {
+    ): Flow<Resource<List<KeypointHistory>>> {
+        return object : NetworkBoundResource<List<KeypointHistory>, ScadatelHistoryResponse>() {
+            override suspend fun fetchFromApi(response: ScadatelHistoryResponse): List<KeypointHistory> {
                 return ScadatelDataMapper.mapHistoryScadatelResponseToDomain(response.data?.allHistory)
             }
 

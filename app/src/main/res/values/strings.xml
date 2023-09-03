@@ -79,6 +79,7 @@
     <string name="tab_history">Historis</string>
     <string name="tab_issue">Gangguan</string>
     <string name="change_detail">Detail Perubahan</string>
-
-
+    <string name="menu_pdf">Export dalam PDF</string>
+    <string name="menu_excel">Export dalam Excel</string>
+    <string name="menu_keypoint_delete">Hapus Keypoint</string>
 </resources>
