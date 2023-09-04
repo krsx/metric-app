@@ -87,7 +87,7 @@ class AddKeypointsSpecViewModel @Inject constructor(
         bat_date,
     ).asLiveData()
 
-    suspend fun createGIGHKeypoint(
+    fun createGIGHKeypoint(
         token: String,
         uniqueId: String,
         keypoint: String,

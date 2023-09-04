@@ -180,6 +180,25 @@
                 app:layout_constraintTop_toBottomOf="@+id/ed_tele_type" />
 
             <EditText
+                android:id="@+id/ed_tele_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_text_field_rounded"
+                android:drawablePadding="12sp"
+                android:ems="10"
+                android:hint="@string/change_date"
+                android:padding="16dp"
+                android:textColorHint="@color/grey_500"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_tele_range" />
+
+
+            <EditText
                 android:id="@+id/ed_tele_sn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -195,7 +214,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ed_tele_range" />
+                app:layout_constraintTop_toBottomOf="@+id/ed_tele_date" />
 
             <TextView
                 android:id="@+id/tv_rectifier"
@@ -264,6 +283,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/ed_rectifier_type" />
 
             <EditText
+                android:id="@+id/ed_rectifier_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_text_field_rounded"
+                android:drawablePadding="12sp"
+                android:ems="10"
+                android:hint="@string/change_date"
+                android:padding="16dp"
+                android:textColorHint="@color/grey_500"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ed_rectifier_range" />
+
+            <EditText
                 android:id="@+id/ed_rectifier_sn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -279,7 +316,7 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ed_rectifier_range" />
+                app:layout_constraintTop_toBottomOf="@+id/ed_rectifier_date" />
 
             <TextView
                 android:id="@+id/tv_rtu"
