@@ -6,6 +6,8 @@ import com.capstone.metricapp.core.data.source.remote.response.RTUData
 import com.capstone.metricapp.core.data.source.remote.response.RTUItem
 import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.RTU
+import org.json.JSONObject
+
 
 object RTUDataMapper {
     fun mapListRTUResponseToDomain(input: List<RTUItem?>?): List<RTU> = input!!.map {
@@ -144,4 +146,60 @@ object RTUDataMapper {
                 newValue = it.newValue!!,
             )
         }
+
+    fun getNewValueFieldFromJSON(input: String): RTU {
+        input.let { newValue ->
+            val newValueJSON = JSONObject(newValue)
+            return RTU(
+                id = newValueJSON.getString("_id"),
+                uniqueId = newValueJSON.getString("uniqueID"),
+                keypoint = newValueJSON.getString("keypoint"),
+                region = newValueJSON.getString("lokasi"),
+
+                telkom_merk = newValueJSON.getString("telkom_merk"),
+                telkom_type = newValueJSON.getString("telkom_tipe"),
+                telkom_rangeVolt = newValueJSON.getString("telkom_rangeVolt"),
+                telkom_date = newValueJSON.getString("telkom_tanggalPenggantian"),
+                telkom_sn = newValueJSON.getString("telkom_sn"),
+
+                main_sim_provider = newValueJSON.getString("providerSimUtama"),
+                main_sim_number = newValueJSON.getString("nomorSimUtama"),
+                backup_sim_provider = newValueJSON.getString("providerSimCadangan"),
+                backup_sim_number = newValueJSON.getString("nomorSimCadangan"),
+
+                rtu_merk = newValueJSON.getString("rtu_merk"),
+                rtu_type = newValueJSON.getString("rtu_tipe"),
+                rtu_date = newValueJSON.getString("rtu_tanggalPenggatian"),
+                rtu_sn = newValueJSON.getString("rtu_sn"),
+
+                bat_merk = newValueJSON.getString("btr_merk"),
+                bat_type = newValueJSON.getString("btr_tipe"),
+                bat_date = newValueJSON.getString("btr_tanggalPenggatian"),
+
+                rect_merk = newValueJSON.getString("rect_merk"),
+                rect_type = newValueJSON.getString("rect_tipe"),
+                rect_rangeVolt = newValueJSON.getString("rect_rangeVolt"),
+                rect_date = newValueJSON.getString("rect_tanggalPenggantian"),
+                rect_sn = newValueJSON.getString("rect_sn"),
+
+                gat_merk = newValueJSON.getString("gtwy_merk"),
+                gat_type = newValueJSON.getString("gtwy_tipe"),
+                gat_date = newValueJSON.getString("gtwy_tanggalPenggatian"),
+                gat_sn = newValueJSON.getString("gtwy_sn"),
+
+                //dateCreated in history shows when the spec get updated
+                //the "createdAt" field will only show the creation of the scadatel keypoint
+                dateCreated = newValueJSON.getString("createdAt")
+            )
+        }
+    }
+
+    fun getHistoryDateOnly(input: String): String {
+        input.let {
+            val newValueJSON = JSONObject(it)
+            return newValueJSON.getString("createdAt")
+        }
+    }
+
+
 }

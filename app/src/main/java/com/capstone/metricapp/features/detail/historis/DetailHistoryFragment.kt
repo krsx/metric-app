@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.KeypointHistory
-import com.capstone.metricapp.core.ui.adapter.ScadatelHistoryKeypointAdapter
+import com.capstone.metricapp.core.ui.adapter.HistoryKeypointAdapter
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.extractId
 import com.capstone.metricapp.core.utils.showToast
@@ -43,10 +43,46 @@ class DetailHistoryFragment : Fragment() {
             viewModel.id.observe(this) { id ->
                 when (extractId(id)) {
                     KeypointsType.LBSREC -> {
-
+                        viewModel.getHistoryRTU(token, id).observe(viewLifecycleOwner) { history ->
+                            when (history) {
+                                is Resource.Error -> {
+                                    showLoading(false)
+                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                }
+                                is Resource.Loading -> {
+                                    showLoading(true)
+                                }
+                                is Resource.Message -> {
+                                    Log.e("DetailHistoryFragment", history.message.toString())
+                                }
+                                is Resource.Success -> {
+                                    showLoading(false)
+                                    viewModel.setKeypointHistoryData(history.data!!)
+                                    initHistoryRecyclerView(history.data, KeypointsType.LBSREC)
+                                }
+                            }
+                        }
                     }
                     KeypointsType.GIGH -> {
-
+                        viewModel.getHistoryRTU(token, id).observe(viewLifecycleOwner) { history ->
+                            when (history) {
+                                is Resource.Error -> {
+                                    showLoading(false)
+                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                }
+                                is Resource.Loading -> {
+                                    showLoading(true)
+                                }
+                                is Resource.Message -> {
+                                    Log.e("DetailHistoryFragment", history.message.toString())
+                                }
+                                is Resource.Success -> {
+                                    showLoading(false)
+                                    viewModel.setKeypointHistoryData(history.data!!)
+                                    initHistoryRecyclerView(history.data, KeypointsType.GIGH)
+                                }
+                            }
+                        }
                     }
                     KeypointsType.SCADATEL -> {
                         viewModel.getHistoryScadatel(token, id)
@@ -64,9 +100,11 @@ class DetailHistoryFragment : Fragment() {
                                     }
                                     is Resource.Success -> {
                                         showLoading(false)
-                                        viewModel.setScadatelHistoryData(history.data!!)
-                                        Log.e("MASUK", history.data.toString())
-                                        initScadatelRecyclerView(history.data)
+                                        viewModel.setKeypointHistoryData(history.data!!)
+                                        initHistoryRecyclerView(
+                                            history.data,
+                                            KeypointsType.SCADATEL
+                                        )
                                     }
                                 }
                             }
@@ -81,14 +119,17 @@ class DetailHistoryFragment : Fragment() {
         _binding = null
     }
 
-    private fun initScadatelRecyclerView(keypointHistory: List<KeypointHistory>) {
+    private fun initHistoryRecyclerView(
+        keypointHistory: List<KeypointHistory>,
+        keypointsType: KeypointsType
+    ) {
         val layoutManager = LinearLayoutManager(context)
         binding.rvHistory.layoutManager = layoutManager
 
-        val adapter = ScadatelHistoryKeypointAdapter(keypointHistory, parentFragmentManager)
+        val adapter = HistoryKeypointAdapter(keypointHistory, parentFragmentManager, keypointsType)
         binding.rvHistory.adapter = adapter
 
-        adapter.setOnItemClickCallback(object : ScadatelHistoryKeypointAdapter.OnItemClickCallback {
+        adapter.setOnItemClickCallback(object : HistoryKeypointAdapter.OnItemClickCallback {
             override fun onItemClicked(history: KeypointHistory) {
 
             }

@@ -122,7 +122,7 @@ class SuccessQRFragment(private val type: KeypointsType) :
                     binding.apply {
                         binding.tvDialogKeypoint.text = rtu.keypoint
                         binding.tvDialogDate.text = DateUtil.convertDateKeypoints(rtu.dateCreated)
-                        binding.tvDialogRegion.text = rtu.region
+                        binding.tvDialogRegion.text = rtu.region + " - ${rtu.uniqueId}"
                     }
                 }
             }
@@ -131,7 +131,7 @@ class SuccessQRFragment(private val type: KeypointsType) :
                     binding.apply {
                         binding.tvDialogKeypoint.text = rtu.keypoint
                         binding.tvDialogDate.text = DateUtil.convertDateKeypoints(rtu.dateCreated)
-                        binding.tvDialogRegion.text = rtu.region
+                        binding.tvDialogRegion.text = rtu.region + " - ${rtu.uniqueId}"
                     }
                 }
             }
@@ -141,7 +141,7 @@ class SuccessQRFragment(private val type: KeypointsType) :
                         binding.tvDialogKeypoint.text = scadatel.keypoint
                         binding.tvDialogDate.text =
                             DateUtil.convertDateKeypoints(scadatel.dateCreated)
-                        binding.tvDialogRegion.text = scadatel.region
+                        binding.tvDialogRegion.text = scadatel.region + " - ${scadatel.uniqueId}"
                     }
                 }
             }

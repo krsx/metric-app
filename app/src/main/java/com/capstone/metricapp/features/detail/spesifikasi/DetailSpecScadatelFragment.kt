@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.Scadatel
-import com.capstone.metricapp.core.utils.DateUtil
 import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.FragmentDetailSpecScadatelBinding
 import com.capstone.metricapp.features.detail.DetailKeypointViewModel
@@ -89,7 +88,7 @@ class DetailSpecScadatelFragment : Fragment() {
             tvDetailScadatelMainVolt.text = scadatel.mainVolt
             tvDetailScadatelBackupVolt.text = scadatel.backupVolt
             tvDetailScadatelOs.text = scadatel.os
-            tvDetailScadatelDate.text = DateUtil.convertDateKeypoints(scadatel.date) ?: ""
+            tvDetailScadatelDate.text = scadatel.date
         }
     }
 

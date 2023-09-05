@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import com.capstone.metricapp.core.domain.model.KeypointHistory
+import com.capstone.metricapp.core.domain.model.RTU
 import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.domain.usecase.RTUUseCase
 import com.capstone.metricapp.core.domain.usecase.ScadatelUseCase
@@ -28,8 +29,11 @@ class DetailKeypointViewModel @Inject constructor(
     private var _scadatel = MutableLiveData<Scadatel>()
     var scadatel: LiveData<Scadatel> = _scadatel
 
-    private var _scadatelListHistory = MutableLiveData<List<KeypointHistory>>()
-    var scadatelListHistory: LiveData<List<KeypointHistory>> = _scadatelListHistory
+    private var _rtu = MutableLiveData<RTU>()
+    var rtu: LiveData<RTU> = _rtu
+
+    private var _keypointListHistory = MutableLiveData<List<KeypointHistory>>()
+    var keypointListHistory: LiveData<List<KeypointHistory>> = _keypointListHistory
 
     fun setId(id: String) {
         _id.value = id
@@ -43,8 +47,12 @@ class DetailKeypointViewModel @Inject constructor(
         _scadatel.value = input
     }
 
-    fun setScadatelHistoryData(input: List<KeypointHistory>) {
-        _scadatelListHistory.value = input
+    fun setRTUData(input: RTU) {
+        _rtu.value = input
+    }
+
+    fun setKeypointHistoryData(input: List<KeypointHistory>) {
+        _keypointListHistory.value = input
     }
 
     fun getScadatelById(token: String, id: String) =
@@ -57,6 +65,11 @@ class DetailKeypointViewModel @Inject constructor(
         scadatelUseCase.deleteScadatelKeypoint(token, id).asLiveData()
 
     fun getRTUById(token: String, id: String) = rtuUseCase.getRTUById(token, id).asLiveData()
+
+    fun getHistoryRTU(token: String, id: String) = rtuUseCase.getHistoryRTU(token, id).asLiveData()
+
+    fun deleteRTUKeypoint(token: String, id: String) =
+        rtuUseCase.deleteRTUKeypoint(token, id).asLiveData()
 
     fun getUserToken() = userUseCase.getUserToken().asLiveData()
 

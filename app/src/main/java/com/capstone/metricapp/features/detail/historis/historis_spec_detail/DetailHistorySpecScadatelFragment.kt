@@ -4,22 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.utils.datamapper.ScadatelDataMapper
 import com.capstone.metricapp.databinding.FragmentDetailHistorySpecScadatelBinding
-import com.capstone.metricapp.features.detail.DetailKeypointViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DetailHistorySpecScadatelFragment(
-    private val position: Int,
     private val historyData: KeypointHistory
 ) : BottomSheetDialogFragment() {
     private var _binding: FragmentDetailHistorySpecScadatelBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: DetailKeypointViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +44,5 @@ class DetailHistorySpecScadatelFragment(
         }
     }
 
-    companion object {
 
-    }
 }

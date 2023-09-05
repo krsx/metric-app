@@ -292,7 +292,7 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
             }
 
             override suspend fun createCall(): Flow<ApiResponse<KeypointHistoryResponse>> {
-                return remoteDataSource.getHistoryScadatel(token, uniqueId)
+                return remoteDataSource.getHistoryRTU(token, uniqueId)
             }
         }.asFlow()
     }

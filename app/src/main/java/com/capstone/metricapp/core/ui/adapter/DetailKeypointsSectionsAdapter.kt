@@ -33,6 +33,4 @@ class DetailKeypointsSectionsAdapter(activity: AppCompatActivity, var type: Keyp
 
         return fragment as Fragment
     }
-
-
 }

@@ -544,7 +544,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     ): Flow<ApiResponse<KeypointHistoryResponse>> {
         return flow {
             try {
-                val response = apiService.getScadatelHistory(token, id)
+                val response = apiService.getRTUHistory(token, id)
                 val data = response.data
                 if (data != null) {
                     emit(ApiResponse.Success(response))

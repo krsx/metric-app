@@ -93,19 +93,23 @@ class DetailKeypointActivity : AppCompatActivity() {
                 viewModel.getRTUById(token, id).observe(this) { rtu ->
                     when (rtu) {
                         is Resource.Error -> {
-                            Log.e("TEST", "ERROR")
+                            viewModel.setLoading(false)
+                            showLongToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
                         }
                         is Resource.Loading -> {
-                            Log.e("TEST", "LOADING")
+                            viewModel.setLoading(true)
                         }
                         is Resource.Message -> {
-                            Log.e("TEST", "MESSAGE")
+                            Log.e("DetailKeypointActivity", rtu.message.toString())
                         }
                         is Resource.Success -> {
-                            Log.e("TEST", "SUCCESS")
+                            viewModel.setLoading(false)
+
+                            viewModel.setId(rtu.data?.uniqueId!!)
+                            viewModel.setRTUData(rtu.data)
 
                             binding.apply {
-                                tvDetailRegion.text = rtu.data?.region
+                                tvDetailRegion.text = rtu.data?.region + " - ${rtu.data.uniqueId}"
                                 tvDetailKeypoint.text = rtu.data?.keypoint
                                 tvDetailDate.text =
                                     DateUtil.convertDateKeypoints(rtu.data!!.dateCreated)
@@ -134,7 +138,8 @@ class DetailKeypointActivity : AppCompatActivity() {
                             viewModel.setScadatelData(scadatel.data)
 
                             binding.apply {
-                                tvDetailRegion.text = scadatel.data?.region
+                                tvDetailRegion.text =
+                                    scadatel.data?.region + " - ${scadatel.data.uniqueId}"
                                 tvDetailKeypoint.text = scadatel.data?.keypoint
                                 tvDetailDate.text =
                                     DateUtil.convertDateKeypoints(scadatel.data!!.dateCreated)

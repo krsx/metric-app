@@ -4,20 +4,48 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import com.capstone.metricapp.core.domain.model.KeypointHistory
+import com.capstone.metricapp.core.utils.datamapper.RTUDataMapper
 import com.capstone.metricapp.databinding.FragmentDetailHistorySpecLbsRecBinding
-import com.capstone.metricapp.features.detail.DetailKeypointViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DetailHistorySpecLBSREC : BottomSheetDialogFragment() {
+class DetailHistorySpecLBSREC(private val historyData: KeypointHistory) :
+    BottomSheetDialogFragment() {
     private var _binding: FragmentDetailHistorySpecLbsRecBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: DetailKeypointViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupData()
+    }
+
+    private fun setupData() {
+        val newValue = RTUDataMapper.getNewValueFieldFromJSON(historyData.newValue)
+        binding.apply {
+            tvDetailTeleMerk.text = newValue.telkom_merk
+            tvDetailTeleType.text = newValue.telkom_type
+            tvDetailTeleRange.text = newValue.telkom_rangeVolt
+            tvDetailTeleDate.text = newValue.telkom_date
+            tvDetailTeleSn.text = newValue.telkom_sn
+
+            tvDetailSimMainProvider.text = newValue.main_sim_provider
+            tvDetailSimMainNo.text = newValue.main_sim_number
+
+            tvDetailSimBackupProvider.text = newValue.backup_sim_provider
+            tvDetailSimBackupNo.text = newValue.backup_sim_number
+
+            tvDetailRtuMerk.text = newValue.rtu_merk
+            tvDetailRtuType.text = newValue.rtu_type
+            tvDetailRtuDate.text = newValue.rtu_date
+            tvDetailRtuSn.text = newValue.rtu_sn
+
+            tvDetailBateraiMerk.text = newValue.bat_merk
+            tvDetailBateraiType.text = newValue.bat_type
+            tvDetailBateraiDate.text = newValue.bat_date
+        }
     }
 
     override fun onCreateView(

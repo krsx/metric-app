@@ -1,7 +1,6 @@
 package com.capstone.metricapp.core.data.source.remote.network
 
 import com.capstone.metricapp.core.data.source.remote.response.*
-import com.capstone.metricapp.core.domain.model.KeypointHistory
 import retrofit2.http.*
 
 interface ApiService {
@@ -224,7 +223,7 @@ interface ApiService {
     suspend fun getRTUHistory(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
-    ): KeypointHistory
+    ): KeypointHistoryResponse
 
     @DELETE
     suspend fun deleteRTUKeypoint(
