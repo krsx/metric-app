@@ -63,7 +63,7 @@ class DetailSpecLBSRECFragment : Fragment() {
         when (rtu) {
             is Resource.Error -> {
                 viewModel.setLoading(false)
-                context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
             }
             is Resource.Loading -> {
                 viewModel.setLoading(true)

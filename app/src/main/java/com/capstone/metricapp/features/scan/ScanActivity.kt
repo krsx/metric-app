@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.*
 import com.capstone.metricapp.core.data.Resource
+import com.capstone.metricapp.core.domain.model.RTU
 import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.utils.cleanId
 import com.capstone.metricapp.core.utils.constans.KeypointsType
@@ -33,6 +34,7 @@ class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
     private lateinit var qrScanner: CodeScanner
     private var scadatelData: Scadatel? = null
+    private var rtuData: RTU? = null
     private val viewModel: ScanViewModel by viewModels()
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -107,17 +109,156 @@ class ScanActivity : AppCompatActivity() {
             isFlashEnabled = false
 
             decodeCallback = DecodeCallback { result ->
+                val cleanId = cleanId(result.text)
+
                 runOnUiThread {
                     viewModel.getUserToken().observe(this@ScanActivity) { token ->
                         when (extractId(result.text)) {
                             KeypointsType.LBSREC -> {
+                                viewModel.getRTUById(token, cleanId)
+                                    .observe(this@ScanActivity) { rtu ->
+                                        when (rtu) {
+                                            is Resource.Error -> {
+                                                showLoading(false)
+                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang $cleanId")
+                                            }
+                                            is Resource.Loading -> {
+                                                showLoading(true)
 
+                                            }
+                                            is Resource.Message -> {
+                                                showLoading(false)
+
+                                            }
+                                            is Resource.Success -> {
+                                                showLoading(false)
+
+                                                lifecycleScope.launch {
+                                                    rtuData = RTU(
+                                                        id = rtu.data?.id!!,
+                                                        uniqueId = rtu.data.uniqueId,
+                                                        keypoint = rtu.data.keypoint,
+                                                        region = rtu.data.region,
+
+                                                        telkom_merk = rtu.data.telkom_merk,
+                                                        telkom_type = rtu.data.telkom_type,
+                                                        telkom_rangeVolt = rtu.data.telkom_rangeVolt,
+                                                        telkom_date = rtu.data.telkom_date,
+                                                        telkom_sn = rtu.data.telkom_sn,
+
+                                                        main_sim_provider = rtu.data.main_sim_provider,
+                                                        main_sim_number = rtu.data.main_sim_number,
+
+                                                        backup_sim_provider = rtu.data.backup_sim_provider,
+                                                        backup_sim_number = rtu.data.backup_sim_number,
+
+                                                        rtu_merk = rtu.data.rtu_merk,
+                                                        rtu_type = rtu.data.rtu_type,
+                                                        rtu_date = rtu.data.rtu_date,
+                                                        rtu_sn = rtu.data.rtu_sn,
+
+                                                        bat_merk = rtu.data.bat_merk,
+                                                        bat_type = rtu.data.bat_type,
+                                                        bat_date = rtu.data.bat_date,
+
+                                                        dateCreated = rtu.data.dateCreated,
+
+                                                        rect_sn = rtu.data.rect_sn,
+                                                        rect_date = rtu.data.rect_date,
+                                                        rect_merk = rtu.data.rect_merk,
+                                                        rect_rangeVolt = rtu.data.rect_rangeVolt,
+                                                        rect_type = rtu.data.rect_type,
+
+                                                        gat_sn = rtu.data.gat_sn,
+                                                        gat_merk = rtu.data.gat_merk,
+                                                        gat_type = rtu.data.gat_merk,
+                                                        gat_date = rtu.data.gat_date,
+                                                    )
+                                                }
+
+                                                viewModel.setRTUData(rtuData!!)
+
+                                                SuccessQRFragment(KeypointsType.LBSREC).show(
+                                                    supportFragmentManager,
+                                                    SUCCESS_FRAGMENT_TAG
+                                                )
+                                            }
+                                        }
+                                    }
                             }
                             KeypointsType.GIGH -> {
+                                viewModel.getRTUById(token, cleanId)
+                                    .observe(this@ScanActivity) { rtu ->
+                                        when (rtu) {
+                                            is Resource.Error -> {
+                                                showLoading(false)
+                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang $cleanId")
+                                            }
+                                            is Resource.Loading -> {
+                                                showLoading(true)
 
+                                            }
+                                            is Resource.Message -> {
+                                                showLoading(false)
+
+                                            }
+                                            is Resource.Success -> {
+                                                showLoading(false)
+
+                                                lifecycleScope.launch {
+                                                    rtuData = RTU(
+                                                        id = rtu.data?.id!!,
+                                                        uniqueId = rtu.data.uniqueId,
+                                                        keypoint = rtu.data.keypoint,
+                                                        region = rtu.data.region,
+
+                                                        telkom_merk = rtu.data.telkom_merk,
+                                                        telkom_type = rtu.data.telkom_type,
+                                                        telkom_rangeVolt = rtu.data.telkom_rangeVolt,
+                                                        telkom_date = rtu.data.telkom_date,
+                                                        telkom_sn = rtu.data.telkom_sn,
+
+                                                        main_sim_provider = rtu.data.main_sim_provider,
+                                                        main_sim_number = rtu.data.main_sim_number,
+
+                                                        backup_sim_provider = rtu.data.backup_sim_provider,
+                                                        backup_sim_number = rtu.data.backup_sim_number,
+
+                                                        rtu_merk = rtu.data.rtu_merk,
+                                                        rtu_type = rtu.data.rtu_type,
+                                                        rtu_date = rtu.data.rtu_date,
+                                                        rtu_sn = rtu.data.rtu_sn,
+
+                                                        bat_merk = rtu.data.bat_merk,
+                                                        bat_type = rtu.data.bat_type,
+                                                        bat_date = rtu.data.bat_date,
+
+                                                        dateCreated = rtu.data.dateCreated,
+
+                                                        rect_sn = rtu.data.rect_sn,
+                                                        rect_date = rtu.data.rect_date,
+                                                        rect_merk = rtu.data.rect_merk,
+                                                        rect_rangeVolt = rtu.data.rect_rangeVolt,
+                                                        rect_type = rtu.data.rect_type,
+
+                                                        gat_sn = rtu.data.gat_sn,
+                                                        gat_merk = rtu.data.gat_merk,
+                                                        gat_type = rtu.data.gat_merk,
+                                                        gat_date = rtu.data.gat_date,
+                                                    )
+                                                }
+
+                                                viewModel.setRTUData(rtuData!!)
+
+                                                SuccessQRFragment(KeypointsType.LBSREC).show(
+                                                    supportFragmentManager,
+                                                    SUCCESS_FRAGMENT_TAG
+                                                )
+                                            }
+                                        }
+                                    }
                             }
                             KeypointsType.SCADATEL -> {
-                                val cleanId = cleanId(result.text)
                                 viewModel.getScadatelById(token, cleanId)
                                     .observe(this@ScanActivity) { scadatel ->
                                         when (scadatel) {

@@ -23,6 +23,9 @@ class DetailKeypointViewModel @Inject constructor(
     private var _id = MutableLiveData<String>()
     var id: LiveData<String> = _id
 
+    private var _noHistory = MutableLiveData<Boolean>()
+    var noHistory: LiveData<Boolean> = _noHistory
+
     private var _isLoading = MutableLiveData<Boolean>()
     var isLoading: LiveData<Boolean> = _isLoading
 
@@ -37,6 +40,10 @@ class DetailKeypointViewModel @Inject constructor(
 
     fun setId(id: String) {
         _id.value = id
+    }
+
+    fun setNoHistory(isNoHistory: Boolean) {
+        _noHistory.value = isNoHistory
     }
 
     fun setLoading(isLoading: Boolean) {

@@ -36,6 +36,10 @@ class DetailHistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+
+        viewModel.noHistory.observe(this) {
+            showNoHistory(it)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -47,7 +51,10 @@ class DetailHistoryFragment : Fragment() {
                             when (history) {
                                 is Resource.Error -> {
                                     showLoading(false)
-                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                    if (history.message.toString() == "the item with the uniqueID has no history yet.") {
+                                        viewModel.setNoHistory(true)
+                                    }
+                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                 }
                                 is Resource.Loading -> {
                                     showLoading(true)
@@ -68,7 +75,10 @@ class DetailHistoryFragment : Fragment() {
                             when (history) {
                                 is Resource.Error -> {
                                     showLoading(false)
-                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                    if (history.message.toString() == "the item with the uniqueID has no history yet.") {
+                                        viewModel.setNoHistory(true)
+                                    }
+                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                 }
                                 is Resource.Loading -> {
                                     showLoading(true)
@@ -90,7 +100,10 @@ class DetailHistoryFragment : Fragment() {
                                 when (history) {
                                     is Resource.Error -> {
                                         showLoading(false)
-                                        context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                        if (history.message.toString() == "the item with the uniqueID has no history yet.") {
+                                            viewModel.setNoHistory(true)
+                                        }
+                                        context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                     }
                                     is Resource.Loading -> {
                                         showLoading(true)
@@ -138,6 +151,10 @@ class DetailHistoryFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.refHistory.isRefreshing = isLoading
+    }
+
+    private fun showNoHistory(isNoHistory: Boolean) {
+        binding.tvNoHistory.visibility = if (isNoHistory) View.VISIBLE else View.GONE
     }
 
     companion object {
