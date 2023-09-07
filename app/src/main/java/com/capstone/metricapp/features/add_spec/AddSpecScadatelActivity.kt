@@ -27,15 +27,14 @@ class AddSpecScadatelActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        val id = intent.getStringExtra(KEY_ID_KEYPOINTS) ?: "bruh"
+        val id = intent.getStringExtra(KEY_ID_KEYPOINTS)
 
         viewModel.getUserToken().observe(this) { token ->
-            setupHeaderInfo(token, id)
+            setupHeaderInfo(token, id!!)
 
             setupInitialSpecData(token, id)
 
             setupButtonAdd(token, id)
-
         }
 
 
@@ -64,7 +63,7 @@ class AddSpecScadatelActivity : AppCompatActivity() {
                         edScadatelBackupVolt.setText(scadatel.data?.backupVolt)
                         edScadatelOs.setText(scadatel.data?.os)
                         edScadatelDate.setText(scadatel.data?.date)
-                        edScadatelOs.setText("") //later will be added
+                        edNotes.setText("") //later will be added
                     }
 
                 }
@@ -136,7 +135,8 @@ class AddSpecScadatelActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     showLoading(false)
 
-                    binding.tvAddSpecRegion.text = scadatel.data?.region
+                    binding.tvAddSpecRegion.text =
+                        scadatel.data?.region + " - ${scadatel.data?.uniqueId}"
                     binding.tvAddSpecKeypoint.text = scadatel.data?.keypoint
                     binding.tvAddSpecDate.text =
                         DateUtil.convertDateKeypoints(scadatel.data?.dateCreated!!)

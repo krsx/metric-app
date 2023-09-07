@@ -41,4 +41,105 @@ class AddSpecViewModel @Inject constructor(
     ).asLiveData()
 
     fun getRTUById(token: String, id: String) = rtuUseCase.getRTUById(token, id).asLiveData()
+
+    fun updateSpecLBSREC(
+        token: String,
+        uniqueId: String,
+
+        telkom_merk: String?,
+        telkom_type: String?,
+        telkom_rangeVolt: String?,
+        telkom_date: String?,
+        telkom_sn: String?,
+
+        main_sim_provider: String?,
+        main_sim_number: String?,
+
+        backup_sim_provider: String?,
+        backup_sim_number: String?,
+
+        rtu_merk: String?,
+        rtu_type: String?,
+        rtu_date: String?,
+        rtu_sn: String?,
+
+        bat_merk: String?,
+        bat_type: String?,
+        bat_date: String?,
+    ) = rtuUseCase.updateSpecLBS(
+        token,
+        uniqueId,
+        telkom_merk,
+        telkom_type,
+        telkom_rangeVolt,
+        telkom_date,
+        telkom_sn,
+        main_sim_provider,
+        main_sim_number,
+        backup_sim_provider,
+        backup_sim_number,
+        rtu_merk,
+        rtu_type,
+        rtu_date,
+        rtu_sn,
+        bat_merk,
+        bat_type,
+        bat_date
+    ).asLiveData()
+
+    fun updateSpecGIGH(
+        token: String,
+        uniqueId: String,
+
+        telkom_merk: String?,
+        telkom_type: String?,
+        telkom_rangeVolt: String?,
+        telkom_date: String?,
+        telkom_sn: String?,
+
+        rect_merk: String?,
+        rect_type: String?,
+        rect_rangeVolt: String?,
+        rect_date: String?,
+        rect_sn: String?,
+
+        rtu_merk: String?,
+        rtu_type: String?,
+        rtu_date: String?,
+        rtu_sn: String?,
+
+        bat_merk: String?,
+        bat_type: String?,
+        bat_date: String?,
+
+        gat_merk: String?,
+        gat_type: String?,
+        gat_date: String?,
+        gat_sn: String?,
+
+        ) = rtuUseCase.updateSpecGIGHKeypoint(
+        token,
+        uniqueId,
+        telkom_merk,
+        telkom_type,
+        telkom_rangeVolt,
+        telkom_date,
+        telkom_sn,
+        rect_merk,
+        rect_type,
+        rect_rangeVolt,
+        rect_date,
+        rect_sn,
+        rtu_merk,
+        rtu_type,
+        rtu_date,
+        rtu_sn,
+        bat_merk,
+        bat_type,
+        bat_date,
+        gat_merk,
+        gat_type,
+        gat_date,
+        gat_sn
+    ).asLiveData()
 }
