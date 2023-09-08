@@ -444,6 +444,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                 val response = apiService.updateSpecLBSREC(
                     token,
                     uniqueId,
+                    uniqueId,
                     telkom_merk,
                     telkom_type,
                     telkom_rangeVolt,
@@ -508,6 +509,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             try {
                 val response = apiService.updateSpecGIGH(
                     token,
+                    uniqueId,
                     uniqueId,
                     telkom_merk,
                     telkom_type,

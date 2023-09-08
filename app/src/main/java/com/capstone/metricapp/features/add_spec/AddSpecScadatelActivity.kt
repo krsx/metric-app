@@ -37,7 +37,9 @@ class AddSpecScadatelActivity : AppCompatActivity() {
             setupButtonAdd(token, id)
         }
 
-
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupInitialSpecData(token: String, id: String) {

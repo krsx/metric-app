@@ -29,6 +29,7 @@ class AddSpecLBSRECActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val id = intent.getStringExtra(KEY_ID_KEYPOINTS)
+        Log.e("LOG ID BERAPA", id?.length.toString() + id)
 
 
         viewModel.getUserToken().observe(this) { token ->
@@ -37,6 +38,10 @@ class AddSpecLBSRECActivity : AppCompatActivity() {
             setupInitialSpecData(token, id)
 
             setupButtonAdd(token, id)
+        }
+
+        binding.btnBack.setOnClickListener {
+            finish()
         }
 
     }

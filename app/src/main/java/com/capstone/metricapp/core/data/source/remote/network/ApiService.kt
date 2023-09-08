@@ -162,9 +162,11 @@ interface ApiService {
     ): CreateRTUItemResponse
 
     @PUT("rtu/{id}")
+    @FormUrlEncoded
     suspend fun updateSpecLBSREC(
         @Header("Authorization") authorization: String,
-        @Path("id") uniqueID: String,
+        @Path("id") id: String,
+        @Field("uniqueID") uniqueID: String,
 
         @Field("telkom_merk") telkom_merk: String,
         @Field("telkom_tipe") telkom_type: String,
@@ -188,9 +190,11 @@ interface ApiService {
     ): UpdateRTUResponse
 
     @PUT("rtu/{id}")
+    @FormUrlEncoded
     fun updateSpecGIGH(
         @Header("Authorization") authorization: String,
-        @Path("id") uniqueID: String,
+        @Path("id") id: String,
+        @Field("uniqueID") uniqueID: String,
 
         @Field("telkom_merk") telkom_merk: String,
         @Field("telkom_tipe") telkom_type: String,

@@ -36,6 +36,10 @@ class AddSpecGIGHActivity : AppCompatActivity() {
 
             setupButtonAdd(token, id)
         }
+
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setupButtonAdd(token: String, id: String) {

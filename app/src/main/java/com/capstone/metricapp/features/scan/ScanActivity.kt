@@ -120,7 +120,7 @@ class ScanActivity : AppCompatActivity() {
                                         when (rtu) {
                                             is Resource.Error -> {
                                                 showLoading(false)
-                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang $cleanId")
+                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
                                             }
                                             is Resource.Loading -> {
                                                 showLoading(true)
@@ -192,7 +192,7 @@ class ScanActivity : AppCompatActivity() {
                                         when (rtu) {
                                             is Resource.Error -> {
                                                 showLoading(false)
-                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang $cleanId")
+                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
                                             }
                                             is Resource.Loading -> {
                                                 showLoading(true)
@@ -264,7 +264,7 @@ class ScanActivity : AppCompatActivity() {
                                         when (scadatel) {
                                             is Resource.Error -> {
                                                 showLoading(false)
-                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang $cleanId")
+                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
                                             }
                                             is Resource.Loading -> {
                                                 showLoading(true)
