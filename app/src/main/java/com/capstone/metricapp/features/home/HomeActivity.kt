@@ -69,25 +69,56 @@ class HomeActivity : AppCompatActivity() {
                 setRecyclerView()
             } else {
                 viewModel.getUserToken().observe(this) { token ->
-                    viewModel.findScadatelKeypoints(token, query).observe(this) { scadatel ->
-                        when (scadatel) {
-                            is Resource.Error -> {
-                                binding.refKeypoints.isRefreshing = false
-                                showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                    viewModel.getUserDivision().observe(this) { division ->
+                        when (division) {
+                            Divisions.RTU.divisionName -> {
+                                viewModel.findRTUKeypoints(token, query).observe(this) { rtu ->
+                                    when (rtu) {
+                                        is Resource.Error -> {
+                                            binding.refKeypoints.isRefreshing = false
+                                            showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
+                                        }
+                                        is Resource.Loading -> {
+                                            binding.refKeypoints.isRefreshing = true
+
+                                        }
+                                        is Resource.Message -> {
+                                            binding.refKeypoints.isRefreshing = false
+                                            showLongToast("Keypoints yang dicari tidak ditemukan")
+                                            Log.e("HomeViewModel", rtu.message.toString())
+                                        }
+                                        is Resource.Success -> {
+                                            binding.refKeypoints.isRefreshing = false
+                                            initRecyclerViewRTU(rtu.data!!)
+                                        }
+                                    }
+                                }
                             }
-                            is Resource.Loading -> {
-                                binding.refKeypoints.isRefreshing = true
-                            }
-                            is Resource.Message -> {
-                                binding.refKeypoints.isRefreshing = false
-                                showLongToast("Keypoints yang dicari tidak ditemukan")
-                                Log.e("HomeViewModel", scadatel.message.toString())
-                            }
-                            is Resource.Success -> {
-                                binding.refKeypoints.isRefreshing = false
-                                initRecyclerViewScadatel(scadatel.data!!)
+                            Divisions.SCADATEL.divisionName -> {
+                                viewModel.findScadatelKeypoints(token, query)
+                                    .observe(this) { scadatel ->
+                                        when (scadatel) {
+                                            is Resource.Error -> {
+                                                binding.refKeypoints.isRefreshing = false
+                                                showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                                            }
+                                            is Resource.Loading -> {
+                                                binding.refKeypoints.isRefreshing = true
+                                            }
+                                            is Resource.Message -> {
+                                                binding.refKeypoints.isRefreshing = false
+                                                showLongToast("Keypoints yang dicari tidak ditemukan")
+                                                Log.e("HomeViewModel", scadatel.message.toString())
+                                            }
+                                            is Resource.Success -> {
+                                                binding.refKeypoints.isRefreshing = false
+                                                initRecyclerViewScadatel(scadatel.data!!)
+                                            }
+                                        }
+                                    }
                             }
                         }
+
                     }
                 }
             }
