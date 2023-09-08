@@ -229,7 +229,7 @@ interface ApiService {
         @Path("id") id: String,
     ): KeypointHistoryResponse
 
-    @DELETE
+    @DELETE("rtu/{id}")
     suspend fun deleteRTUKeypoint(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,

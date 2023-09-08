@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.utils.constans.Divisions
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.features.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +45,32 @@ class DeleteKeypointFragment(private val id: String) : DialogFragment() {
                     viewModel.getUserDivision().observe(this) { division ->
                         when (division) {
                             Divisions.RTU.divisionName -> {
-
+                                viewModel.deleteRTUKeypoint(token, id).observe(this) { rtu ->
+                                    when (rtu) {
+                                        is Resource.Error -> {
+                                            showLoading(false)
+                                        }
+                                        is Resource.Loading -> {
+                                            showLoading(true)
+                                        }
+                                        is Resource.Message -> {
+                                            Log.e(
+                                                "DeleteKeypointFragment",
+                                                rtu.message.toString()
+                                            )
+                                        }
+                                        is Resource.Success -> {
+                                            context?.showLongToast("Keypoint telah berhasil dihapus")
+                                            val intentBackToHome = Intent(
+                                                requireContext(),
+                                                HomeActivity::class.java
+                                            )
+                                            startActivity(intentBackToHome)
+                                            activity?.finish()
+                                        }
+                                        else -> {}
+                                    }
+                                }
                             }
                             Divisions.SCADATEL.divisionName -> {
                                 viewModel.deleteScadatelKeypoint(token, id)
@@ -63,6 +89,8 @@ class DeleteKeypointFragment(private val id: String) : DialogFragment() {
                                                 )
                                             }
                                             is Resource.Success -> {
+                                                context?.showLongToast("Keypoint telah berhasil dihapus")
+
                                                 val intentBackToHome = Intent(
                                                     requireContext(),
                                                     HomeActivity::class.java
@@ -70,6 +98,7 @@ class DeleteKeypointFragment(private val id: String) : DialogFragment() {
                                                 startActivity(intentBackToHome)
                                                 activity?.finish()
                                             }
+                                            else -> {}
                                         }
                                     }
                             }

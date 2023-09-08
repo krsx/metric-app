@@ -226,6 +226,6 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
     }
 
     override fun deleteRTUKeypoint(token: String, id: String): Flow<Resource<Common>> {
-        return deleteRTUKeypoint(token, id)
+        return rtuRepository.deleteRTUKeypoint(token, id)
     }
 }
