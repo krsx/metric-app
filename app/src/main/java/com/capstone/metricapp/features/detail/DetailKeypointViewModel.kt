@@ -81,4 +81,16 @@ class DetailKeypointViewModel @Inject constructor(
     fun getUserToken() = userUseCase.getUserToken().asLiveData()
 
     fun getUserDivision() = userUseCase.getUserDivision().asLiveData()
+
+    fun exportRTUToPDF(token: String, id: String) =
+        rtuUseCase.exportRTUDataToPDF(token, id).asLiveData()
+
+    fun exportScadatelToPDF(token: String, id: String) =
+        scadatelUseCase.exportScadatelDataToPDF(token, id).asLiveData()
+
+    fun exportRTUToExcel(token: String, id: String) =
+        rtuUseCase.exportRTUDataToExcel(token, id).asLiveData()
+
+    fun exportScadatelToExcel(token: String, id: String) =
+        scadatelUseCase.exportScadatelDataToExcel(token, id).asLiveData()
 }

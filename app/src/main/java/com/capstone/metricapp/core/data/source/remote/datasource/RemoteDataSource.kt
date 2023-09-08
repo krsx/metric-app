@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.ResponseBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -573,6 +574,76 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
                 Log.e("deleteRTUKeypoint", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun exportRTUDataToPDF(token: String, id: String): Flow<ApiResponse<ResponseBody>> {
+        return flow {
+            try {
+                val response = apiService.exportRTUDataToPDF(token, id)
+                if (response != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("exportRTUDataToPDF", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun exportRTUDataToeXCEL(token: String, id: String): Flow<ApiResponse<ResponseBody>> {
+        return flow {
+            try {
+                val response = apiService.exportRTUDataToExcel(token, id)
+                if (response != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("exportRTUDataToPDF", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun exportScadatelDataToPDF(
+        token: String,
+        id: String
+    ): Flow<ApiResponse<ResponseBody>> {
+        return flow {
+            try {
+                val response = apiService.exportScadatelDataToPDF(token, id)
+                if (response != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("exportRTUDataToPDF", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun exportScadatelDataToExcel(
+        token: String,
+        id: String
+    ): Flow<ApiResponse<ResponseBody>> {
+        return flow {
+            try {
+                val response = apiService.exportScadatelDataToExcel(token, id)
+                if (response != null) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.e("exportRTUDataToPDF", e.toString())
             }
         }.flowOn(Dispatchers.IO)
     }

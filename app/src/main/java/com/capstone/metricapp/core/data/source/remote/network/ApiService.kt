@@ -1,6 +1,7 @@
 package com.capstone.metricapp.core.data.source.remote.network
 
 import com.capstone.metricapp.core.data.source.remote.response.*
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -234,4 +235,28 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
     ): CommonResponse
+
+    @GET("scadatel/pdf/{id}")
+    suspend fun exportRTUDataToPDF(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): ResponseBody
+
+    @GET("rtu/excel/{id}")
+    suspend fun exportRTUDataToExcel(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): ResponseBody
+
+    @GET("scadatel/pdf/{id}")
+    suspend fun exportScadatelDataToPDF(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): ResponseBody
+
+    @GET("scadatel/excel/{id}")
+    suspend fun exportScadatelDataToExcel(
+        @Header("Authorization") authorization: String,
+        @Path("id") id: String,
+    ): ResponseBody
 }

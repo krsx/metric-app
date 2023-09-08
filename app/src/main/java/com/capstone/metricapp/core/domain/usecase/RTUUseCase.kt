@@ -5,6 +5,7 @@ import com.capstone.metricapp.core.domain.model.Common
 import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.RTU
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
 
 interface RTUUseCase {
 
@@ -138,4 +139,9 @@ interface RTUUseCase {
     ): Flow<Resource<List<KeypointHistory>>>
 
     fun deleteRTUKeypoint(token: String, id: String): Flow<Resource<Common>>
+
+    fun exportRTUDataToPDF(token: String, id: String): Flow<Resource<ResponseBody>>
+
+    fun exportRTUDataToExcel(token: String, id: String): Flow<Resource<ResponseBody>>
+
 }

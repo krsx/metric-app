@@ -6,6 +6,7 @@ import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.RTU
 import com.capstone.metricapp.core.domain.repository.IRTURepository
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepository) :
@@ -227,5 +228,13 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
 
     override fun deleteRTUKeypoint(token: String, id: String): Flow<Resource<Common>> {
         return rtuRepository.deleteRTUKeypoint(token, id)
+    }
+
+    override fun exportRTUDataToPDF(token: String, id: String): Flow<Resource<ResponseBody>> {
+        return rtuRepository.exportRTUDataToPDF(token, id)
+    }
+
+    override fun exportRTUDataToExcel(token: String, id: String): Flow<Resource<ResponseBody>> {
+        return rtuRepository.exportRTUDataToExcel(token, id)
     }
 }

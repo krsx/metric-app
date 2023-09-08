@@ -12,6 +12,7 @@ import com.capstone.metricapp.core.domain.repository.IScadatelRepository
 import com.capstone.metricapp.core.utils.datamapper.CommonDataMapper
 import com.capstone.metricapp.core.utils.datamapper.ScadatelDataMapper
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -147,6 +148,33 @@ class ScadatelRepository @Inject constructor(
 
             override suspend fun createCall(): Flow<ApiResponse<CommonResponse>> {
                 return remoteDataSource.deleteScadatelKeypoint(token, id)
+            }
+        }.asFlow()
+    }
+
+    override fun exportScadatelDataToPDF(token: String, id: String): Flow<Resource<ResponseBody>> {
+        return object : NetworkBoundResource<ResponseBody, ResponseBody>() {
+            override suspend fun fetchFromApi(response: ResponseBody): ResponseBody {
+                return response
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<ResponseBody>> {
+                return remoteDataSource.exportRTUDataToPDF(token, id)
+            }
+        }.asFlow()
+    }
+
+    override fun exportScadatelDataToExcel(
+        token: String,
+        id: String
+    ): Flow<Resource<ResponseBody>> {
+        return object : NetworkBoundResource<ResponseBody, ResponseBody>() {
+            override suspend fun fetchFromApi(response: ResponseBody): ResponseBody {
+                return response
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<ResponseBody>> {
+                return remoteDataSource.exportRTUDataToPDF(token, id)
             }
         }.asFlow()
     }

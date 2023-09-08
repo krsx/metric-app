@@ -6,6 +6,7 @@ import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.Scadatel
 import com.capstone.metricapp.core.domain.repository.IScadatelRepository
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
 import javax.inject.Inject
 
 class ScadatelInteractor @Inject constructor(private val scadatelRepository: IScadatelRepository) :
@@ -82,6 +83,17 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
 
     override fun deleteScadatelKeypoint(token: String, id: String): Flow<Resource<Common>> {
         return scadatelRepository.deleteScadatelKeypoint(token, id)
+    }
+
+    override fun exportScadatelDataToPDF(token: String, id: String): Flow<Resource<ResponseBody>> {
+        return scadatelRepository.exportScadatelDataToPDF(token, id)
+    }
+
+    override fun exportScadatelDataToExcel(
+        token: String,
+        id: String
+    ): Flow<Resource<ResponseBody>> {
+        return scadatelRepository.exportScadatelDataToExcel(token, id)
     }
 
 }

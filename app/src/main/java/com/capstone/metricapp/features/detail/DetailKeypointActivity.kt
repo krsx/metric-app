@@ -59,7 +59,25 @@ class DetailKeypointActivity : AppCompatActivity() {
                         true
                     }
                     R.id.menuPdf -> {
+                        viewModel.getUserToken().observe(this) { token ->
+                            viewModel.exportScadatelToPDF(token, id).observe(this) {
+                                when (it) {
+                                    is Resource.Error -> {
+                                        Log.e("ERROR", "ERROR ${it.message}")
+                                    }
+                                    is Resource.Loading -> {
+                                        Log.e("LOADING", "LOADING ${it.message}")
+                                    }
+                                    is Resource.Message -> {
+                                        Log.e("MESSAGE", "MESSAGE ${it.message}")
+                                    }
+                                    is Resource.Success -> {
+                                        showLongToast("Data sudah didownload!")
+                                    }
+                                }
 
+                            }
+                        }
                         true
                     }
                     R.id.menuKeypointDelete -> {

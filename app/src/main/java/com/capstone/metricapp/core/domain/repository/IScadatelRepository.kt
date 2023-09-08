@@ -5,6 +5,7 @@ import com.capstone.metricapp.core.domain.model.Common
 import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.domain.model.Scadatel
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
 
 interface IScadatelRepository {
     fun getAllScadatel(token: String): Flow<Resource<List<Scadatel>>>
@@ -44,4 +45,10 @@ interface IScadatelRepository {
     ): Flow<Resource<List<KeypointHistory>>>
 
     fun deleteScadatelKeypoint(token: String, id: String): Flow<Resource<Common>>
+
+    fun exportScadatelDataToPDF(token: String, id: String): Flow<Resource<ResponseBody>>
+
+    fun exportScadatelDataToExcel(token: String, id: String): Flow<Resource<ResponseBody>>
+
+
 }

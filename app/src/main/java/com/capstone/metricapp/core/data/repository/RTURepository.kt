@@ -12,6 +12,7 @@ import com.capstone.metricapp.core.domain.repository.IRTURepository
 import com.capstone.metricapp.core.utils.datamapper.CommonDataMapper
 import com.capstone.metricapp.core.utils.datamapper.RTUDataMapper
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -308,4 +309,30 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
             }
         }.asFlow()
     }
+
+    override fun exportRTUDataToPDF(token: String, id: String): Flow<Resource<ResponseBody>> {
+        return object : NetworkBoundResource<ResponseBody, ResponseBody>() {
+            override suspend fun fetchFromApi(response: ResponseBody): ResponseBody {
+                return response
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<ResponseBody>> {
+                return remoteDataSource.exportRTUDataToPDF(token, id)
+            }
+        }.asFlow()
+    }
+
+    override fun exportRTUDataToExcel(token: String, id: String): Flow<Resource<ResponseBody>> {
+        return object : NetworkBoundResource<ResponseBody, ResponseBody>() {
+            override suspend fun fetchFromApi(response: ResponseBody): ResponseBody {
+                return response
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<ResponseBody>> {
+                return remoteDataSource.exportRTUDataToPDF(token, id)
+            }
+        }.asFlow()
+    }
+
+
 }
