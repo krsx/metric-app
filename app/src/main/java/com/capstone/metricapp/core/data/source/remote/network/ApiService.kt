@@ -236,7 +236,7 @@ interface ApiService {
         @Path("id") id: String,
     ): CommonResponse
 
-    @GET("scadatel/pdf/{id}")
+    @GET("rtu/pdf/{id}")
     suspend fun exportRTUDataToPDF(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,

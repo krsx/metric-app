@@ -1,5 +1,6 @@
 package com.capstone.metricapp.features.detail
 
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +9,13 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.ui.adapter.DetailKeypointsSectionsAdapter
 import com.capstone.metricapp.core.utils.DateUtil
+import com.capstone.metricapp.core.utils.DownloadFileUtils
 import com.capstone.metricapp.core.utils.constans.Divisions
 import com.capstone.metricapp.core.utils.extractId
 import com.capstone.metricapp.core.utils.showLongToast
@@ -24,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailKeypointActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailKeypointsBinding
     private val viewModel: DetailKeypointViewModel by viewModels()
+    private var keypointsId = ""
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +41,7 @@ class DetailKeypointActivity : AppCompatActivity() {
             finish()
         }
 
-        val keypointsId = (intent.getStringExtra(KEY_ID_KEYPOINTS)!!)
+        keypointsId = (intent.getStringExtra(KEY_ID_KEYPOINTS)!!)
         setupTabs(keypointsId)
 
         viewModel.getUserToken().observe(this) { token ->
@@ -46,6 +51,8 @@ class DetailKeypointActivity : AppCompatActivity() {
         }
 
         setupDropdownMenu(keypointsId)
+
+        setupPermissions()
     }
 
     private fun setupDropdownMenu(id: String) {
@@ -55,28 +62,99 @@ class DetailKeypointActivity : AppCompatActivity() {
             popUpMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menuExcel -> {
+                        viewModel.getUserToken().observe(this) { token ->
+                            viewModel.getUserDivision().observe(this) { division ->
+                                when (division) {
+                                    Divisions.RTU.divisionName -> {
+                                        viewModel.exportRTUToExcel(token, id)
+                                            .observe(this) { excel ->
+                                                when (excel) {
+                                                    is Resource.Error -> {
+                                                        Log.e("ERROR", "ERROR ${excel.message}")
+                                                    }
+                                                    is Resource.Loading -> {
+                                                        Log.e("LOADING", "LOADING ${excel.message}")
+                                                    }
+                                                    is Resource.Message -> {
+                                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
+                                                    }
+                                                    is Resource.Success -> {
 
+                                                    }
+                                                }
+
+                                            }
+                                    }
+                                    Divisions.SCADATEL.divisionName -> {
+
+                                    }
+                                }
+                            }
+
+                        }
                         true
                     }
                     R.id.menuPdf -> {
                         viewModel.getUserToken().observe(this) { token ->
-                            viewModel.exportScadatelToPDF(token, id).observe(this) {
-                                when (it) {
-                                    is Resource.Error -> {
-                                        Log.e("ERROR", "ERROR ${it.message}")
+                            viewModel.getUserDivision().observe(this) { division ->
+                                when (division) {
+                                    Divisions.RTU.divisionName -> {
+                                        viewModel.exportRTUToPDF(token, id).observe(this) { pdf ->
+                                            when (pdf) {
+                                                is Resource.Error -> {
+                                                    Log.e("ERROR", "ERROR ${pdf.message}")
+                                                }
+                                                is Resource.Loading -> {
+                                                    Log.e("LOADING", "LOADING ${pdf.message}")
+                                                }
+                                                is Resource.Message -> {
+                                                    Log.e("MESSAGE", "MESSAGE ${pdf.message}")
+                                                }
+                                                is Resource.Success -> {
+                                                    val fileName = "$keypointsId.pdf"
+                                                    DownloadFileUtils.readByteStreamPDF(
+                                                        this,
+                                                        pdf.data!!,
+                                                        fileName,
+                                                    )
+                                                    DownloadFileUtils.logDocumentDirectory(this)
+                                                    showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
+                                                }
+                                            }
+                                        }
                                     }
-                                    is Resource.Loading -> {
-                                        Log.e("LOADING", "LOADING ${it.message}")
-                                    }
-                                    is Resource.Message -> {
-                                        Log.e("MESSAGE", "MESSAGE ${it.message}")
-                                    }
-                                    is Resource.Success -> {
-                                        showLongToast("Data sudah didownload!")
+                                    Divisions.SCADATEL.divisionName -> {
+                                        viewModel.exportScadatelToPDF(token, id)
+                                            .observe(this) { pdf ->
+                                                when (pdf) {
+                                                    is Resource.Error -> {
+                                                        Log.e("ERROR", "ERROR ${pdf.message}")
+                                                    }
+                                                    is Resource.Loading -> {
+                                                        Log.e("LOADING", "LOADING ${pdf.message}")
+                                                    }
+                                                    is Resource.Message -> {
+                                                        Log.e("MESSAGE", "MESSAGE ${pdf.message}")
+                                                    }
+                                                    is Resource.Success -> {
+                                                        val fileName = "$keypointsId.pdf"
+
+                                                        DownloadFileUtils.readByteStreamPDF(
+                                                            this,
+                                                            pdf.data!!,
+                                                            fileName,
+                                                        )
+                                                        DownloadFileUtils.logDocumentDirectory(this)
+                                                        showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
+                                                    }
+                                                }
+                                            }
                                     }
                                 }
 
                             }
+
+
                         }
                         true
                     }
@@ -169,9 +247,44 @@ class DetailKeypointActivity : AppCompatActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            EXTERNAL_STORAGE -> if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                showLongToast("Anda perlu memberikan izn akses kamera untuk dapat menggunakan fitur ini")
+            } else {
+                //success
+            }
+        }
+    }
+
+    private fun setupPermissions() {
+        val permission = ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            sendRequestPermissions()
+        }
+    }
+
+    private fun sendRequestPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            EXTERNAL_STORAGE
+        )
+    }
+
 
     companion object {
         const val KEY_ID_KEYPOINTS = "key_id_keypoints"
+        const val EXTERNAL_STORAGE = 121
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
