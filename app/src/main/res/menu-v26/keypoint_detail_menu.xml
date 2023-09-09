@@ -11,5 +11,7 @@
     <item
         android:id="@+id/menuKeypointDelete"
         android:title="@string/menu_keypoint_delete"
+        android:iconTint="@color/red"
+
         />
 </menu>

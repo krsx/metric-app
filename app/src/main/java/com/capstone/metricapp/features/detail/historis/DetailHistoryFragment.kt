@@ -55,10 +55,9 @@ class DetailHistoryFragment : Fragment() {
                                     when (history) {
                                         is Resource.Error -> {
                                             showLoading(false)
-                                            if (history.message.toString() == "the item with the uniqueID has no history yet.") {
-                                                viewModel.setNoHistory(true)
-                                            }
-                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                            viewModel.setNoHistory(true)
+//                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+
                                         }
                                         is Resource.Loading -> {
                                             showLoading(true)
@@ -71,6 +70,8 @@ class DetailHistoryFragment : Fragment() {
                                         }
                                         is Resource.Success -> {
                                             showLoading(false)
+                                            viewModel.setNoHistory(false)
+
                                             viewModel.setKeypointHistoryData(history.data!!)
                                             initHistoryRecyclerView(
                                                 history.data,
@@ -86,10 +87,10 @@ class DetailHistoryFragment : Fragment() {
                                     when (history) {
                                         is Resource.Error -> {
                                             showLoading(false)
-                                            if (history.message.toString() == "the item with the uniqueID has no history yet.") {
-                                                viewModel.setNoHistory(true)
-                                            }
-                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                            viewModel.setNoHistory(true)
+                                            context?.showLongToast("${history.data} + ${history.message}")
+
+//                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                         }
                                         is Resource.Loading -> {
                                             showLoading(true)
@@ -102,6 +103,8 @@ class DetailHistoryFragment : Fragment() {
                                         }
                                         is Resource.Success -> {
                                             showLoading(false)
+                                            viewModel.setNoHistory(false)
+
                                             viewModel.setKeypointHistoryData(history.data!!)
                                             initHistoryRecyclerView(
                                                 history.data,
@@ -116,11 +119,9 @@ class DetailHistoryFragment : Fragment() {
                                 .observe(viewLifecycleOwner) { history ->
                                     when (history) {
                                         is Resource.Error -> {
+                                            viewModel.setNoHistory(false)
                                             showLoading(false)
-                                            if (history.message.toString() == "the item with the uniqueID has no history yet.") {
-                                                viewModel.setNoHistory(true)
-                                            }
-                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+//                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                         }
                                         is Resource.Loading -> {
                                             showLoading(true)
@@ -133,6 +134,8 @@ class DetailHistoryFragment : Fragment() {
                                         }
                                         is Resource.Success -> {
                                             showLoading(false)
+                                            viewModel.setNoHistory(false)
+
                                             viewModel.setKeypointHistoryData(history.data!!)
                                             initHistoryRecyclerView(
                                                 history.data,
@@ -157,10 +160,9 @@ class DetailHistoryFragment : Fragment() {
                             when (history) {
                                 is Resource.Error -> {
                                     showLoading(false)
-                                    if (history.message.toString() == "the item with the uniqueID has no history yet.") {
-                                        viewModel.setNoHistory(true)
-                                    }
-                                    context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                    viewModel.setNoHistory(true)
+
+//                                    context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                 }
                                 is Resource.Loading -> {
                                     showLoading(true)
@@ -170,6 +172,8 @@ class DetailHistoryFragment : Fragment() {
                                 }
                                 is Resource.Success -> {
                                     showLoading(false)
+                                    viewModel.setNoHistory(false)
+
                                     viewModel.setKeypointHistoryData(history.data!!)
                                     initHistoryRecyclerView(history.data, KeypointsType.LBSREC)
                                 }
@@ -181,10 +185,9 @@ class DetailHistoryFragment : Fragment() {
                             when (history) {
                                 is Resource.Error -> {
                                     showLoading(false)
-                                    if (history.message.toString() == "the item with the uniqueID has no history yet.") {
-                                        viewModel.setNoHistory(true)
-                                    }
-                                    context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                    viewModel.setNoHistory(true)
+
+//                                    context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                 }
                                 is Resource.Loading -> {
                                     showLoading(true)
@@ -194,6 +197,8 @@ class DetailHistoryFragment : Fragment() {
                                 }
                                 is Resource.Success -> {
                                     showLoading(false)
+                                    viewModel.setNoHistory(false)
+
                                     viewModel.setKeypointHistoryData(history.data!!)
                                     initHistoryRecyclerView(history.data, KeypointsType.GIGH)
                                 }
@@ -206,10 +211,9 @@ class DetailHistoryFragment : Fragment() {
                                 when (history) {
                                     is Resource.Error -> {
                                         showLoading(false)
-                                        if (history.message.toString() == "the item with the uniqueID has no history yet.") {
-                                            viewModel.setNoHistory(true)
-                                        }
-                                        context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                        viewModel.setNoHistory(true)
+
+//                                        context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                     }
                                     is Resource.Loading -> {
                                         showLoading(true)
@@ -219,6 +223,8 @@ class DetailHistoryFragment : Fragment() {
                                     }
                                     is Resource.Success -> {
                                         showLoading(false)
+                                        viewModel.setNoHistory(false)
+
                                         viewModel.setKeypointHistoryData(history.data!!)
                                         initHistoryRecyclerView(
                                             history.data,

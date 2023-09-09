@@ -1,7 +1,6 @@
 package com.capstone.metricapp.features.detail.historis.historis_spec_detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +32,7 @@ class DetailHistorySpecGIGH(private val historyData: KeypointHistory) :
 
     private fun setupData() {
         val newValue = RTUDataMapper.getNewValueFieldFromJSON(historyData.newValue)
-        Log.e("TEST NIH", newValue.toString())
+
         binding.apply {
             tvDetailTeleMerk.text = newValue.telkom_merk
             tvDetailTeleType.text = newValue.telkom_type
