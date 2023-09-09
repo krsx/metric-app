@@ -329,7 +329,7 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
             }
 
             override suspend fun createCall(): Flow<ApiResponse<ResponseBody>> {
-                return remoteDataSource.exportRTUDataToPDF(token, id)
+                return remoteDataSource.exportRTUDataToExcel(token, id)
             }
         }.asFlow()
     }

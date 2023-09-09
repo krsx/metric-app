@@ -594,7 +594,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun exportRTUDataToeXCEL(token: String, id: String): Flow<ApiResponse<ResponseBody>> {
+    suspend fun exportRTUDataToExcel(token: String, id: String): Flow<ApiResponse<ResponseBody>> {
         return flow {
             try {
                 val response = apiService.exportRTUDataToExcel(token, id)

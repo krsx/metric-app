@@ -79,14 +79,44 @@ class DetailKeypointActivity : AppCompatActivity() {
                                                         Log.e("MESSAGE", "MESSAGE ${excel.message}")
                                                     }
                                                     is Resource.Success -> {
+                                                        val fileName = "$keypointsId.xlsx"
 
+                                                        DownloadFileUtils.readByteStreamExcel(
+                                                            this,
+                                                            excel.data!!,
+                                                            fileName
+                                                        )
+                                                        showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
                                                     }
                                                 }
 
                                             }
                                     }
                                     Divisions.SCADATEL.divisionName -> {
+                                        viewModel.exportScadatelToExcel(token, id)
+                                            .observe(this) { excel ->
+                                                when (excel) {
+                                                    is Resource.Error -> {
+                                                        Log.e("ERROR", "ERROR ${excel.message}")
+                                                    }
+                                                    is Resource.Loading -> {
+                                                        Log.e("LOADING", "LOADING ${excel.message}")
+                                                    }
+                                                    is Resource.Message -> {
+                                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
+                                                    }
+                                                    is Resource.Success -> {
+                                                        val fileName = "$keypointsId.xlsx"
 
+                                                        DownloadFileUtils.readByteStreamExcel(
+                                                            this,
+                                                            excel.data!!,
+                                                            fileName
+                                                        )
+                                                        showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
+                                                    }
+                                                }
+                                            }
                                     }
                                 }
                             }
