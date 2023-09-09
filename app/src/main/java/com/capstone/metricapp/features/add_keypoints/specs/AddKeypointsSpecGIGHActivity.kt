@@ -133,7 +133,7 @@ class AddKeypointsSpecGIGHActivity : AppCompatActivity() {
                 }
             }
         } else {
-            showToast("Tolong lengkapi semua data")
+            showLongToast("Tolong lengkapi semua data")
         }
     }
 

@@ -220,7 +220,7 @@ class DetailKeypointActivity : AppCompatActivity() {
                     when (rtu) {
                         is Resource.Error -> {
                             viewModel.setLoading(false)
-                            showLongToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
+                            showLongToast("Terjadi kesalahan, pastikan internet anda")
                         }
                         is Resource.Loading -> {
                             viewModel.setLoading(true)
@@ -249,7 +249,7 @@ class DetailKeypointActivity : AppCompatActivity() {
                     when (scadatel) {
                         is Resource.Error -> {
                             viewModel.setLoading(false)
-                            showLongToast("Terjadi kesalahan, pastikan internet dan data yang telah diinput benar")
+                            showLongToast("Terjadi kesalahan, pastikan internet anda")
                         }
                         is Resource.Loading -> {
                             viewModel.setLoading(true)

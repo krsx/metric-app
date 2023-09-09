@@ -24,7 +24,6 @@ import com.capstone.metricapp.core.ui.adapter.ScadatelKeypointsAdapter
 import com.capstone.metricapp.core.utils.FabMenuState
 import com.capstone.metricapp.core.utils.constans.Divisions
 import com.capstone.metricapp.core.utils.showLongToast
-import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityHomeBinding
 import com.capstone.metricapp.features.add_keypoints.desc.AddKeypointsDescActivity
 import com.capstone.metricapp.features.detail.DetailKeypointViewModel
@@ -76,7 +75,7 @@ class HomeActivity : AppCompatActivity() {
                                     when (rtu) {
                                         is Resource.Error -> {
                                             binding.refKeypoints.isRefreshing = false
-                                            showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
+                                            showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
                                         }
                                         is Resource.Loading -> {
                                             binding.refKeypoints.isRefreshing = true
@@ -100,7 +99,7 @@ class HomeActivity : AppCompatActivity() {
                                         when (scadatel) {
                                             is Resource.Error -> {
                                                 binding.refKeypoints.isRefreshing = false
-                                                showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                                                showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
                                             }
                                             is Resource.Loading -> {
                                                 binding.refKeypoints.isRefreshing = true
@@ -152,7 +151,7 @@ class HomeActivity : AppCompatActivity() {
                             when (rtu) {
                                 is Resource.Error -> {
                                     binding.refKeypoints.isRefreshing = false
-                                    showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
+                                    showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
                                 }
                                 is Resource.Loading -> {
                                     binding.refKeypoints.isRefreshing = true
@@ -173,7 +172,7 @@ class HomeActivity : AppCompatActivity() {
                             when (scadatel) {
                                 is Resource.Error -> {
                                     binding.refKeypoints.isRefreshing = false
-                                    showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                                    showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
                                 }
                                 is Resource.Loading -> {
                                     binding.refKeypoints.isRefreshing = true
@@ -210,7 +209,7 @@ class HomeActivity : AppCompatActivity() {
                                         when (rtu) {
                                             is Resource.Error -> {
                                                 binding.refKeypoints.isRefreshing = false
-                                                showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
+                                                showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
                                             }
                                             is Resource.Loading -> {
                                                 binding.refKeypoints.isRefreshing = true
@@ -232,7 +231,7 @@ class HomeActivity : AppCompatActivity() {
                                             when (scadatel) {
                                                 is Resource.Error -> {
                                                     binding.refKeypoints.isRefreshing = false
-                                                    showToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${scadatel.message}")
+                                                    showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
                                                 }
                                                 is Resource.Loading -> {
                                                     binding.refKeypoints.isRefreshing = true

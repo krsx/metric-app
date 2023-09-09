@@ -18,7 +18,6 @@ import com.capstone.metricapp.core.utils.cleanId
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.extractId
 import com.capstone.metricapp.core.utils.showLongToast
-import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityScanBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -120,7 +119,7 @@ class ScanActivity : AppCompatActivity() {
                                         when (rtu) {
                                             is Resource.Error -> {
                                                 showLoading(false)
-                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                                showLongToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
                                             }
                                             is Resource.Loading -> {
                                                 showLoading(true)
@@ -192,7 +191,7 @@ class ScanActivity : AppCompatActivity() {
                                         when (rtu) {
                                             is Resource.Error -> {
                                                 showLoading(false)
-                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                                showLongToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
                                             }
                                             is Resource.Loading -> {
                                                 showLoading(true)
@@ -264,7 +263,7 @@ class ScanActivity : AppCompatActivity() {
                                         when (scadatel) {
                                             is Resource.Error -> {
                                                 showLoading(false)
-                                                showToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
+                                                showLongToast("Terjadi kesalahan, silahkan cek koneksi internet anda dan lakukan scan ulang")
                                             }
                                             is Resource.Loading -> {
                                                 showLoading(true)

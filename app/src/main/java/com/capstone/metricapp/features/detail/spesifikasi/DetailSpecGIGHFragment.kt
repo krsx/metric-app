@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.RTU
-import com.capstone.metricapp.core.utils.showToast
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.databinding.FragmentDetailSpecGighBinding
 import com.capstone.metricapp.features.detail.DetailKeypointViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,7 +63,7 @@ class DetailSpecGIGHFragment : Fragment() {
         when (rtu) {
             is Resource.Error -> {
                 viewModel.setLoading(false)
-                context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
             }
             is Resource.Loading -> {
                 viewModel.setLoading(true)

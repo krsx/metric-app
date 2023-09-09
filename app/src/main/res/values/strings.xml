@@ -85,4 +85,5 @@
     <string name="menu_excel">Export dalam Excel</string>
     <string name="menu_keypoint_delete">Hapus Keypoint</string>
     <string name="no_history">Keypoint ini tidak memiliki\nriwayat perubahan spesifikasi</string>
+    <string name="upcoming_feature">Fitur ini akan segera hadir</string>
 </resources>

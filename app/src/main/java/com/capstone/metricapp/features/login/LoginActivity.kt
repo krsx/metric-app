@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.utils.showLongToast
-import com.capstone.metricapp.core.utils.showToast
 import com.capstone.metricapp.databinding.ActivityLoginBinding
 import com.capstone.metricapp.features.home.HomeActivity
 import com.capstone.metricapp.features.register.RegisterActivity
@@ -111,7 +110,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                showToast("Tolong isi semua data")
+                showLongToast("Tolong isi semua data")
             }
         }
     }

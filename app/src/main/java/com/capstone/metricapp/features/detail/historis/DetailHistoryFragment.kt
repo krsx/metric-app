@@ -13,7 +13,7 @@ import com.capstone.metricapp.core.domain.model.KeypointHistory
 import com.capstone.metricapp.core.ui.adapter.HistoryKeypointAdapter
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.extractId
-import com.capstone.metricapp.core.utils.showToast
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.databinding.FragmentDetailHistoryBinding
 import com.capstone.metricapp.features.detail.DetailKeypointViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +40,112 @@ class DetailHistoryFragment : Fragment() {
         viewModel.noHistory.observe(this) {
             showNoHistory(it)
         }
+
+        setupRefresh()
+    }
+
+    private fun setupRefresh() {
+        binding.refHistory.setOnRefreshListener {
+            viewModel.getUserToken().observe(this) { token ->
+                viewModel.id.observe(this) { id ->
+                    when (extractId(id)) {
+                        KeypointsType.LBSREC -> {
+                            viewModel.getHistoryRTU(token, id)
+                                .observe(viewLifecycleOwner) { history ->
+                                    when (history) {
+                                        is Resource.Error -> {
+                                            showLoading(false)
+                                            if (history.message.toString() == "the item with the uniqueID has no history yet.") {
+                                                viewModel.setNoHistory(true)
+                                            }
+                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                        }
+                                        is Resource.Loading -> {
+                                            showLoading(true)
+                                        }
+                                        is Resource.Message -> {
+                                            Log.e(
+                                                "DetailHistoryFragment",
+                                                history.message.toString()
+                                            )
+                                        }
+                                        is Resource.Success -> {
+                                            showLoading(false)
+                                            viewModel.setKeypointHistoryData(history.data!!)
+                                            initHistoryRecyclerView(
+                                                history.data,
+                                                KeypointsType.LBSREC
+                                            )
+                                        }
+                                    }
+                                }
+                        }
+                        KeypointsType.GIGH -> {
+                            viewModel.getHistoryRTU(token, id)
+                                .observe(viewLifecycleOwner) { history ->
+                                    when (history) {
+                                        is Resource.Error -> {
+                                            showLoading(false)
+                                            if (history.message.toString() == "the item with the uniqueID has no history yet.") {
+                                                viewModel.setNoHistory(true)
+                                            }
+                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                        }
+                                        is Resource.Loading -> {
+                                            showLoading(true)
+                                        }
+                                        is Resource.Message -> {
+                                            Log.e(
+                                                "DetailHistoryFragment",
+                                                history.message.toString()
+                                            )
+                                        }
+                                        is Resource.Success -> {
+                                            showLoading(false)
+                                            viewModel.setKeypointHistoryData(history.data!!)
+                                            initHistoryRecyclerView(
+                                                history.data,
+                                                KeypointsType.GIGH
+                                            )
+                                        }
+                                    }
+                                }
+                        }
+                        KeypointsType.SCADATEL -> {
+                            viewModel.getHistoryScadatel(token, id)
+                                .observe(viewLifecycleOwner) { history ->
+                                    when (history) {
+                                        is Resource.Error -> {
+                                            showLoading(false)
+                                            if (history.message.toString() == "the item with the uniqueID has no history yet.") {
+                                                viewModel.setNoHistory(true)
+                                            }
+                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                        }
+                                        is Resource.Loading -> {
+                                            showLoading(true)
+                                        }
+                                        is Resource.Message -> {
+                                            Log.e(
+                                                "DetailHistoryFragment",
+                                                history.message.toString()
+                                            )
+                                        }
+                                        is Resource.Success -> {
+                                            showLoading(false)
+                                            viewModel.setKeypointHistoryData(history.data!!)
+                                            initHistoryRecyclerView(
+                                                history.data,
+                                                KeypointsType.SCADATEL
+                                            )
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -54,7 +160,7 @@ class DetailHistoryFragment : Fragment() {
                                     if (history.message.toString() == "the item with the uniqueID has no history yet.") {
                                         viewModel.setNoHistory(true)
                                     }
-                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                    context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                 }
                                 is Resource.Loading -> {
                                     showLoading(true)
@@ -78,7 +184,7 @@ class DetailHistoryFragment : Fragment() {
                                     if (history.message.toString() == "the item with the uniqueID has no history yet.") {
                                         viewModel.setNoHistory(true)
                                     }
-                                    context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                    context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                 }
                                 is Resource.Loading -> {
                                     showLoading(true)
@@ -103,7 +209,7 @@ class DetailHistoryFragment : Fragment() {
                                         if (history.message.toString() == "the item with the uniqueID has no history yet.") {
                                             viewModel.setNoHistory(true)
                                         }
-                                        context?.showToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
+                                        context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                     }
                                     is Resource.Loading -> {
                                         showLoading(true)
@@ -155,11 +261,5 @@ class DetailHistoryFragment : Fragment() {
 
     private fun showNoHistory(isNoHistory: Boolean) {
         binding.tvNoHistory.visibility = if (isNoHistory) View.VISIBLE else View.GONE
-    }
-
-    companion object {
-        private const val SCADATEL_HISTORY_FRAGMENT_TAG = "Detail History Scadatel"
-        private const val LBSREC_HISTORY_FRAGMENT_TAG = "Detail History LBS REC"
-        private const val GIGH_HISTORY_FRAGMENT_TAG = "Detail History  GI GH"
     }
 }

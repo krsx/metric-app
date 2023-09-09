@@ -12,7 +12,7 @@ import com.capstone.metricapp.R
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.constans.KeypointsTypeId
 import com.capstone.metricapp.core.utils.constans.keypointsIdType
-import com.capstone.metricapp.core.utils.showToast
+import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.databinding.ActivityAddKeypointsDescBinding
 import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecGIGHActivity
 import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecLBSRECActivity
@@ -94,7 +94,7 @@ class AddKeypointsDescActivity : AppCompatActivity() {
 
                 startActivity(intentToAddKeypointSpec)
             } else {
-                showToast("Tolong lengkapi semua data")
+                showLongToast("Tolong lengkapi semua data")
             }
         }
     }

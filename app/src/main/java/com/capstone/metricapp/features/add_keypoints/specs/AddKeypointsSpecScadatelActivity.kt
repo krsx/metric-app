@@ -90,7 +90,7 @@ class AddKeypointsSpecScadatelActivity : AppCompatActivity() {
                 }
             }
         } else {
-            showToast("Tolong isi semua data")
+            showLongToast("Tolong isi semua data")
         }
     }
 
