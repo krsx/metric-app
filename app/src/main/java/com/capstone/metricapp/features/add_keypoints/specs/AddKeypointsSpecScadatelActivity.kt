@@ -63,6 +63,7 @@ class AddKeypointsSpecScadatelActivity : AppCompatActivity() {
                     scadatelBackupVolt,
                     scadatelOs,
                     scadatelDate,
+                    scadatelNotes
                 ).observe(this) { scadatel ->
                     when (scadatel) {
                         is Resource.Error -> {

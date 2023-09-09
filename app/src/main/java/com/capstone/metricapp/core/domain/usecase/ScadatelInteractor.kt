@@ -36,7 +36,8 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
         mainVolt: String,
         backupVolt: String,
         os: String,
-        date: String
+        date: String,
+        notes: String
     ): Flow<Resource<Scadatel>> {
         return scadatelRepository.createScadatelKeypoint(
             token,
@@ -48,7 +49,8 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
             mainVolt,
             backupVolt,
             os,
-            date
+            date,
+            notes
         )
     }
 
@@ -60,7 +62,8 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
         mainVolt: String?,
         backupVolt: String?,
         os: String?,
-        date: String?
+        date: String?,
+        notes: String?
     ): Flow<Resource<Scadatel>> {
         return scadatelRepository.updateSpecScadatel(
             token,
@@ -70,7 +73,8 @@ class ScadatelInteractor @Inject constructor(private val scadatelRepository: ISc
             mainVolt,
             backupVolt,
             os,
-            date
+            date,
+            notes
         )
     }
 

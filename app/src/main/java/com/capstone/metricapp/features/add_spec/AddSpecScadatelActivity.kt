@@ -65,7 +65,7 @@ class AddSpecScadatelActivity : AppCompatActivity() {
                         edScadatelBackupVolt.setText(scadatel.data?.backupVolt)
                         edScadatelOs.setText(scadatel.data?.os)
                         edScadatelDate.setText(scadatel.data?.date)
-                        edNotes.setText("") //later will be added
+                        edNotes.setText(scadatel.data?.notes)
                     }
 
                 }
@@ -91,7 +91,8 @@ class AddSpecScadatelActivity : AppCompatActivity() {
                 edMainVolt,
                 edBackupVolt,
                 edOS,
-                edDate
+                edDate,
+                edNote
             ).observe(this) { scadatel ->
                 when (scadatel) {
                     is Resource.Error -> {

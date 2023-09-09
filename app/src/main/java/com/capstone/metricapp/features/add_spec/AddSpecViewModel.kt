@@ -28,7 +28,8 @@ class AddSpecViewModel @Inject constructor(
         mainVolt: String?,
         backupVolt: String?,
         os: String?,
-        date: String?
+        date: String?,
+        notes: String?,
     ) = scadatelUseCase.updateSpecScadatel(
         token,
         id,
@@ -37,7 +38,8 @@ class AddSpecViewModel @Inject constructor(
         mainVolt,
         backupVolt,
         os,
-        date
+        date,
+        notes
     ).asLiveData()
 
     fun getRTUById(token: String, id: String) = rtuUseCase.getRTUById(token, id).asLiveData()

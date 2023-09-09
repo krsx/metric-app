@@ -16,4 +16,5 @@ data class Scadatel(
     var os: String,
     var date: String,
     var dateCreated: String,
+    var notes: String
 ) : Parcelable

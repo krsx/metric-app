@@ -28,7 +28,8 @@ class AddKeypointsSpecViewModel @Inject constructor(
         mainVolt: String,
         backupVolt: String,
         os: String,
-        date: String
+        date: String,
+        notes: String
     ) = scadatelUseCase.createScadatelKeypoint(
         token,
         uniqueId,
@@ -39,7 +40,8 @@ class AddKeypointsSpecViewModel @Inject constructor(
         mainVolt,
         backupVolt,
         os,
-        date
+        date,
+        notes
     ).asLiveData()
 
     //RTU

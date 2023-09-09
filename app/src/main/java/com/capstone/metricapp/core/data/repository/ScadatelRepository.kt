@@ -71,7 +71,8 @@ class ScadatelRepository @Inject constructor(
         mainVolt: String,
         backupVolt: String,
         os: String,
-        date: String
+        date: String,
+        notes: String
     ): Flow<Resource<Scadatel>> {
         return object : NetworkBoundResource<Scadatel, CreateScadatelItemResponse>() {
             override suspend fun fetchFromApi(response: CreateScadatelItemResponse): Scadatel {
@@ -89,7 +90,8 @@ class ScadatelRepository @Inject constructor(
                     mainVolt,
                     backupVolt,
                     os,
-                    date
+                    date,
+                    notes
                 )
             }
         }.asFlow()
@@ -103,7 +105,8 @@ class ScadatelRepository @Inject constructor(
         mainVolt: String?,
         backupVolt: String?,
         os: String?,
-        date: String?
+        date: String?,
+        notes: String?
     ): Flow<Resource<Scadatel>> {
         return object : NetworkBoundResource<Scadatel, UpdateScadatelItemResponse>() {
             override suspend fun fetchFromApi(response: UpdateScadatelItemResponse): Scadatel {
@@ -120,6 +123,7 @@ class ScadatelRepository @Inject constructor(
                     backupVolt ?: "",
                     os ?: "",
                     date ?: "",
+                    notes ?: "",
                 )
             }
         }.asFlow()

@@ -41,6 +41,7 @@ class DetailHistorySpecScadatelFragment(
             tvDetailScadatelBackupVolt.text = newValue.backupVolt
             tvDetailScadatelOs.text = newValue.os
             tvDetailScadatelDate.text = newValue.date
+            tvDetailScadatelNotes.text = newValue.notes
         }
     }
 

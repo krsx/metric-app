@@ -286,7 +286,8 @@ class ScanActivity : AppCompatActivity() {
                                                         backupVolt = scadatel.data.backupVolt,
                                                         os = scadatel.data.os,
                                                         date = scadatel.data.date,
-                                                        dateCreated = scadatel.data.dateCreated
+                                                        dateCreated = scadatel.data.dateCreated,
+                                                        notes = scadatel.data.notes
                                                     )
 
                                                     viewModel.setScadatelData(scadatelData!!)

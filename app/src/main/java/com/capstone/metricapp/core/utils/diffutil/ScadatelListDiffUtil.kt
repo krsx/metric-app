@@ -21,6 +21,7 @@ class ScadatelListDiffUtil : DiffUtil.ItemCallback<Scadatel>() {
             oldItem.region != newItem.region -> false
             oldItem.type != newItem.type -> false
             oldItem.uniqueId != newItem.uniqueId -> false
+            oldItem.notes != newItem.notes -> false
             else -> true
         }
     }

@@ -89,6 +89,7 @@ class DetailSpecScadatelFragment : Fragment() {
             tvDetailScadatelBackupVolt.text = scadatel.backupVolt
             tvDetailScadatelOs.text = scadatel.os
             tvDetailScadatelDate.text = scadatel.date
+            tvDetailScadatelNotes.text = scadatel.notes
         }
     }
 

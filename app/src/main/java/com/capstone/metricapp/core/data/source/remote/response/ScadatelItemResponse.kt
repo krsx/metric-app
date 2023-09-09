@@ -47,7 +47,10 @@ data class ScadatelItem(
     val type: String? = null,
 
     @field:SerializedName("uniqueID")
-    val uniqueID: String? = null
+    val uniqueID: String? = null,
+
+    @field:SerializedName("notes")
+    val notes: String? = null
 )
 
 data class ScadatelData(

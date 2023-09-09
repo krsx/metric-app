@@ -52,6 +52,7 @@ interface ApiService {
         @Field("backupVolt") backupVolt: String,
         @Field("os") os: String,
         @Field("tanggalPemasangan") date: String,
+        @Field("notes") notes: String,
     ): CreateScadatelItemResponse
 
     @PUT("scadatel/{id}")
@@ -66,6 +67,7 @@ interface ApiService {
         @Field("backupVolt") backupVolt: String,
         @Field("os") os: String,
         @Field("tanggalPemasangan") date: String,
+        @Field("notes") notes: String,
     ): UpdateScadatelItemResponse
 
     @GET("scadatel/history/{id}")

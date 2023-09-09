@@ -22,7 +22,8 @@ object ScadatelDataMapper {
                 backupVolt = it.backupVolt!!,
                 os = it.os!!,
                 date = it.date!!,
-                dateCreated = it.createdAt!!
+                dateCreated = it.createdAt!!,
+                notes = it.notes ?: ""
             )
         }
 
@@ -37,7 +38,8 @@ object ScadatelDataMapper {
         backupVolt = input?.scadatelItem?.backupVolt ?: "",
         os = input?.scadatelItem?.os ?: "",
         date = input?.scadatelItem?.date ?: "",
-        dateCreated = input?.scadatelItem?.createdAt ?: ""
+        dateCreated = input?.scadatelItem?.createdAt ?: "",
+        notes = input?.scadatelItem?.notes ?: "",
     )
 
     fun mapCreateScadatelResponseToDomain(input: CreateScadatelData?): Scadatel = Scadatel(
@@ -51,7 +53,8 @@ object ScadatelDataMapper {
         backupVolt = input.item.backupVolt!!,
         os = input.item.os!!,
         date = input.item.date!!,
-        dateCreated = input.item.createdAt!!
+        dateCreated = input.item.createdAt!!,
+        notes = input.item.notes!!,
     )
 
     fun mapHistoryScadatelResponseToDomain(input: List<KeypointHistoryItem?>?): List<KeypointHistory> =
@@ -83,7 +86,9 @@ object ScadatelDataMapper {
 
                 //dateCreated in history shows when the spec get updated
                 //the "createdAt" field will only show the creation of the scadatel keypoint
-                dateCreated = newValueJSON.getString("updatedAt")
+                dateCreated = newValueJSON.getString("updatedAt"),
+//                notes = newValueJSON.getString("notes"),
+                notes = "" //still no notes field on every field
             )
         }
     }
