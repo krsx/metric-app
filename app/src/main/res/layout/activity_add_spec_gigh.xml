@@ -591,7 +591,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_notes" />
 
-            <androidx.appcompat.widget.AppCompatButton
+            <Button
                 android:id="@+id/btn_save"
                 style="@style/textStyleTitleWhite"
                 android:layout_width="0dp"
@@ -602,7 +602,7 @@
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/custom_button_rounded"
                 android:elevation="0dp"
-                android:paddingVertical="12dp"
+                android:paddingVertical="8dp"
                 android:text="@string/add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
