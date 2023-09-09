@@ -172,6 +172,8 @@ class ScanActivity : AppCompatActivity() {
                                                         gat_merk = rtu.data.gat_merk,
                                                         gat_type = rtu.data.gat_merk,
                                                         gat_date = rtu.data.gat_date,
+
+                                                        notes = rtu.data.notes
                                                     )
                                                 }
 
@@ -244,6 +246,8 @@ class ScanActivity : AppCompatActivity() {
                                                         gat_merk = rtu.data.gat_merk,
                                                         gat_type = rtu.data.gat_merk,
                                                         gat_date = rtu.data.gat_date,
+
+                                                        notes = rtu.data.notes
                                                     )
                                                 }
 

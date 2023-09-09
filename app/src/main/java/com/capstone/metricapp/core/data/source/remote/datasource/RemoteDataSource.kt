@@ -313,6 +313,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         bat_merk: String,
         bat_type: String,
         bat_date: String,
+
+        notes: String,
     ): Flow<ApiResponse<CreateRTUItemResponse>> {
         return flow {
             try {
@@ -336,7 +338,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     rtu_sn,
                     bat_merk,
                     bat_type,
-                    bat_date
+                    bat_date,
+                    notes
                 )
                 val data = response.data
                 if (data != null) {
@@ -382,6 +385,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         gat_type: String,
         gat_date: String,
         gat_sn: String,
+
+        notes: String,
     ): Flow<ApiResponse<CreateRTUItemResponse>> {
         return flow<ApiResponse<CreateRTUItemResponse>> {
             try {
@@ -404,7 +409,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     bat_type,
                     bat_date,
                     gat_merk,
-                    gat_type, gat_date, gat_sn,
+                    gat_type, gat_date, gat_sn, notes
                 )
                 val data = response.data
                 if (data != null) {
@@ -443,6 +448,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         bat_merk: String,
         bat_type: String,
         bat_date: String,
+
+        notes: String
     ): Flow<ApiResponse<UpdateRTUResponse>> {
         return flow {
             try {
@@ -465,7 +472,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     rtu_sn,
                     bat_merk,
                     bat_type,
-                    bat_date
+                    bat_date,
+                    notes
                 )
                 val data = response.data
                 if (data != null) {
@@ -509,6 +517,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         gat_type: String,
         gat_date: String,
         gat_sn: String,
+
+        notes: String
     ): Flow<ApiResponse<UpdateRTUResponse>> {
         return flow<ApiResponse<UpdateRTUResponse>> {
             try {
@@ -537,6 +547,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     gat_type,
                     gat_date,
                     gat_sn,
+                    notes
                 )
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))

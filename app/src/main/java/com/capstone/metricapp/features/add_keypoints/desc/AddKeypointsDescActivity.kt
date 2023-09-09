@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.capstone.metricapp.R
-import com.capstone.metricapp.core.utils.constans.KeypointsType
-import com.capstone.metricapp.core.utils.constans.KeypointsTypeId
-import com.capstone.metricapp.core.utils.constans.keypointsIdType
+import com.capstone.metricapp.core.utils.constans.*
 import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.databinding.ActivityAddKeypointsDescBinding
 import com.capstone.metricapp.features.add_keypoints.specs.AddKeypointsSpecGIGHActivity
@@ -23,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @RequiresApi(Build.VERSION_CODES.O)
 class AddKeypointsDescActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddKeypointsDescBinding
+    private val viewModel: AddKeypointsDescViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,41 +100,61 @@ class AddKeypointsDescActivity : AppCompatActivity() {
     }
 
     private fun setupPickKeypointsType() {
-        val adapter = ArrayAdapter(this, R.layout.item_list_dropdown, keypointsIdType)
-        binding.dropdownMenu.setAdapter(adapter)
-        binding.dropdownMenu.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        viewModel.getUserDivision().observe(this) {
+            when (it) {
+                Divisions.RTU.divisionName -> {
+                    val adapter = ArrayAdapter(this, R.layout.item_list_dropdown, keypointRTUType)
 
+                    binding.dropdownMenu.setAdapter(adapter)
+                    binding.dropdownMenu.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
+                        ) {
+
+                        }
+
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                        }
+
+                        override fun afterTextChanged(p0: Editable?) {
+                            binding.edAddKeypointsType.isHintEnabled = p0.isNullOrEmpty()
+                        }
+
+                    }
+                    )
+                }
+                Divisions.SCADATEL.divisionName -> {
+                    val adapter =
+                        ArrayAdapter(this, R.layout.item_list_dropdown, keypointScadatelType)
+
+                    binding.dropdownMenu.setAdapter(adapter)
+                    binding.dropdownMenu.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(
+                            p0: CharSequence?,
+                            p1: Int,
+                            p2: Int,
+                            p3: Int
+                        ) {
+
+                        }
+
+                        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                        }
+
+                        override fun afterTextChanged(p0: Editable?) {
+                            binding.edAddKeypointsType.isHintEnabled = p0.isNullOrEmpty()
+                        }
+
+                    }
+                    )
+                }
             }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                binding.edAddKeypointsType.isHintEnabled = p0.isNullOrEmpty()
-            }
-
         }
-        )
-    }
-
-    private fun setupButtonNext() {
-        val intentToAddSpec = when (binding.dropdownMenu.text.toString()) {
-            KeypointsType.GIGH.type -> {
-                Intent(this, AddKeypointsSpecGIGHActivity::class.java)
-            }
-            KeypointsType.LBSREC.type -> {
-                Intent(this, AddKeypointsSpecLBSRECActivity::class.java)
-            }
-            KeypointsType.SCADATEL.type -> {
-                Intent(this, AddKeypointsSpecScadatelActivity::class.java)
-            }
-
-            else -> Intent(this, AddKeypointsSpecGIGHActivity::class.java)
-        }
-
-        startActivity(intentToAddSpec)
     }
 
     companion object {

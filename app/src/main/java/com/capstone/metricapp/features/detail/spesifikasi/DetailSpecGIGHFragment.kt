@@ -105,6 +105,8 @@ class DetailSpecGIGHFragment : Fragment() {
             tvDetailGatewayType.text = data.gat_type
             tvDetailGatewayDate.text = data.gat_date
             tvDetailGatewaySn.text = data.gat_sn
+
+            tvDetailNotes.text = data.notes
         }
     }
 

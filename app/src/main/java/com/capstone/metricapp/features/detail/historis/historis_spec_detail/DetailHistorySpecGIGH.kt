@@ -60,6 +60,8 @@ class DetailHistorySpecGIGH(private val historyData: KeypointHistory) :
             tvDetailGatewayType.text = newValue.gat_type
             tvDetailGatewayDate.text = newValue.gat_date
             tvDetailGatewaySn.text = newValue.gat_sn
+
+            tvDetailNotes.text = newValue.notes
         }
     }
 

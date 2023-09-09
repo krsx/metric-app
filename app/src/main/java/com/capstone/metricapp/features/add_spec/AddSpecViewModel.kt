@@ -68,6 +68,8 @@ class AddSpecViewModel @Inject constructor(
         bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
+
+        notes: String?,
     ) = rtuUseCase.updateSpecLBS(
         token,
         uniqueId,
@@ -86,7 +88,8 @@ class AddSpecViewModel @Inject constructor(
         rtu_sn,
         bat_merk,
         bat_type,
-        bat_date
+        bat_date,
+        notes
     ).asLiveData()
 
     fun updateSpecGIGH(
@@ -119,7 +122,8 @@ class AddSpecViewModel @Inject constructor(
         gat_date: String?,
         gat_sn: String?,
 
-        ) = rtuUseCase.updateSpecGIGHKeypoint(
+        notes: String?
+    ) = rtuUseCase.updateSpecGIGHKeypoint(
         token,
         uniqueId,
         telkom_merk,
@@ -142,6 +146,7 @@ class AddSpecViewModel @Inject constructor(
         gat_merk,
         gat_type,
         gat_date,
-        gat_sn
+        gat_sn,
+        notes
     ).asLiveData()
 }

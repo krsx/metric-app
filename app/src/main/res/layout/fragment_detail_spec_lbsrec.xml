@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    
+
     tools:context=".features.detail.spesifikasi.DetailSpecLBSRECFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -554,6 +554,7 @@
                         app:layout_constraintStart_toEndOf="@+id/textView39"
                         app:layout_constraintTop_toTopOf="@+id/textView39" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>

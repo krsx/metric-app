@@ -39,3 +39,24 @@ val keypointsIdType = listOf(
     "SWITCH",
     "GPS"
 )
+
+val keypointRTUType = listOf(
+    "LBS",
+    "RECLOSER",
+    "GH",
+    "GI",
+)
+
+val keypointScadatelType = listOf(
+    "RADIO DATA",
+    "RADIO SUARA",
+    "WORK STATION",
+    "SERVER",
+    "SWITCH",
+    "GATEWAY",
+    "ROUTER",
+    "SWITCH",
+    "GPS"
+)
+
+

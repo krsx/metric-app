@@ -101,6 +101,8 @@ class DetailSpecLBSRECFragment : Fragment() {
             tvDetailBateraiMerk.text = data.bat_merk
             tvDetailBateraiType.text = data.bat_type
             tvDetailBateraiDate.text = data.bat_date
+
+            tvDetailNotes.text = data.notes
         }
     }
 

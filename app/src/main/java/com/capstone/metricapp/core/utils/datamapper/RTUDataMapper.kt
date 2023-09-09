@@ -50,6 +50,7 @@ object RTUDataMapper {
             gat_sn = it.gatSn ?: "",
 
             dateCreated = it.createdAt!!,
+            notes = it.notes ?: ""
         )
     }
 
@@ -92,6 +93,7 @@ object RTUDataMapper {
         gat_sn = input.rtuItem.gatSn ?: "",
 
         dateCreated = input.rtuItem.createdAt!!,
+        notes = input.rtuItem.notes ?: ""
     )
 
     fun mapCreateRTUResponse(input: CreateRTUData?): RTU = RTU(
@@ -133,6 +135,7 @@ object RTUDataMapper {
         gat_sn = input.gat_sn ?: "",
 
         dateCreated = input.createdAt!!,
+        notes = input.notes ?: ""
     )
 
     fun mapHistoryRTUResponseToDomain(input: List<KeypointHistoryItem?>?): List<KeypointHistory> =
@@ -189,7 +192,9 @@ object RTUDataMapper {
 
                 //dateCreated in history shows when the spec get updated
                 //the "createdAt" field will only show the creation of the scadatel keypoint
-                dateCreated = newValueJSON.getString("createdAt")
+                dateCreated = newValueJSON.getString("createdAt"),
+//                notes = newValueJSON.getString("notes"),
+                notes = ""
             )
         }
     }
@@ -200,6 +205,4 @@ object RTUDataMapper {
             return newValueJSON.getString("createdAt")
         }
     }
-
-
 }

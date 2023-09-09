@@ -127,6 +127,8 @@ interface ApiService {
         @Field("btr_merk") bat_merk: String,
         @Field("btr_tipe") bat_type: String,
         @Field("btr_tanggalPenggatian") bat_date: String,
+
+        @Field("notes") notes: String,
     ): CreateRTUItemResponse
 
     @POST("rtu")
@@ -162,6 +164,8 @@ interface ApiService {
         @Field("gtwy_tipe") gat_type: String,
         @Field("gtwy_tanggalPenggatian") gat_date: String,
         @Field("gtwy_sn") gat_sn: String,
+
+        @Field("notes") notes: String,
     ): CreateRTUItemResponse
 
     @PUT("rtu/{id}")
@@ -190,6 +194,8 @@ interface ApiService {
         @Field("btr_merk") bat_merk: String,
         @Field("btr_tipe") bat_type: String,
         @Field("btr_tanggalPenggatian") bat_date: String,
+
+        @Field("notes") notes: String,
     ): UpdateRTUResponse
 
     @PUT("rtu/{id}")
@@ -224,6 +230,8 @@ interface ApiService {
         @Field("gtwy_tipe") gat_type: String,
         @Field("gtwy_tanggalPenggatian") gat_date: String,
         @Field("gtwy_sn") gat_sn: String,
+
+        @Field("notes") notes: String,
     ): UpdateRTUResponse
 
     @GET("rtu/history/{id}")

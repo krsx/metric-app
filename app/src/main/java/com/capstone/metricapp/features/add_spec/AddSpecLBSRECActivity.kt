@@ -69,6 +69,8 @@ class AddSpecLBSRECActivity : AppCompatActivity() {
             val batType = binding.edBatteryType.text.toString()
             val batDate = binding.edBatteryDate.text.toString()
 
+            val notes = binding.edNotes.text.toString()
+
             viewModel.updateSpecLBSREC(
                 token,
                 id,
@@ -87,7 +89,8 @@ class AddSpecLBSRECActivity : AppCompatActivity() {
                 rtuSn,
                 batMerk,
                 batType,
-                batDate
+                batDate,
+                notes
             ).observe(this) { rtu ->
                 when (rtu) {
                     is Resource.Error -> {
@@ -155,7 +158,7 @@ class AddSpecLBSRECActivity : AppCompatActivity() {
                         edBatteryType.setText(rtu.data?.bat_type)
                         edBatteryDate.setText(rtu.data?.bat_date)
 
-                        edNotes.setText("")
+                        edNotes.setText(rtu.data?.notes)
                     }
                 }
             }

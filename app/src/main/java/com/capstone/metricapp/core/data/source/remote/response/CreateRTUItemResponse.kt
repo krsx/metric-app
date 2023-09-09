@@ -108,4 +108,7 @@ data class CreateRTUData(
 
     @field:SerializedName("__v")
     val v: Int? = null,
+
+    @field:SerializedName("notes")
+    val notes: String? = null
 )

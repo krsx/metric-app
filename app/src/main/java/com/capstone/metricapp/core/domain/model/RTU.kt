@@ -43,4 +43,5 @@ data class RTU(
     var gat_sn: String,
 
     var dateCreated: String,
+    var notes: String,
 ) : Parcelable

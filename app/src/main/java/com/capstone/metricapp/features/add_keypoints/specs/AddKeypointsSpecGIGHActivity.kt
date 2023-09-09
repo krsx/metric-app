@@ -65,8 +65,6 @@ class AddKeypointsSpecGIGHActivity : AppCompatActivity() {
         val batDate = binding.edBatteryDate.text.toString()
 
         val note = binding.edNotes.text.toString()
-
-
         if (teleMerk.isNotEmpty() && teleType.isNotEmpty() && teleRange.isNotEmpty() && teleSn.isNotEmpty() && teleDate.isNotEmpty()
             && recMerk.isNotEmpty() && recType.isNotEmpty() && recRange.isNotEmpty() && recSn.isNotEmpty() && recDate.isNotEmpty()
             && rtuMerk.isNotEmpty() && rtuType.isNotEmpty() && rtuDate.isNotEmpty() && rtuSn.isNotEmpty()
@@ -106,6 +104,7 @@ class AddKeypointsSpecGIGHActivity : AppCompatActivity() {
                     gatType,
                     gatDate,
                     gatSn,
+                    note
                 ).observe(this) { rtu ->
                     when (rtu) {
                         is Resource.Error -> {

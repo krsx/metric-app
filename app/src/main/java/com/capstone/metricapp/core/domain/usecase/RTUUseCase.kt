@@ -41,6 +41,8 @@ interface RTUUseCase {
         bat_merk: String,
         bat_type: String,
         bat_date: String,
+
+        notes: String
     ): Flow<Resource<RTU>>
 
     fun updateSpecLBS(
@@ -67,6 +69,8 @@ interface RTUUseCase {
         bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
+
+        notes: String?
     ): Flow<Resource<RTU>>
 
     fun createGIGHKeypoint(
@@ -100,6 +104,8 @@ interface RTUUseCase {
         gat_type: String,
         gat_date: String,
         gat_sn: String,
+
+        notes: String
     ): Flow<Resource<RTU>>
 
     fun updateSpecGIGHKeypoint(
@@ -131,6 +137,8 @@ interface RTUUseCase {
         gat_type: String?,
         gat_date: String?,
         gat_sn: String?,
+
+        notes: String?
     ): Flow<Resource<RTU>>
 
     fun getHistoryRTU(

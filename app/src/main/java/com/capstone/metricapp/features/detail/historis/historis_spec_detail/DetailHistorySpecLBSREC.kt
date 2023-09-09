@@ -45,6 +45,8 @@ class DetailHistorySpecLBSREC(private val historyData: KeypointHistory) :
             tvDetailBateraiMerk.text = newValue.bat_merk
             tvDetailBateraiType.text = newValue.bat_type
             tvDetailBateraiDate.text = newValue.bat_date
+
+            tvDetailNotes.text = newValue.notes
         }
     }
 

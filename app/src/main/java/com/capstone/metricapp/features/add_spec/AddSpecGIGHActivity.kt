@@ -70,6 +70,7 @@ class AddSpecGIGHActivity : AppCompatActivity() {
             val batType = binding.edBatteryType.text.toString()
             val batDate = binding.edBatteryDate.text.toString()
 
+            val notes = binding.edNotes.text.toString()
             viewModel.updateSpecGIGH(
                 token, id, teleMerk,
                 teleType,
@@ -90,7 +91,8 @@ class AddSpecGIGHActivity : AppCompatActivity() {
                 gatMerk,
                 gatType,
                 gatDate,
-                gatSn
+                gatSn,
+                notes
             ).observe(this) { rtu ->
                 when (rtu) {
                     is Resource.Error -> {
@@ -163,7 +165,7 @@ class AddSpecGIGHActivity : AppCompatActivity() {
                         edGateawayDate.setText(rtu.data?.gat_date)
                         edGateawaySn.setText(rtu.data?.gat_sn)
 
-                        edNotes.setText("")
+                        edNotes.setText(rtu.data?.notes)
                     }
                 }
             }

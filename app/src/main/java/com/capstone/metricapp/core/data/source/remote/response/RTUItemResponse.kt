@@ -104,7 +104,10 @@ data class RTUItem(
     val mainSimNumber: String? = null,
 
     @field:SerializedName("gtwy_merk")
-    val gatMerk: String? = null
+    val gatMerk: String? = null,
+
+    @field:SerializedName("notes")
+    val notes: String? = null
 )
 
 data class RTUData(

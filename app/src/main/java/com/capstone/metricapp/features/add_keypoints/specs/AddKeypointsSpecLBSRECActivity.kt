@@ -93,7 +93,8 @@ class AddKeypointsSpecLBSRECActivity : AppCompatActivity() {
                     rtuSn,
                     batMerk,
                     batType,
-                    batDate
+                    batDate,
+                    note
                 ).observe(this) { rtu ->
                     when (rtu) {
                         is Resource.Error -> {

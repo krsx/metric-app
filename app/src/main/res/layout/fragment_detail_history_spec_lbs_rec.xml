@@ -506,7 +506,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="132dp"
                 android:background="@drawable/custom_card_rounded"
                 android:padding="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
