@@ -87,8 +87,7 @@ object ScadatelDataMapper {
                 //dateCreated in history shows when the spec get updated
                 //the "createdAt" field will only show the creation of the scadatel keypoint
                 dateCreated = newValueJSON.getString("updatedAt"),
-//                notes = newValueJSON.getString("notes"),
-                notes = "" //still no notes field on every field
+                notes = newValueJSON.getString("notes"),
             )
         }
     }

@@ -44,23 +44,17 @@ private fun generateUniqueFileName(directory: File, filename: String): File {
     var targetFile = File(directory, filename)
     var counter = 1
 
-    // Iterate until a unique filename is found
     while (targetFile.exists()) {
-        // Separate the file name and extension (if any)
         val fileNameWithoutExtension = filename.substringBeforeLast(".")
         val fileExtension = filename.substringAfterLast(".", "")
 
-        // Generate a new filename with a numeric suffix
         val newFilename = if (fileExtension.isNotEmpty()) {
             "${fileNameWithoutExtension}_[$counter].$fileExtension"
         } else {
             "${filename}_$counter"
         }
 
-        // Create a new File object with the updated filename
         targetFile = File(directory, newFilename)
-
-        // Increment the counter for the next iteration
         counter++
     }
 

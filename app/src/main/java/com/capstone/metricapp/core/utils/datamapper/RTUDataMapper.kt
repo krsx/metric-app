@@ -193,8 +193,7 @@ object RTUDataMapper {
                 //dateCreated in history shows when the spec get updated
                 //the "createdAt" field will only show the creation of the scadatel keypoint
                 dateCreated = newValueJSON.getString("createdAt"),
-//                notes = newValueJSON.getString("notes"),
-                notes = ""
+                notes = newValueJSON.getString("notes"),
             )
         }
     }
