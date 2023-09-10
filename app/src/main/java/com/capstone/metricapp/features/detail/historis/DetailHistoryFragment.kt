@@ -119,7 +119,7 @@ class DetailHistoryFragment : Fragment() {
                                 .observe(viewLifecycleOwner) { history ->
                                     when (history) {
                                         is Resource.Error -> {
-                                            viewModel.setNoHistory(false)
+                                            viewModel.setNoHistory(true)
                                             showLoading(false)
 //                                            context?.showLongToast("Terjadi kesalahan, silahkan cek koneksi internet dan buka kembali aplikasi METRIC")
                                         }

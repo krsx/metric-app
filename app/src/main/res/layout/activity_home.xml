@@ -176,7 +176,7 @@
         android:drawablePadding="12sp"
         android:ems="10"
         android:maxLines="1"
-        android:hint="@string/password"
+        android:hint="@string/search"
         android:padding="16dp"
         android:textColorHint="@color/white"
         android:textSize="14sp"

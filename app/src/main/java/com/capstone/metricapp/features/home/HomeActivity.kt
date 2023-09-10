@@ -58,6 +58,25 @@ class HomeActivity : AppCompatActivity() {
         handleFab()
 
         setupRefresh()
+
+        handleRecyclerData()
+    }
+
+    private fun handleRecyclerData() {
+        viewModel.getUserDivision().observe(this) { division ->
+            when (division) {
+                Divisions.RTU.divisionName -> {
+                    viewModel.listRTU.observe(this) {
+                        initRecyclerViewRTU(it)
+                    }
+                }
+                Divisions.SCADATEL.divisionName -> {
+                    viewModel.listScadatel.observe(this) {
+                        initRecyclerViewScadatel(it)
+                    }
+                }
+            }
+        }
     }
 
     private fun setupRefresh() {
@@ -88,7 +107,8 @@ class HomeActivity : AppCompatActivity() {
                                         }
                                         is Resource.Success -> {
                                             binding.refKeypoints.isRefreshing = false
-                                            initRecyclerViewRTU(rtu.data!!)
+//                                            initRecyclerViewRTU(rtu.data!!)
+                                            viewModel.setListRTU(rtu.data!!)
                                         }
                                     }
                                 }
@@ -111,7 +131,8 @@ class HomeActivity : AppCompatActivity() {
                                             }
                                             is Resource.Success -> {
                                                 binding.refKeypoints.isRefreshing = false
-                                                initRecyclerViewScadatel(scadatel.data!!)
+//                                                initRecyclerViewScadatel(scadatel.data!!)
+                                                viewModel.setListScadatel(scadatel.data!!)
                                             }
                                         }
                                     }
@@ -162,7 +183,8 @@ class HomeActivity : AppCompatActivity() {
                                 }
                                 is Resource.Success -> {
                                     binding.refKeypoints.isRefreshing = false
-                                    initRecyclerViewRTU(rtu.data!!)
+//                                    initRecyclerViewRTU(rtu.data!!)
+                                    viewModel.setListRTU(rtu.data!!)
                                 }
                             }
                         }
@@ -183,7 +205,8 @@ class HomeActivity : AppCompatActivity() {
                                 }
                                 is Resource.Success -> {
                                     binding.refKeypoints.isRefreshing = false
-                                    initRecyclerViewScadatel(scadatel.data!!)
+//                                    initRecyclerViewScadatel(scadatel.data!!)
+                                    viewModel.setListScadatel(scadatel.data!!)
                                 }
                             }
                         }
@@ -220,7 +243,8 @@ class HomeActivity : AppCompatActivity() {
                                             }
                                             is Resource.Success -> {
                                                 binding.refKeypoints.isRefreshing = false
-                                                initRecyclerViewRTU(rtu.data!!)
+//                                                initRecyclerViewRTU(rtu.data!!)
+                                                viewModel.setListRTU(rtu.data!!)
                                             }
                                         }
                                     }
@@ -242,13 +266,68 @@ class HomeActivity : AppCompatActivity() {
                                                 }
                                                 is Resource.Success -> {
                                                     binding.refKeypoints.isRefreshing = false
-                                                    initRecyclerViewScadatel(scadatel.data!!)
+//                                                    initRecyclerViewScadatel(scadatel.data!!)
+                                                    viewModel.setListScadatel(scadatel.data!!)
                                                 }
                                             }
                                         }
                                 }
                             }
                         }
+                    }
+                } else {
+                    viewModel.getUserToken().observe(this) { token ->
+                        viewModel.getUserDivision().observe(this) { division ->
+                            when (division) {
+                                Divisions.RTU.divisionName -> {
+                                    viewModel.getAllRTU(token).observe(this) { rtu ->
+                                        when (rtu) {
+                                            is Resource.Error -> {
+                                                binding.refKeypoints.isRefreshing = false
+                                                showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
+                                            }
+                                            is Resource.Loading -> {
+                                                binding.refKeypoints.isRefreshing = true
+                                            }
+                                            is Resource.Message -> {
+                                                binding.refKeypoints.isRefreshing = false
+                                                Log.e("HomeViewModel", rtu.message.toString())
+                                            }
+                                            is Resource.Success -> {
+                                                binding.refKeypoints.isRefreshing = false
+//                                    initRecyclerViewRTU(rtu.data!!)
+                                                viewModel.setListRTU(rtu.data!!)
+                                            }
+                                        }
+
+                                    }
+                                }
+                                Divisions.SCADATEL.divisionName -> {
+                                    viewModel.getAllScadatel(token).observe(this) { scadatel ->
+                                        when (scadatel) {
+                                            is Resource.Error -> {
+                                                binding.refKeypoints.isRefreshing = false
+                                                showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
+                                            }
+                                            is Resource.Loading -> {
+                                                binding.refKeypoints.isRefreshing = true
+                                            }
+                                            is Resource.Message -> {
+                                                binding.refKeypoints.isRefreshing = false
+                                                Log.e("HomeViewModel", scadatel.message.toString())
+                                            }
+                                            is Resource.Success -> {
+                                                binding.refKeypoints.isRefreshing = false
+//                                    initRecyclerViewScadatel(scadatel.data!!)
+                                                viewModel.setListScadatel(scadatel.data!!)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+
                     }
                 }
 

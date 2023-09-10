@@ -30,6 +30,10 @@ class DetailKeypointActivity : AppCompatActivity() {
     private val viewModel: DetailKeypointViewModel by viewModels()
     private var keypointsId = ""
 
+    //for handling continuous download
+    private var userToken: String? = null
+    private var userDivision: String? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +49,10 @@ class DetailKeypointActivity : AppCompatActivity() {
         setupTabs(keypointsId)
 
         viewModel.getUserToken().observe(this) { token ->
+            userToken = token
             viewModel.getUserDivision().observe(this) { division ->
+                userDivision = division
+
                 setupHeaderInfo(token, keypointsId, division)
             }
         }
@@ -62,129 +69,14 @@ class DetailKeypointActivity : AppCompatActivity() {
             popUpMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menuExcel -> {
-                        viewModel.getUserToken().observe(this) { token ->
-                            viewModel.getUserDivision().observe(this) { division ->
-                                when (division) {
-                                    Divisions.RTU.divisionName -> {
-                                        viewModel.exportRTUToExcel(token, id)
-                                            .observe(this) { excel ->
-                                                when (excel) {
-                                                    is Resource.Error -> {
-                                                        Log.e("ERROR", "ERROR ${excel.message}")
-                                                    }
-                                                    is Resource.Loading -> {
-                                                        Log.e("LOADING", "LOADING ${excel.message}")
-                                                    }
-                                                    is Resource.Message -> {
-                                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
-                                                    }
-                                                    is Resource.Success -> {
-                                                        val fileName = "$keypointsId.xlsx"
-
-                                                        DownloadFileUtils.readByteStreamExcel(
-                                                            this,
-                                                            excel.data!!,
-                                                            fileName
-                                                        )
-                                                        showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
-                                                    }
-                                                }
-
-                                            }
-                                    }
-                                    Divisions.SCADATEL.divisionName -> {
-                                        viewModel.exportScadatelToExcel(token, id)
-                                            .observe(this) { excel ->
-                                                when (excel) {
-                                                    is Resource.Error -> {
-                                                        Log.e("ERROR", "ERROR ${excel.message}")
-                                                    }
-                                                    is Resource.Loading -> {
-                                                        Log.e("LOADING", "LOADING ${excel.message}")
-                                                    }
-                                                    is Resource.Message -> {
-                                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
-                                                    }
-                                                    is Resource.Success -> {
-                                                        val fileName = "$keypointsId.xlsx"
-
-                                                        DownloadFileUtils.readByteStreamExcel(
-                                                            this,
-                                                            excel.data!!,
-                                                            fileName
-                                                        )
-                                                        showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
-                                                    }
-                                                }
-                                            }
-                                    }
-                                }
-                            }
-
+                        if (userToken != null && userDivision != null) {
+                            handleOnExcelDownload(id, userToken!!, userDivision!!)
                         }
                         true
                     }
                     R.id.menuPdf -> {
-                        viewModel.getUserToken().observe(this) { token ->
-                            viewModel.getUserDivision().observe(this) { division ->
-                                when (division) {
-                                    Divisions.RTU.divisionName -> {
-                                        viewModel.exportRTUToPDF(token, id).observe(this) { pdf ->
-                                            when (pdf) {
-                                                is Resource.Error -> {
-                                                    Log.e("ERROR", "ERROR ${pdf.message}")
-                                                }
-                                                is Resource.Loading -> {
-                                                    Log.e("LOADING", "LOADING ${pdf.message}")
-                                                }
-                                                is Resource.Message -> {
-                                                    Log.e("MESSAGE", "MESSAGE ${pdf.message}")
-                                                }
-                                                is Resource.Success -> {
-                                                    val fileName = "$keypointsId.pdf"
-                                                    DownloadFileUtils.readByteStreamPDF(
-                                                        this,
-                                                        pdf.data!!,
-                                                        fileName,
-                                                    )
-                                                    DownloadFileUtils.logDocumentDirectory(this)
-                                                    showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
-                                                }
-                                            }
-                                        }
-                                    }
-                                    Divisions.SCADATEL.divisionName -> {
-                                        viewModel.exportScadatelToPDF(token, id)
-                                            .observe(this) { pdf ->
-                                                when (pdf) {
-                                                    is Resource.Error -> {
-                                                        Log.e("ERROR", "ERROR ${pdf.message}")
-                                                    }
-                                                    is Resource.Loading -> {
-                                                        Log.e("LOADING", "LOADING ${pdf.message}")
-                                                    }
-                                                    is Resource.Message -> {
-                                                        Log.e("MESSAGE", "MESSAGE ${pdf.message}")
-                                                    }
-                                                    is Resource.Success -> {
-                                                        val fileName = "$keypointsId.pdf"
-
-                                                        DownloadFileUtils.readByteStreamPDF(
-                                                            this,
-                                                            pdf.data!!,
-                                                            fileName,
-                                                        )
-                                                        DownloadFileUtils.logDocumentDirectory(this)
-                                                        showLongToast("Data sudah didownload, silahkan tunggu beberapa saat")
-                                                    }
-                                                }
-                                            }
-                                    }
-                                }
-
-                            }
-
-
+                        if (userToken != null && userDivision != null) {
+                            handleOnPDFDownload(id, userToken!!, userDivision!!)
                         }
                         true
                     }
@@ -197,6 +89,244 @@ class DetailKeypointActivity : AppCompatActivity() {
                 }
             }
             popUpMenu.show()
+        }
+    }
+
+    private fun handleOnPDFDownload(id: String, token: String, division: String) {
+//        viewModel.getUserToken().observe(this) { token ->
+//            Log.e("MASOK", "MASOK 4")
+//            viewModel.getUserDivision().observe(this) { division ->
+//                Log.e("MASOK", "MASOK 5")
+//                when (division) {
+//                    Divisions.RTU.divisionName -> {
+//                        viewModel.exportRTUToPDF(token, id).observe(this) { pdf ->
+//                            when (pdf) {
+//                                is Resource.Error -> {
+//                                    Log.e("ERROR", "ERROR ${pdf.message}")
+//                                }
+//                                is Resource.Loading -> {
+//                                    Log.e("LOADING", "LOADING ${pdf.message}")
+//                                }
+//                                is Resource.Message -> {
+//                                    Log.e("MESSAGE", "MESSAGE ${pdf.message}")
+//                                }
+//                                is Resource.Success -> {
+//                                    val fileName = "$keypointsId.pdf"
+//                                    DownloadFileUtils.readByteStreamPDF(
+//                                        this,
+//                                        pdf.data!!,
+//                                        fileName,
+//                                    )
+//                                    DownloadFileUtils.logDocumentDirectory(this)
+//                                    showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
+//                                }
+//                            }
+//                        }
+//                    }
+//                    Divisions.SCADATEL.divisionName -> {
+//                        viewModel.exportScadatelToPDF(token, id)
+//                            .observe(this) { pdf ->
+//                                when (pdf) {
+//                                    is Resource.Error -> {
+//                                        Log.e("ERROR", "ERROR ${pdf.message}")
+//                                    }
+//                                    is Resource.Loading -> {
+//                                        Log.e("LOADING", "LOADING ${pdf.message}")
+//                                    }
+//                                    is Resource.Message -> {
+//                                        Log.e("MESSAGE", "MESSAGE ${pdf.message}")
+//                                    }
+//                                    is Resource.Success -> {
+//                                        val fileName = "$keypointsId.pdf"
+//
+//                                        DownloadFileUtils.readByteStreamPDF(
+//                                            this,
+//                                            pdf.data!!,
+//                                            fileName,
+//                                        )
+//                                        DownloadFileUtils.logDocumentDirectory(this)
+//                                        showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
+//                                    }
+//                                }
+//                            }
+//                    }
+//                }
+//            }
+//        }
+
+        when (division) {
+            Divisions.RTU.divisionName -> {
+                viewModel.exportRTUToPDF(token, id).observe(this) { pdf ->
+                    when (pdf) {
+                        is Resource.Error -> {
+                            Log.e("ERROR", "ERROR ${pdf.message}")
+                        }
+                        is Resource.Loading -> {
+                            Log.e("LOADING", "LOADING ${pdf.message}")
+                        }
+                        is Resource.Message -> {
+                            Log.e("MESSAGE", "MESSAGE ${pdf.message}")
+                        }
+                        is Resource.Success -> {
+                            val fileName = "$keypointsId.pdf"
+                            DownloadFileUtils.readByteStreamPDF(
+                                this,
+                                pdf.data!!,
+                                fileName,
+                            )
+                            DownloadFileUtils.logDocumentDirectory(this)
+                            showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
+                        }
+                    }
+                }
+            }
+            Divisions.SCADATEL.divisionName -> {
+                viewModel.exportScadatelToPDF(token, id)
+                    .observe(this) { pdf ->
+                        when (pdf) {
+                            is Resource.Error -> {
+                                Log.e("ERROR", "ERROR ${pdf.message}")
+                            }
+                            is Resource.Loading -> {
+                                Log.e("LOADING", "LOADING ${pdf.message}")
+                            }
+                            is Resource.Message -> {
+                                Log.e("MESSAGE", "MESSAGE ${pdf.message}")
+                            }
+                            is Resource.Success -> {
+                                val fileName = "$keypointsId.pdf"
+
+                                DownloadFileUtils.readByteStreamPDF(
+                                    this,
+                                    pdf.data!!,
+                                    fileName,
+                                )
+                                DownloadFileUtils.logDocumentDirectory(this)
+                                showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
+                            }
+                        }
+                    }
+            }
+        }
+    }
+
+    private fun handleOnExcelDownload(id: String, token: String, division: String) {
+//        viewModel.getUserToken().observe(this) { token ->
+//            Log.e("MASOK", "MASOK 1")
+//            viewModel.getUserDivision().observe(this) { division ->
+//                Log.e("MASOK", "MASOK 2")
+//                when (division) {
+//                    Divisions.RTU.divisionName -> {
+//                        viewModel.exportRTUToExcel(token, id)
+//                            .observe(this) { excel ->
+//                                when (excel) {
+//                                    is Resource.Error -> {
+//                                        Log.e("ERROR", "ERROR ${excel.message}")
+//                                    }
+//                                    is Resource.Loading -> {
+//                                        Log.e("LOADING", "LOADING ${excel.message}")
+//                                    }
+//                                    is Resource.Message -> {
+//                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
+//                                    }
+//                                    is Resource.Success -> {
+//                                        val fileName = "$keypointsId.xlsx"
+//
+//                                        DownloadFileUtils.readByteStreamExcel(
+//                                            this,
+//                                            excel.data!!,
+//                                            fileName
+//                                        )
+//                                        showLongToast("Data excel sudah didownload, silahkan tunggu beberapa saat")
+//                                    }
+//                                }
+//
+//                            }
+//                    }
+//                    Divisions.SCADATEL.divisionName -> {
+//                        viewModel.exportScadatelToExcel(token, id)
+//                            .observe(this) { excel ->
+//                                when (excel) {
+//                                    is Resource.Error -> {
+//                                        Log.e("ERROR", "ERROR ${excel.message}")
+//                                    }
+//                                    is Resource.Loading -> {
+//                                        Log.e("LOADING", "LOADING ${excel.message}")
+//                                    }
+//                                    is Resource.Message -> {
+//                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
+//                                    }
+//                                    is Resource.Success -> {
+//                                        val fileName = "$keypointsId.xlsx"
+//
+//                                        DownloadFileUtils.readByteStreamExcel(
+//                                            this,
+//                                            excel.data!!,
+//                                            fileName
+//                                        )
+//                                        showLongToast("Data excel sudah didownload, silahkan tunggu beberapa saat")
+//                                    }
+//                                }
+//                            }
+//                    }
+//                }
+//            }
+//        }
+
+        when (division) {
+            Divisions.RTU.divisionName -> {
+                viewModel.exportRTUToExcel(token, id)
+                    .observe(this) { excel ->
+                        when (excel) {
+                            is Resource.Error -> {
+                                Log.e("ERROR", "ERROR ${excel.message}")
+                            }
+                            is Resource.Loading -> {
+                                Log.e("LOADING", "LOADING ${excel.message}")
+                            }
+                            is Resource.Message -> {
+                                Log.e("MESSAGE", "MESSAGE ${excel.message}")
+                            }
+                            is Resource.Success -> {
+                                val fileName = "$keypointsId.xlsx"
+
+                                DownloadFileUtils.readByteStreamExcel(
+                                    this,
+                                    excel.data!!,
+                                    fileName
+                                )
+                                showLongToast("Data excel sudah didownload, silahkan tunggu beberapa saat")
+                            }
+                        }
+
+                    }
+            }
+            Divisions.SCADATEL.divisionName -> {
+                viewModel.exportScadatelToExcel(token, id)
+                    .observe(this) { excel ->
+                        when (excel) {
+                            is Resource.Error -> {
+                                Log.e("ERROR", "ERROR ${excel.message}")
+                            }
+                            is Resource.Loading -> {
+                                Log.e("LOADING", "LOADING ${excel.message}")
+                            }
+                            is Resource.Message -> {
+                                Log.e("MESSAGE", "MESSAGE ${excel.message}")
+                            }
+                            is Resource.Success -> {
+                                val fileName = "$keypointsId.xlsx"
+
+                                DownloadFileUtils.readByteStreamExcel(
+                                    this,
+                                    excel.data!!,
+                                    fileName
+                                )
+                                showLongToast("Data excel sudah didownload, silahkan tunggu beberapa saat")
+                            }
+                        }
+                    }
+            }
         }
     }
 

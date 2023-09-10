@@ -163,7 +163,7 @@ class ScadatelRepository @Inject constructor(
             }
 
             override suspend fun createCall(): Flow<ApiResponse<ResponseBody>> {
-                return remoteDataSource.exportRTUDataToPDF(token, id)
+                return remoteDataSource.exportScadatelDataToPDF(token, id)
             }
         }.asFlow()
     }

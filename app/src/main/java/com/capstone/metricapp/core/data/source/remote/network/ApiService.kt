@@ -76,7 +76,7 @@ interface ApiService {
         @Path("id") id: String,
     ): KeypointHistoryResponse
 
-    @DELETE
+    @DELETE("scadatel/{id}")
     suspend fun deleteScadatelKeypoint(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
