@@ -14,6 +14,7 @@ import com.budiyev.android.codescanner.*
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.domain.model.RTU
 import com.capstone.metricapp.core.domain.model.Scadatel
+import com.capstone.metricapp.core.utils.ManagePermissions
 import com.capstone.metricapp.core.utils.cleanId
 import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.core.utils.extractId
@@ -35,6 +36,7 @@ class ScanActivity : AppCompatActivity() {
     private var scadatelData: Scadatel? = null
     private var rtuData: RTU? = null
     private val viewModel: ScanViewModel by viewModels()
+    private lateinit var managePermissions: ManagePermissions
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,7 @@ class ScanActivity : AppCompatActivity() {
         }
 
         setupPermissions()
+
         qrScanner()
     }
 

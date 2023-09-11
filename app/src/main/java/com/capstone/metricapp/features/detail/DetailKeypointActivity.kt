@@ -14,11 +14,8 @@ import androidx.core.content.ContextCompat
 import com.capstone.metricapp.R
 import com.capstone.metricapp.core.data.Resource
 import com.capstone.metricapp.core.ui.adapter.DetailKeypointsSectionsAdapter
-import com.capstone.metricapp.core.utils.DateUtil
-import com.capstone.metricapp.core.utils.DownloadFileUtils
+import com.capstone.metricapp.core.utils.*
 import com.capstone.metricapp.core.utils.constans.Divisions
-import com.capstone.metricapp.core.utils.extractId
-import com.capstone.metricapp.core.utils.showLongToast
 import com.capstone.metricapp.databinding.ActivityDetailKeypointsBinding
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +26,7 @@ class DetailKeypointActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailKeypointsBinding
     private val viewModel: DetailKeypointViewModel by viewModels()
     private var keypointsId = ""
+    private lateinit var managePermissions: ManagePermissions
 
     //for handling continuous download
     private var userToken: String? = null
@@ -93,67 +91,6 @@ class DetailKeypointActivity : AppCompatActivity() {
     }
 
     private fun handleOnPDFDownload(id: String, token: String, division: String) {
-//        viewModel.getUserToken().observe(this) { token ->
-//            Log.e("MASOK", "MASOK 4")
-//            viewModel.getUserDivision().observe(this) { division ->
-//                Log.e("MASOK", "MASOK 5")
-//                when (division) {
-//                    Divisions.RTU.divisionName -> {
-//                        viewModel.exportRTUToPDF(token, id).observe(this) { pdf ->
-//                            when (pdf) {
-//                                is Resource.Error -> {
-//                                    Log.e("ERROR", "ERROR ${pdf.message}")
-//                                }
-//                                is Resource.Loading -> {
-//                                    Log.e("LOADING", "LOADING ${pdf.message}")
-//                                }
-//                                is Resource.Message -> {
-//                                    Log.e("MESSAGE", "MESSAGE ${pdf.message}")
-//                                }
-//                                is Resource.Success -> {
-//                                    val fileName = "$keypointsId.pdf"
-//                                    DownloadFileUtils.readByteStreamPDF(
-//                                        this,
-//                                        pdf.data!!,
-//                                        fileName,
-//                                    )
-//                                    DownloadFileUtils.logDocumentDirectory(this)
-//                                    showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
-//                                }
-//                            }
-//                        }
-//                    }
-//                    Divisions.SCADATEL.divisionName -> {
-//                        viewModel.exportScadatelToPDF(token, id)
-//                            .observe(this) { pdf ->
-//                                when (pdf) {
-//                                    is Resource.Error -> {
-//                                        Log.e("ERROR", "ERROR ${pdf.message}")
-//                                    }
-//                                    is Resource.Loading -> {
-//                                        Log.e("LOADING", "LOADING ${pdf.message}")
-//                                    }
-//                                    is Resource.Message -> {
-//                                        Log.e("MESSAGE", "MESSAGE ${pdf.message}")
-//                                    }
-//                                    is Resource.Success -> {
-//                                        val fileName = "$keypointsId.pdf"
-//
-//                                        DownloadFileUtils.readByteStreamPDF(
-//                                            this,
-//                                            pdf.data!!,
-//                                            fileName,
-//                                        )
-//                                        DownloadFileUtils.logDocumentDirectory(this)
-//                                        showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
-//                                    }
-//                                }
-//                            }
-//                    }
-//                }
-//            }
-//        }
-
         when (division) {
             Divisions.RTU.divisionName -> {
                 viewModel.exportRTUToPDF(token, id).observe(this) { pdf ->
@@ -174,7 +111,6 @@ class DetailKeypointActivity : AppCompatActivity() {
                                 pdf.data!!,
                                 fileName,
                             )
-                            DownloadFileUtils.logDocumentDirectory(this)
                             showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
                         }
                     }
@@ -201,7 +137,6 @@ class DetailKeypointActivity : AppCompatActivity() {
                                     pdf.data!!,
                                     fileName,
                                 )
-                                DownloadFileUtils.logDocumentDirectory(this)
                                 showLongToast("Data PDF sudah didownload, silahkan tunggu beberapa saat")
                             }
                         }
@@ -211,68 +146,6 @@ class DetailKeypointActivity : AppCompatActivity() {
     }
 
     private fun handleOnExcelDownload(id: String, token: String, division: String) {
-//        viewModel.getUserToken().observe(this) { token ->
-//            Log.e("MASOK", "MASOK 1")
-//            viewModel.getUserDivision().observe(this) { division ->
-//                Log.e("MASOK", "MASOK 2")
-//                when (division) {
-//                    Divisions.RTU.divisionName -> {
-//                        viewModel.exportRTUToExcel(token, id)
-//                            .observe(this) { excel ->
-//                                when (excel) {
-//                                    is Resource.Error -> {
-//                                        Log.e("ERROR", "ERROR ${excel.message}")
-//                                    }
-//                                    is Resource.Loading -> {
-//                                        Log.e("LOADING", "LOADING ${excel.message}")
-//                                    }
-//                                    is Resource.Message -> {
-//                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
-//                                    }
-//                                    is Resource.Success -> {
-//                                        val fileName = "$keypointsId.xlsx"
-//
-//                                        DownloadFileUtils.readByteStreamExcel(
-//                                            this,
-//                                            excel.data!!,
-//                                            fileName
-//                                        )
-//                                        showLongToast("Data excel sudah didownload, silahkan tunggu beberapa saat")
-//                                    }
-//                                }
-//
-//                            }
-//                    }
-//                    Divisions.SCADATEL.divisionName -> {
-//                        viewModel.exportScadatelToExcel(token, id)
-//                            .observe(this) { excel ->
-//                                when (excel) {
-//                                    is Resource.Error -> {
-//                                        Log.e("ERROR", "ERROR ${excel.message}")
-//                                    }
-//                                    is Resource.Loading -> {
-//                                        Log.e("LOADING", "LOADING ${excel.message}")
-//                                    }
-//                                    is Resource.Message -> {
-//                                        Log.e("MESSAGE", "MESSAGE ${excel.message}")
-//                                    }
-//                                    is Resource.Success -> {
-//                                        val fileName = "$keypointsId.xlsx"
-//
-//                                        DownloadFileUtils.readByteStreamExcel(
-//                                            this,
-//                                            excel.data!!,
-//                                            fileName
-//                                        )
-//                                        showLongToast("Data excel sudah didownload, silahkan tunggu beberapa saat")
-//                                    }
-//                                }
-//                            }
-//                    }
-//                }
-//            }
-//        }
-
         when (division) {
             Divisions.RTU.divisionName -> {
                 viewModel.exportRTUToExcel(token, id)
@@ -407,21 +280,6 @@ class DetailKeypointActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            EXTERNAL_STORAGE -> if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                showLongToast("Anda perlu memberikan izn akses kamera untuk dapat menggunakan fitur ini")
-            } else {
-                //success
-            }
-        }
-    }
-
     private fun setupPermissions() {
         val permission = ContextCompat.checkSelfPermission(
             this,
@@ -439,6 +297,21 @@ class DetailKeypointActivity : AppCompatActivity() {
             arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
             EXTERNAL_STORAGE
         )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            EXTERNAL_STORAGE -> if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                showLongToast("Anda perlu memberikan izn akses file untuk dapat menggunakan fitur export data")
+            } else {
+                //success
+            }
+        }
     }
 
 

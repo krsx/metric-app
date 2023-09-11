@@ -16,6 +16,7 @@ object DownloadFileUtils {
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
             val file = generateUniqueFileName(documentsDirectory, fileName)
 
+            Log.e("FILES", file.path.toString())
             input.byteStream().saveToFile(file)
             openDownloadedFile(context, file, "application/pdf")
         } catch (e: Exception) {
@@ -29,60 +30,14 @@ object DownloadFileUtils {
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
             val file = generateUniqueFileName(documentsDirectory, fileName)
 
+            Log.e("FILES", file.path.toString())
             input.byteStream().saveToFile(file)
             openDownloadedFile(context, file, "application/vnd.ms-excel")
         } catch (e: Exception) {
             Log.e("Data to Excel", e.toString())
         }
     }
-
-    fun logDocumentDirectory(context: Context) {
-        val documentsDirectory =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-        val pathToDocuments = documentsDirectory.absolutePath
-        Log.d("Documents Directory", pathToDocuments)
-    }
 }
-
-//fun showFileDownloadNotification(context: Context, file: File, fileType: String) {
-//    val notificationId = 1 // You can use any unique ID for the notification.
-//
-//    // Create a notification channel for Android Oreo and higher.
-//    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//        val channelId = "file_download_channel"
-//        val channelName = "File Download Channel"
-//        val importance = NotificationManager.IMPORTANCE_HIGH
-//        val channel = NotificationChannel(channelId, channelName, importance)
-//
-//        val notificationManager =
-//            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        notificationManager.createNotificationChannel(channel)
-//    }
-//
-//    // Create an intent to open the saved file when the notification is clicked.
-//    val openFileIntent = Intent(Intent.ACTION_VIEW)
-//    openFileIntent.setDataAndType(Uri.fromFile(file), fileType)
-//    openFileIntent.flags =
-//        Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_GRANT_READ_URI_PERMISSION
-//
-//    val pendingIntent = PendingIntent.getActivity(
-//        context,
-//        0,
-//        openFileIntent,
-//        PendingIntent.FLAG_UPDATE_CURRENT
-//    )
-//
-//    // Create the notification.
-//    val notificationBuilder = NotificationCompat.Builder(context, "file_download_channel")
-//        .setContentTitle("File Download Complete")
-//        .setContentText("Tap to open the $fileType file.")
-//        .setContentIntent(pendingIntent)
-//        .setAutoCancel(true)
-//        .setPriority(NotificationCompat.PRIORITY_HIGH)
-//
-//    val notificationManagerCompat = NotificationManagerCompat.from(context)
-//    notificationManagerCompat.notify(notificationId, notificationBuilder.build())
-//}
 
 private fun generateUniqueFileName(directory: File, filename: String): File {
     var targetFile = File(directory, filename)
@@ -115,19 +70,25 @@ fun InputStream.saveToFile(file: File) {
 
 fun openDownloadedFile(context: Context, file: File, fileType: String) {
     try {
-        val uri = FileProvider.getUriForFile(
-            context,
-            "${context.packageName}.provider",
-            file
-        )
+        if (file.exists()) {
+            val uri = FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.provider",
+                file
+            )
 
-        val openFileIntent = Intent(Intent.ACTION_VIEW)
-        openFileIntent.setDataAndType(uri, fileType)
-        openFileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        openFileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            val openFileIntent = Intent(Intent.ACTION_VIEW)
+            openFileIntent.setDataAndType(uri, fileType)
+            openFileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            openFileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-        context.startActivity(openFileIntent)
+            context.startActivity(openFileIntent)
+        } else {
+            Log.e("Open PDF Error", "File not found: ${file.absolutePath}")
+            // Tangani jika file tidak ditemukan.
+        }
     } catch (e: Exception) {
         Log.e("Open File Error", e.toString())
+        // Handle other exceptions if necessary.
     }
 }
