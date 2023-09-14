@@ -9,6 +9,7 @@ import com.capstone.metricapp.core.utils.constans.KeypointsType
 import com.capstone.metricapp.features.detail.gangguan.DetailIssueFragment
 import com.capstone.metricapp.features.detail.historis.DetailHistoryFragment
 import com.capstone.metricapp.features.detail.spesifikasi.DetailSpecGIGHFragment
+import com.capstone.metricapp.features.detail.spesifikasi.DetailSpecLBSRECFragment
 import com.capstone.metricapp.features.detail.spesifikasi.DetailSpecScadatelFragment
 
 class DetailKeypointsSectionsAdapter(activity: AppCompatActivity, var type: KeypointsType) :
@@ -25,7 +26,7 @@ class DetailKeypointsSectionsAdapter(activity: AppCompatActivity, var type: Keyp
             0 -> fragment = when (type) {
                 KeypointsType.SCADATEL -> DetailSpecScadatelFragment()
                 KeypointsType.GIGH -> DetailSpecGIGHFragment()
-                KeypointsType.LBSREC -> DetailSpecGIGHFragment()
+                KeypointsType.LBSREC -> DetailSpecLBSRECFragment()
             }
             1 -> fragment = DetailHistoryFragment()
             2 -> fragment = DetailIssueFragment()
