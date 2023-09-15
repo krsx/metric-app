@@ -23,7 +23,9 @@ object ScadatelDataMapper {
                 os = it.os!!,
                 date = it.date!!,
                 dateCreated = it.createdAt!!,
-                notes = it.notes ?: ""
+                notes = it.notes ?: "",
+                device = it.device ?: "",
+                username = it.username ?: "",
             )
         }
 
@@ -40,6 +42,8 @@ object ScadatelDataMapper {
         date = input?.scadatelItem?.date ?: "",
         dateCreated = input?.scadatelItem?.createdAt ?: "",
         notes = input?.scadatelItem?.notes ?: "",
+        device = input?.scadatelItem?.device ?: "",
+        username = input?.scadatelItem?.username ?: "",
     )
 
     fun mapCreateScadatelResponseToDomain(input: CreateScadatelData?): Scadatel = Scadatel(
@@ -55,6 +59,8 @@ object ScadatelDataMapper {
         date = input.item.date!!,
         dateCreated = input.item.createdAt!!,
         notes = input.item.notes!!,
+        device = input.item.device!!,
+        username = input.item.username!!,
     )
 
     fun mapHistoryScadatelResponseToDomain(input: List<KeypointHistoryItem?>?): List<KeypointHistory> =
@@ -88,6 +94,9 @@ object ScadatelDataMapper {
                 //the "createdAt" field will only show the creation of the scadatel keypoint
                 dateCreated = newValueJSON.getString("updatedAt"),
                 notes = newValueJSON.getString("notes"),
+
+                device = newValueJSON.getString("device"),
+                username = newValueJSON.getString("username"),
             )
         }
     }

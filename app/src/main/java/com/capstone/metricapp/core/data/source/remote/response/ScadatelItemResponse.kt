@@ -50,7 +50,13 @@ data class ScadatelItem(
     val uniqueID: String? = null,
 
     @field:SerializedName("notes")
-    val notes: String? = null
+    val notes: String? = null,
+
+    @field:SerializedName("device")
+    val device: String? = null,
+
+    @field:SerializedName("username")
+    val username: String? = null
 )
 
 data class ScadatelData(

@@ -294,7 +294,9 @@ class ScanActivity : AppCompatActivity() {
                                                         os = scadatel.data.os,
                                                         date = scadatel.data.date,
                                                         dateCreated = scadatel.data.dateCreated,
-                                                        notes = scadatel.data.notes
+                                                        notes = scadatel.data.notes,
+                                                        device = scadatel.data.device,
+                                                        username = scadatel.data.username,
                                                     )
 
                                                     viewModel.setScadatelData(scadatelData!!)

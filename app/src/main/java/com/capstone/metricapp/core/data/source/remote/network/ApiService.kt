@@ -53,6 +53,8 @@ interface ApiService {
         @Field("os") os: String,
         @Field("tanggalPemasangan") date: String,
         @Field("notes") notes: String,
+        @Field("device") device: String,
+        @Field("username") username: String,
     ): CreateScadatelItemResponse
 
     @PUT("scadatel/{id}")
@@ -68,6 +70,8 @@ interface ApiService {
         @Field("os") os: String,
         @Field("tanggalPemasangan") date: String,
         @Field("notes") notes: String,
+        @Field("device") device: String,
+        @Field("username") username: String,
     ): UpdateScadatelItemResponse
 
     @GET("scadatel/history/{id}")

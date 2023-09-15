@@ -17,6 +17,8 @@ class AddKeypointsSpecViewModel @Inject constructor(
 
     fun getUserToken() = userUseCase.getUserToken().asLiveData()
 
+    fun getUserEmail() = userUseCase.getUserEmail().asLiveData()
+
     //SCADATEL
     fun createScadatelKeypoint(
         token: String,
@@ -29,7 +31,9 @@ class AddKeypointsSpecViewModel @Inject constructor(
         backupVolt: String,
         os: String,
         date: String,
-        notes: String
+        notes: String,
+        device: String,
+        email: String,
     ) = scadatelUseCase.createScadatelKeypoint(
         token,
         uniqueId,
@@ -41,7 +45,7 @@ class AddKeypointsSpecViewModel @Inject constructor(
         backupVolt,
         os,
         date,
-        notes
+        notes, device, email,
     ).asLiveData()
 
     //RTU

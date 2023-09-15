@@ -42,8 +42,8 @@ class DetailHistorySpecScadatelFragment(
             tvDetailScadatelOs.text = newValue.os
             tvDetailScadatelDate.text = newValue.date
             tvDetailScadatelNotes.text = newValue.notes
+            tvDetailScadatelDevice.text = newValue.device
+            tvDetailScadatelUsername.text = newValue.username
         }
     }
-
-
 }

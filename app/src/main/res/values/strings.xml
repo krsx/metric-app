@@ -87,4 +87,6 @@
     <string name="no_history">Keypoint ini tidak memiliki\nriwayat perubahan spesifikasi</string>
     <string name="upcoming_feature">Fitur ini akan segera hadir</string>
     <string name="search">Pencarian</string>
+    <string name="device">Perangkat</string>
+    <string name="nama_perangkat">Nama Perangkat</string>
 </resources>

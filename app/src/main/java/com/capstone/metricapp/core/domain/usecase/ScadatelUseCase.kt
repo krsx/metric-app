@@ -26,6 +26,8 @@ interface ScadatelUseCase {
         os: String,
         date: String,
         notes: String,
+        device: String,
+        username: String,
     ): Flow<Resource<Scadatel>>
 
     fun updateSpecScadatel(
@@ -39,6 +41,8 @@ interface ScadatelUseCase {
         os: String?,
         date: String?,
         notes: String?,
+        device: String?,
+        username: String?,
     ): Flow<Resource<Scadatel>>
 
     fun getHistoryScadatel(

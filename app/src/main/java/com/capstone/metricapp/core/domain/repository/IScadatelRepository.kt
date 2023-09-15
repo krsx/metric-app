@@ -25,7 +25,9 @@ interface IScadatelRepository {
         backupVolt: String,
         os: String,
         date: String,
-        notes: String
+        notes: String,
+        device: String,
+        username: String,
     ): Flow<Resource<Scadatel>>
 
     fun updateSpecScadatel(
@@ -38,7 +40,9 @@ interface IScadatelRepository {
         backupVolt: String?,
         os: String?,
         date: String?,
-        notes: String?
+        notes: String?,
+        device: String?,
+        username: String?,
     ): Flow<Resource<Scadatel>>
 
     fun getHistoryScadatel(

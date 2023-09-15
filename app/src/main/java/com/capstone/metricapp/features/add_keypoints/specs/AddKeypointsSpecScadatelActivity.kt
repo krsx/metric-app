@@ -32,11 +32,13 @@ class AddKeypointsSpecScadatelActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            setupButtonSave()
+            viewModel.getUserEmail().observe(this) { email ->
+                setupButtonSave(email)
+            }
         }
     }
 
-    private fun setupButtonSave() {
+    private fun setupButtonSave(email: String) {
         val scadatelMerk = binding.edScadatelMerk.text.toString()
         val scadatelType = binding.edScadatelType.text.toString()
         val scadatelMainVolt = binding.edScadatelMainVolt.text.toString()
@@ -63,7 +65,9 @@ class AddKeypointsSpecScadatelActivity : AppCompatActivity() {
                     scadatelBackupVolt,
                     scadatelOs,
                     scadatelDate,
-                    scadatelNotes
+                    scadatelNotes,
+                    "${Build.MANUFACTURER} ${Build.MODEL}",
+                    email,
                 ).observe(this) { scadatel ->
                     when (scadatel) {
                         is Resource.Error -> {

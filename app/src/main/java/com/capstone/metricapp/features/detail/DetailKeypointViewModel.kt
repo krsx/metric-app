@@ -82,6 +82,8 @@ class DetailKeypointViewModel @Inject constructor(
 
     fun getUserDivision() = userUseCase.getUserDivision().asLiveData()
 
+    fun getUserEmail() = userUseCase.getUserEmail().asLiveData()
+
     fun exportRTUToPDF(token: String, id: String) =
         rtuUseCase.exportRTUDataToPDF(token, id).asLiveData()
 

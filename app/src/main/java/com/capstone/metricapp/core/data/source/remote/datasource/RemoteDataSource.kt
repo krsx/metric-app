@@ -123,7 +123,9 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         backupVolt: String,
         os: String,
         date: String,
-        notes: String
+        notes: String,
+        device: String,
+        username: String,
     ): Flow<ApiResponse<CreateScadatelItemResponse>> {
         return flow {
             try {
@@ -138,7 +140,9 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     backupVolt,
                     os,
                     date,
-                    notes
+                    notes,
+                    device,
+                    username,
                 )
                 val data = response.data
                 if (data != null) {
@@ -162,7 +166,9 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         backupVolt: String?,
         os: String?,
         date: String?,
-        notes: String?
+        notes: String?,
+        device: String?,
+        username: String?
     ): Flow<ApiResponse<UpdateScadatelItemResponse>> {
         return flow {
             try {
@@ -176,7 +182,9 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
                     backupVolt ?: "",
                     os ?: "",
                     date ?: "",
-                    notes ?: ""
+                    notes ?: "",
+                    device ?: "",
+                    username ?: ""
                 )
                 val data = response.data
                 if (data != null) {

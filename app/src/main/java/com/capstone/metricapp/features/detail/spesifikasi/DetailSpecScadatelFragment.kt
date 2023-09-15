@@ -41,7 +41,9 @@ class DetailSpecScadatelFragment : Fragment() {
         viewModel.getUserToken().observe(this) { token ->
             viewModel.id.observe(this) { id ->
                 viewModel.scadatel.observe(this) { scadatel ->
-                    setupInfo(scadatel)
+                    viewModel.getUserEmail().observe(this) { email ->
+                        setupInfo(scadatel, email)
+                    }
                 }
             }
         }
@@ -54,14 +56,16 @@ class DetailSpecScadatelFragment : Fragment() {
             viewModel.getUserToken().observe(this) { token ->
                 viewModel.id.observe(this) { id ->
                     viewModel.getScadatelById(token, id).observe(this) { scadatel ->
-                        checkScadatelData(scadatel)
+                        viewModel.getUserEmail().observe(this) { email ->
+                            checkScadatelData(scadatel, email)
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun checkScadatelData(scadatel: Resource<Scadatel>) {
+    private fun checkScadatelData(scadatel: Resource<Scadatel>, email: String) {
         when (scadatel) {
             is Resource.Error -> {
                 viewModel.setLoading(false)
@@ -75,13 +79,13 @@ class DetailSpecScadatelFragment : Fragment() {
             }
             is Resource.Success -> {
                 viewModel.setLoading(false)
-                setupInfo(scadatel.data!!)
+                setupInfo(scadatel.data!!, email)
             }
         }
     }
 
 
-    private fun setupInfo(scadatel: Scadatel) {
+    private fun setupInfo(scadatel: Scadatel, email: String) {
         binding.apply {
             tvDetailScadatelMerk.text = scadatel.merk
             tvDetailScadatelType.text = scadatel.type
@@ -90,6 +94,8 @@ class DetailSpecScadatelFragment : Fragment() {
             tvDetailScadatelOs.text = scadatel.os
             tvDetailScadatelDate.text = scadatel.date
             tvDetailScadatelNotes.text = scadatel.notes
+            tvDetailScadatelDevice.text = scadatel.device
+            tvDetailScadatelUsername.text = scadatel.username
         }
     }
 

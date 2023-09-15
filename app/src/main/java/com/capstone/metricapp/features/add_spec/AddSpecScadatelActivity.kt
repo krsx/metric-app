@@ -34,7 +34,9 @@ class AddSpecScadatelActivity : AppCompatActivity() {
 
             setupInitialSpecData(token, id)
 
-            setupButtonAdd(token, id)
+            viewModel.getUserEmail().observe(this) { email ->
+                setupButtonAdd(token, id, email)
+            }
         }
 
         binding.btnBack.setOnClickListener {
@@ -67,13 +69,12 @@ class AddSpecScadatelActivity : AppCompatActivity() {
                         edScadatelDate.setText(scadatel.data?.date)
                         edNotes.setText(scadatel.data?.notes)
                     }
-
                 }
             }
         }
     }
 
-    private fun setupButtonAdd(token: String, id: String) {
+    private fun setupButtonAdd(token: String, id: String, email: String) {
         binding.btnSave.setOnClickListener {
             val edMerk = binding.edScadatelMerk.text.toString()
             val edType = binding.edScadatelType.text.toString()
@@ -92,7 +93,9 @@ class AddSpecScadatelActivity : AppCompatActivity() {
                 edBackupVolt,
                 edOS,
                 edDate,
-                edNote
+                edNote,
+                "${Build.MANUFACTURER} ${Build.MODEL}",
+                email
             ).observe(this) { scadatel ->
                 when (scadatel) {
                     is Resource.Error -> {
