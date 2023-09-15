@@ -176,7 +176,9 @@ class ScanActivity : AppCompatActivity() {
                                                         gat_type = rtu.data.gat_merk,
                                                         gat_date = rtu.data.gat_date,
 
-                                                        notes = rtu.data.notes
+                                                        notes = rtu.data.notes,
+                                                        device = rtu.data.device,
+                                                        username = rtu.data.username,
                                                     )
                                                 }
 
@@ -250,13 +252,15 @@ class ScanActivity : AppCompatActivity() {
                                                         gat_type = rtu.data.gat_merk,
                                                         gat_date = rtu.data.gat_date,
 
-                                                        notes = rtu.data.notes
+                                                        notes = rtu.data.notes,
+                                                        device = rtu.data.device,
+                                                        username = rtu.data.username,
                                                     )
                                                 }
 
                                                 viewModel.setRTUData(rtuData!!)
 
-                                                SuccessQRFragment(KeypointsType.LBSREC).show(
+                                                SuccessQRFragment(KeypointsType.GIGH).show(
                                                     supportFragmentManager,
                                                     SUCCESS_FRAGMENT_TAG
                                                 )

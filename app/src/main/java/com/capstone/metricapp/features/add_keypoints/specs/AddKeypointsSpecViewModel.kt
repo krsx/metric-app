@@ -71,6 +71,8 @@ class AddKeypointsSpecViewModel @Inject constructor(
         bat_type: String,
         bat_date: String,
         notes: String,
+        device: String,
+        username: String,
     ) = rtuUseCase.createLBSKeypoint(
         token,
         uniqueId,
@@ -92,7 +94,8 @@ class AddKeypointsSpecViewModel @Inject constructor(
         bat_merk,
         bat_type,
         bat_date,
-        notes
+        notes,
+        device, username,
     ).asLiveData()
 
     fun createGIGHKeypoint(
@@ -122,6 +125,8 @@ class AddKeypointsSpecViewModel @Inject constructor(
         gat_date: String,
         gat_sn: String,
         notes: String,
+        device: String,
+        username: String,
     ) = rtuUseCase.createGIGHKeypoint(
         token,
         uniqueId,
@@ -148,6 +153,8 @@ class AddKeypointsSpecViewModel @Inject constructor(
         gat_type,
         gat_date,
         gat_sn,
-        notes
+        notes,
+        device,
+        username
     ).asLiveData()
 }

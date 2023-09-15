@@ -133,6 +133,8 @@ interface ApiService {
         @Field("btr_tanggalPenggatian") bat_date: String,
 
         @Field("notes") notes: String,
+        @Field("device") device: String,
+        @Field("username") username: String,
     ): CreateRTUItemResponse
 
     @POST("rtu")
@@ -170,6 +172,8 @@ interface ApiService {
         @Field("gtwy_sn") gat_sn: String,
 
         @Field("notes") notes: String,
+        @Field("device") device: String,
+        @Field("username") username: String,
     ): CreateRTUItemResponse
 
     @PUT("rtu/{id}")
@@ -200,11 +204,13 @@ interface ApiService {
         @Field("btr_tanggalPenggatian") bat_date: String,
 
         @Field("notes") notes: String,
+        @Field("device") device: String,
+        @Field("username") username: String,
     ): UpdateRTUResponse
 
     @PUT("rtu/{id}")
     @FormUrlEncoded
-    fun updateSpecGIGH(
+    suspend fun updateSpecGIGH(
         @Header("Authorization") authorization: String,
         @Path("id") id: String,
         @Field("uniqueID") uniqueID: String,
@@ -236,6 +242,8 @@ interface ApiService {
         @Field("gtwy_sn") gat_sn: String,
 
         @Field("notes") notes: String,
+        @Field("device") device: String,
+        @Field("username") username: String,
     ): UpdateRTUResponse
 
     @GET("rtu/history/{id}")

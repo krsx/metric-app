@@ -34,11 +34,13 @@ class AddKeypointsSpecLBSRECActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            setupButtonSave()
+            viewModel.getUserEmail().observe(this) { email ->
+                setupButtonSave(email)
+            }
         }
     }
 
-    private fun setupButtonSave() {
+    private fun setupButtonSave(email: String) {
         val teleMerk = binding.edTeleMerk.text.toString()
         val teleType = binding.edTeleType.text.toString()
         val teleRange = binding.edTeleRange.text.toString()
@@ -94,7 +96,9 @@ class AddKeypointsSpecLBSRECActivity : AppCompatActivity() {
                     batMerk,
                     batType,
                     batDate,
-                    note
+                    note,
+                    "${Build.MANUFACTURER} ${Build.MODEL}",
+                    email,
                 ).observe(this) { rtu ->
                     when (rtu) {
                         is Resource.Error -> {

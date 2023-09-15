@@ -76,7 +76,9 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         bat_merk: String,
         bat_type: String,
         bat_date: String,
-        notes: String
+        notes: String,
+        device: String,
+        username: String,
     ): Flow<Resource<RTU>> {
         return object : NetworkBoundResource<RTU, CreateRTUItemResponse>() {
             override suspend fun fetchFromApi(response: CreateRTUItemResponse): RTU {
@@ -105,7 +107,9 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
                     bat_merk,
                     bat_type,
                     bat_date,
-                    notes
+                    notes,
+                    device,
+                    username
                 )
             }
         }.asFlow()
@@ -130,7 +134,9 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
-        notes: String?
+        notes: String?,
+        device: String?,
+        username: String?,
     ): Flow<Resource<RTU>> {
         return object : NetworkBoundResource<RTU, UpdateRTUResponse>() {
             override suspend fun fetchFromApi(response: UpdateRTUResponse): RTU {
@@ -157,7 +163,9 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
                     bat_merk ?: "",
                     bat_type ?: "",
                     bat_date ?: "",
-                    notes ?: ""
+                    notes ?: "",
+                    device ?: "",
+                    username ?: ""
                 )
             }
         }.asFlow()
@@ -189,7 +197,9 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         gat_type: String,
         gat_date: String,
         gat_sn: String,
-        notes: String
+        notes: String,
+        device: String,
+        username: String,
     ): Flow<Resource<RTU>> {
         return object : NetworkBoundResource<RTU, CreateRTUItemResponse>() {
             override suspend fun fetchFromApi(response: CreateRTUItemResponse): RTU {
@@ -223,7 +233,8 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
                     gat_type,
                     gat_date,
                     gat_sn,
-                    notes
+                    notes,
+                    device, username,
                 )
             }
         }.asFlow()
@@ -253,7 +264,9 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
         gat_type: String?,
         gat_date: String?,
         gat_sn: String?,
-        notes: String?
+        notes: String?,
+        device: String?,
+        username: String?
     ): Flow<Resource<RTU>> {
         return object : NetworkBoundResource<RTU, UpdateRTUResponse>() {
             override suspend fun fetchFromApi(response: UpdateRTUResponse): RTU {
@@ -285,7 +298,9 @@ class RTURepository @Inject constructor(private val remoteDataSource: RemoteData
                     gat_type ?: "",
                     gat_date ?: "",
                     gat_sn ?: "",
-                    notes ?: ""
+                    notes ?: "",
+                    device ?: "",
+                    username ?: ""
                 )
             }
         }.asFlow()

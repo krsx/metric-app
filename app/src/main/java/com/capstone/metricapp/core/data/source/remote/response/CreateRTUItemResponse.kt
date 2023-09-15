@@ -110,5 +110,11 @@ data class CreateRTUData(
     val v: Int? = null,
 
     @field:SerializedName("notes")
-    val notes: String? = null
+    val notes: String? = null,
+
+    @field:SerializedName("device")
+    val device: String? = null,
+
+    @field:SerializedName("username")
+    val username: String? = null
 )

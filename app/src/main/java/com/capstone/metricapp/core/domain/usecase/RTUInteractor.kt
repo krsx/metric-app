@@ -44,7 +44,9 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
         bat_merk: String,
         bat_type: String,
         bat_date: String,
-        notes: String
+        notes: String,
+        device: String,
+        username: String,
     ): Flow<Resource<RTU>> {
         return rtuRepository.createLBSKeypoint(
             token,
@@ -67,7 +69,9 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
             bat_merk,
             bat_type,
             bat_date,
-            notes
+            notes,
+            device,
+            username,
         )
     }
 
@@ -90,7 +94,9 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
         bat_merk: String?,
         bat_type: String?,
         bat_date: String?,
-        notes: String?
+        notes: String?,
+        device: String?,
+        username: String?
     ): Flow<Resource<RTU>> {
         return rtuRepository.updateSpecLBSRECKeypoint(
             token,
@@ -111,7 +117,9 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
             bat_merk,
             bat_type,
             bat_date,
-            notes
+            notes,
+            device,
+            username,
         )
     }
 
@@ -141,7 +149,9 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
         gat_type: String,
         gat_date: String,
         gat_sn: String,
-        notes: String
+        notes: String,
+        device: String,
+        username: String,
     ): Flow<Resource<RTU>> {
         return rtuRepository.createGIGHKeypoint(
             token,
@@ -169,7 +179,9 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
             gat_type,
             gat_date,
             gat_sn,
-            notes
+            notes,
+            device,
+            username
         )
     }
 
@@ -197,7 +209,9 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
         gat_type: String?,
         gat_date: String?,
         gat_sn: String?,
-        notes: String?
+        notes: String?,
+        device: String?,
+        username: String?
     ): Flow<Resource<RTU>> {
         return rtuRepository.updateSpecGIGHKeypoint(
             token,
@@ -224,6 +238,8 @@ class RTUInteractor @Inject constructor(private val rtuRepository: IRTURepositor
             gat_date,
             gat_sn,
             notes,
+            device,
+            username,
         )
     }
 

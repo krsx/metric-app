@@ -34,7 +34,9 @@ class AddSpecGIGHActivity : AppCompatActivity() {
 
             setupInitialSpecData(token, id)
 
-            setupButtonAdd(token, id)
+            viewModel.getUserEmail().observe(this) { email ->
+                setupButtonAdd(token, id, email)
+            }
         }
 
         binding.btnBack.setOnClickListener {
@@ -42,7 +44,7 @@ class AddSpecGIGHActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupButtonAdd(token: String, id: String) {
+    private fun setupButtonAdd(token: String, id: String, email: String) {
         binding.btnSave.setOnClickListener {
             val teleMerk = binding.edTeleMerk.text.toString()
             val teleType = binding.edTeleType.text.toString()
@@ -92,7 +94,9 @@ class AddSpecGIGHActivity : AppCompatActivity() {
                 gatType,
                 gatDate,
                 gatSn,
-                notes
+                notes,
+                "${Build.MANUFACTURER} ${Build.MODEL}",
+                email
             ).observe(this) { rtu ->
                 when (rtu) {
                     is Resource.Error -> {

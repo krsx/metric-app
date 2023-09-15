@@ -44,4 +44,7 @@ data class RTU(
 
     var dateCreated: String,
     var notes: String,
+
+    var device: String,
+    var username: String,
 ) : Parcelable

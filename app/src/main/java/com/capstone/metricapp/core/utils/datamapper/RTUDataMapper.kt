@@ -50,7 +50,9 @@ object RTUDataMapper {
             gat_sn = it.gatSn ?: "",
 
             dateCreated = it.createdAt!!,
-            notes = it.notes ?: ""
+            notes = it.notes ?: "",
+            device = it.device ?: "",
+            username = it.username ?: "",
         )
     }
 
@@ -93,7 +95,9 @@ object RTUDataMapper {
         gat_sn = input.rtuItem.gatSn ?: "",
 
         dateCreated = input.rtuItem.createdAt!!,
-        notes = input.rtuItem.notes ?: ""
+        notes = input.rtuItem.notes ?: "",
+        device = input.rtuItem.device ?: "",
+        username = input.rtuItem.username ?: ""
     )
 
     fun mapCreateRTUResponse(input: CreateRTUData?): RTU = RTU(
@@ -135,7 +139,9 @@ object RTUDataMapper {
         gat_sn = input.gat_sn ?: "",
 
         dateCreated = input.createdAt!!,
-        notes = input.notes ?: ""
+        notes = input.notes ?: "",
+        device = input.device ?: "",
+        username = input.username ?: ""
     )
 
     fun mapHistoryRTUResponseToDomain(input: List<KeypointHistoryItem?>?): List<KeypointHistory> =
@@ -194,6 +200,8 @@ object RTUDataMapper {
                 //the "createdAt" field will only show the creation of the scadatel keypoint
                 dateCreated = newValueJSON.getString("createdAt"),
                 notes = newValueJSON.getString("notes"),
+                device = newValueJSON.getString("device"),
+                username = newValueJSON.getString("username"),
             )
         }
     }

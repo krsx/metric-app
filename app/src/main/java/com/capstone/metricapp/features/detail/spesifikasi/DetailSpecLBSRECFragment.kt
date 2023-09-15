@@ -103,6 +103,8 @@ class DetailSpecLBSRECFragment : Fragment() {
             tvDetailBateraiDate.text = data.bat_date
 
             tvDetailNotes.text = data.notes
+            tvDetailDevice.text = data.device
+            tvDetailUsername.text = data.username
         }
     }
 
