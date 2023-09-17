@@ -11,4 +11,6 @@ data class KeypointHistory(
     var fieldName: String,
     var oldValue: String,
     var newValue: String,
+    var username: String,
+    var device: String,
 ) : Parcelable

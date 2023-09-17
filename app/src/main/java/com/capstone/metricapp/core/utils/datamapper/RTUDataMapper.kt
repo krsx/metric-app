@@ -153,6 +153,8 @@ object RTUDataMapper {
                 fieldName = it.fieldName!!,
                 oldValue = it.oldValue!!,
                 newValue = it.newValue!!,
+                device = it.device ?: "",
+                username = it.username ?: "",
             )
         }
 
@@ -165,43 +167,43 @@ object RTUDataMapper {
                 keypoint = newValueJSON.getString("keypoint"),
                 region = newValueJSON.getString("lokasi"),
 
-                telkom_merk = newValueJSON.getString("telkom_merk"),
-                telkom_type = newValueJSON.getString("telkom_tipe"),
-                telkom_rangeVolt = newValueJSON.getString("telkom_rangeVolt"),
-                telkom_date = newValueJSON.getString("telkom_tanggalPenggantian"),
-                telkom_sn = newValueJSON.getString("telkom_sn"),
+                telkom_merk = checkJsonField(newValueJSON, "telkom_merk"),
+                telkom_type = checkJsonField(newValueJSON, "telkom_tipe"),
+                telkom_rangeVolt = checkJsonField(newValueJSON, "telkom_rangeVolt"),
+                telkom_date = checkJsonField(newValueJSON, "telkom_tanggalPenggantian"),
+                telkom_sn = checkJsonField(newValueJSON, "telkom_sn"),
 
-                main_sim_provider = newValueJSON.getString("providerSimUtama"),
-                main_sim_number = newValueJSON.getString("nomorSimUtama"),
-                backup_sim_provider = newValueJSON.getString("providerSimCadangan"),
-                backup_sim_number = newValueJSON.getString("nomorSimCadangan"),
+                main_sim_provider = checkJsonField(newValueJSON, "providerSimUtama"),
+                main_sim_number = checkJsonField(newValueJSON, "nomorSimUtama"),
+                backup_sim_provider = checkJsonField(newValueJSON, "providerSimCadangan"),
+                backup_sim_number = checkJsonField(newValueJSON, "nomorSimCadangan"),
 
-                rtu_merk = newValueJSON.getString("rtu_merk"),
-                rtu_type = newValueJSON.getString("rtu_tipe"),
-                rtu_date = newValueJSON.getString("rtu_tanggalPenggatian"),
-                rtu_sn = newValueJSON.getString("rtu_sn"),
+                rtu_merk = checkJsonField(newValueJSON, "rtu_merk"),
+                rtu_type = checkJsonField(newValueJSON, "rtu_tipe"),
+                rtu_date = checkJsonField(newValueJSON, "rtu_tanggalPenggatian"),
+                rtu_sn = checkJsonField(newValueJSON, "rtu_sn"),
 
-                bat_merk = newValueJSON.getString("btr_merk"),
-                bat_type = newValueJSON.getString("btr_tipe"),
-                bat_date = newValueJSON.getString("btr_tanggalPenggatian"),
+                bat_merk = checkJsonField(newValueJSON, "btr_merk"),
+                bat_type = checkJsonField(newValueJSON, "btr_tipe"),
+                bat_date = checkJsonField(newValueJSON, "btr_tanggalPenggatian"),
 
-                rect_merk = newValueJSON.getString("rect_merk"),
-                rect_type = newValueJSON.getString("rect_tipe"),
-                rect_rangeVolt = newValueJSON.getString("rect_rangeVolt"),
-                rect_date = newValueJSON.getString("rect_tanggalPenggantian"),
-                rect_sn = newValueJSON.getString("rect_sn"),
+                rect_merk = checkJsonField(newValueJSON, "rect_merk"),
+                rect_type = checkJsonField(newValueJSON, "rect_tipe"),
+                rect_rangeVolt = checkJsonField(newValueJSON, "rect_rangeVolt"),
+                rect_date = checkJsonField(newValueJSON, "rect_tanggalPenggantian"),
+                rect_sn = checkJsonField(newValueJSON, "rect_sn"),
 
-                gat_merk = newValueJSON.getString("gtwy_merk"),
-                gat_type = newValueJSON.getString("gtwy_tipe"),
-                gat_date = newValueJSON.getString("gtwy_tanggalPenggatian"),
-                gat_sn = newValueJSON.getString("gtwy_sn"),
+                gat_merk = checkJsonField(newValueJSON, "gtwy_merk"),
+                gat_type = checkJsonField(newValueJSON, "gtwy_tipe"),
+                gat_date = checkJsonField(newValueJSON, "gtwy_tanggalPenggatian"),
+                gat_sn = checkJsonField(newValueJSON, "gtwy_sn"),
 
                 //dateCreated in history shows when the spec get updated
                 //the "createdAt" field will only show the creation of the scadatel keypoint
                 dateCreated = newValueJSON.getString("createdAt"),
-                notes = newValueJSON.getString("notes"),
-                device = newValueJSON.getString("device"),
-                username = newValueJSON.getString("username"),
+                notes = newValueJSON.getString("notes") ?: "",
+                device = checkJsonField(newValueJSON, "device"),
+                username = checkJsonField(newValueJSON, "username"),
             )
         }
     }
@@ -210,6 +212,14 @@ object RTUDataMapper {
         input.let {
             val newValueJSON = JSONObject(it)
             return newValueJSON.getString("createdAt")
+        }
+    }
+
+    private fun checkJsonField(newValue: JSONObject, field: String): String {
+        return if (newValue.has(field)) {
+            newValue.getString(field)
+        } else {
+            ""
         }
     }
 }

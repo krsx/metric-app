@@ -35,7 +35,13 @@ data class KeypointHistoryItem(
     val oldValue: String? = null,
 
     @field:SerializedName("timestamp")
-    val timestamp: String? = null
+    val timestamp: String? = null,
+
+    @field:SerializedName("username")
+    val username: String? = null,
+
+    @field:SerializedName("device")
+    val device: String? = null
 )
 
 data class KeypointHistoryData(

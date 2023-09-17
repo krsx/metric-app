@@ -72,6 +72,8 @@ object ScadatelDataMapper {
                 fieldName = it.fieldName!!,
                 oldValue = it.oldValue!!,
                 newValue = it.newValue!!,
+                device = it.device ?: "",
+                username = it.username ?: "",
             )
         }
 
@@ -83,20 +85,20 @@ object ScadatelDataMapper {
                 uniqueId = newValueJSON.getString("uniqueID"),
                 keypoint = newValueJSON.getString("keypoint"),
                 region = newValueJSON.getString("lokasi"),
-                merk = newValueJSON.getString("merk"),
-                type = newValueJSON.getString("tipe"),
-                mainVolt = newValueJSON.getString("mainVolt"),
-                backupVolt = newValueJSON.getString("backupVolt"),
-                os = newValueJSON.getString("os"),
-                date = newValueJSON.getString("tanggalPemasangan"),
+                merk = checkJsonField(newValueJSON, "merk"),
+                type = checkJsonField(newValueJSON, "tipe"),
+                mainVolt = checkJsonField(newValueJSON, "mainVolt"),
+                backupVolt = checkJsonField(newValueJSON, "backupVolt"),
+                os = checkJsonField(newValueJSON, "os"),
+                date = checkJsonField(newValueJSON, "tanggalPemasangan"),
 
                 //dateCreated in history shows when the spec get updated
                 //the "createdAt" field will only show the creation of the scadatel keypoint
                 dateCreated = newValueJSON.getString("updatedAt"),
-                notes = newValueJSON.getString("notes"),
+                notes = checkJsonField(newValueJSON, "notes"),
 
-                device = newValueJSON.getString("device"),
-                username = newValueJSON.getString("username"),
+                device = checkJsonField(newValueJSON, "device"),
+                username = checkJsonField(newValueJSON, "username"),
             )
         }
     }
@@ -106,6 +108,14 @@ object ScadatelDataMapper {
         input.let {
             val newValueJSON = JSONObject(it)
             return newValueJSON.getString("updatedAt")
+        }
+    }
+
+    private fun checkJsonField(newValue: JSONObject, field: String): String {
+        return if (newValue.has(field)) {
+            newValue.getString(field)
+        } else {
+            ""
         }
     }
 }
