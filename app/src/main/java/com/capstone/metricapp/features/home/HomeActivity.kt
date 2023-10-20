@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -216,120 +217,135 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupSearch() {
-        binding.edSearch.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                event?.action == KeyEvent.ACTION_DOWN &&
-                event.keyCode == KeyEvent.KEYCODE_ENTER
-            ) {
-                val query = binding.edSearch.text.toString().trim()
-                if (query.isNotEmpty()) {
-                    viewModel.getUserToken().observe(this) { token ->
-                        viewModel.getUserDivision().observe(this) { division ->
-                            when (division) {
-                                Divisions.RTU.divisionName -> {
-                                    viewModel.findRTUKeypoints(token, query).observe(this) { rtu ->
-                                        when (rtu) {
-                                            is Resource.Error -> {
-                                                binding.refKeypoints.isRefreshing = false
-                                                showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
-                                            }
-                                            is Resource.Loading -> {
-                                                binding.refKeypoints.isRefreshing = true
-                                            }
-                                            is Resource.Message -> {
-                                                binding.refKeypoints.isRefreshing = false
-                                                showLongToast("Keypoints yang dicari tidak ditemukan")
-                                            }
-                                            is Resource.Success -> {
-                                                binding.refKeypoints.isRefreshing = false
+    private fun initiateSearch() {
+        val query = binding.edSearch.text.toString().trim()
+        if (query.isNotEmpty()) {
+            viewModel.getUserToken().observe(this) { token ->
+                viewModel.getUserDivision().observe(this) { division ->
+                    when (division) {
+                        Divisions.RTU.divisionName -> {
+                            viewModel.findRTUKeypoints(token, query).observe(this) { rtu ->
+                                when (rtu) {
+                                    is Resource.Error -> {
+                                        binding.refKeypoints.isRefreshing = false
+                                        showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
+                                    }
+                                    is Resource.Loading -> {
+                                        binding.refKeypoints.isRefreshing = true
+                                    }
+                                    is Resource.Message -> {
+                                        binding.refKeypoints.isRefreshing = false
+                                        showLongToast("Keypoints yang dicari tidak ditemukan")
+                                    }
+                                    is Resource.Success -> {
+                                        binding.refKeypoints.isRefreshing = false
 //                                                initRecyclerViewRTU(rtu.data!!)
-                                                viewModel.setListRTU(rtu.data!!)
-                                            }
-                                        }
+                                        viewModel.setListRTU(rtu.data!!)
                                     }
                                 }
-                                Divisions.SCADATEL.divisionName -> {
-                                    viewModel.findScadatelKeypoints(token, query)
-                                        .observe(this) { scadatel ->
-                                            when (scadatel) {
-                                                is Resource.Error -> {
-                                                    binding.refKeypoints.isRefreshing = false
-                                                    showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
-                                                }
-                                                is Resource.Loading -> {
-                                                    binding.refKeypoints.isRefreshing = true
-                                                }
-                                                is Resource.Message -> {
-                                                    binding.refKeypoints.isRefreshing = false
-                                                    showLongToast("Keypoints yang dicari tidak ditemukan")
-                                                }
-                                                is Resource.Success -> {
-                                                    binding.refKeypoints.isRefreshing = false
+                            }
+                        }
+                        Divisions.SCADATEL.divisionName -> {
+                            viewModel.findScadatelKeypoints(token, query)
+                                .observe(this) { scadatel ->
+                                    when (scadatel) {
+                                        is Resource.Error -> {
+                                            binding.refKeypoints.isRefreshing = false
+                                            showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
+                                        }
+                                        is Resource.Loading -> {
+                                            binding.refKeypoints.isRefreshing = true
+                                        }
+                                        is Resource.Message -> {
+                                            binding.refKeypoints.isRefreshing = false
+                                            showLongToast("Keypoints yang dicari tidak ditemukan")
+                                        }
+                                        is Resource.Success -> {
+                                            binding.refKeypoints.isRefreshing = false
 //                                                    initRecyclerViewScadatel(scadatel.data!!)
-                                                    viewModel.setListScadatel(scadatel.data!!)
-                                                }
-                                            }
-                                        }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    viewModel.getUserToken().observe(this) { token ->
-                        viewModel.getUserDivision().observe(this) { division ->
-                            when (division) {
-                                Divisions.RTU.divisionName -> {
-                                    viewModel.getAllRTU(token).observe(this) { rtu ->
-                                        when (rtu) {
-                                            is Resource.Error -> {
-                                                binding.refKeypoints.isRefreshing = false
-                                                showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
-                                            }
-                                            is Resource.Loading -> {
-                                                binding.refKeypoints.isRefreshing = true
-                                            }
-                                            is Resource.Message -> {
-                                                binding.refKeypoints.isRefreshing = false
-                                                Log.e("HomeViewModel", rtu.message.toString())
-                                            }
-                                            is Resource.Success -> {
-                                                binding.refKeypoints.isRefreshing = false
-//                                    initRecyclerViewRTU(rtu.data!!)
-                                                viewModel.setListRTU(rtu.data!!)
-                                            }
-                                        }
-
-                                    }
-                                }
-                                Divisions.SCADATEL.divisionName -> {
-                                    viewModel.getAllScadatel(token).observe(this) { scadatel ->
-                                        when (scadatel) {
-                                            is Resource.Error -> {
-                                                binding.refKeypoints.isRefreshing = false
-                                                showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
-                                            }
-                                            is Resource.Loading -> {
-                                                binding.refKeypoints.isRefreshing = true
-                                            }
-                                            is Resource.Message -> {
-                                                binding.refKeypoints.isRefreshing = false
-                                                Log.e("HomeViewModel", scadatel.message.toString())
-                                            }
-                                            is Resource.Success -> {
-                                                binding.refKeypoints.isRefreshing = false
-//                                    initRecyclerViewScadatel(scadatel.data!!)
-                                                viewModel.setListScadatel(scadatel.data!!)
-                                            }
+                                            viewModel.setListScadatel(scadatel.data!!)
                                         }
                                     }
                                 }
-                            }
-
                         }
-
                     }
                 }
+            }
+        } else {
+            viewModel.getUserToken().observe(this) { token ->
+                viewModel.getUserDivision().observe(this) { division ->
+                    when (division) {
+                        Divisions.RTU.divisionName -> {
+                            viewModel.getAllRTU(token).observe(this) { rtu ->
+                                when (rtu) {
+                                    is Resource.Error -> {
+                                        binding.refKeypoints.isRefreshing = false
+                                        showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini: ${rtu.message}")
+                                    }
+                                    is Resource.Loading -> {
+                                        binding.refKeypoints.isRefreshing = true
+                                    }
+                                    is Resource.Message -> {
+                                        binding.refKeypoints.isRefreshing = false
+                                        Log.e("HomeViewModel", rtu.message.toString())
+                                    }
+                                    is Resource.Success -> {
+                                        binding.refKeypoints.isRefreshing = false
+//                                    initRecyclerViewRTU(rtu.data!!)
+                                        viewModel.setListRTU(rtu.data!!)
+                                    }
+                                }
+
+                            }
+                        }
+                        Divisions.SCADATEL.divisionName -> {
+                            viewModel.getAllScadatel(token).observe(this) { scadatel ->
+                                when (scadatel) {
+                                    is Resource.Error -> {
+                                        binding.refKeypoints.isRefreshing = false
+                                        showLongToast("Terdapat kesahalan, silahkan refresh kembali halaman ini")
+                                    }
+                                    is Resource.Loading -> {
+                                        binding.refKeypoints.isRefreshing = true
+                                    }
+                                    is Resource.Message -> {
+                                        binding.refKeypoints.isRefreshing = false
+                                        Log.e("HomeViewModel", scadatel.message.toString())
+                                    }
+                                    is Resource.Success -> {
+                                        binding.refKeypoints.isRefreshing = false
+//                                    initRecyclerViewScadatel(scadatel.data!!)
+                                        viewModel.setListScadatel(scadatel.data!!)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    private fun setupSearch() {
+        binding.edSearch.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                val drawableLeft = binding.edSearch.compoundDrawables[0]
+                if (drawableLeft != null && event.rawX <= (binding.edSearch.left + drawableLeft.bounds.width() + binding.edSearch.paddingLeft)) {
+                    // Handle drawableStart click event
+                    initiateSearch()
+                    return@setOnTouchListener true
+                }
+            }
+            false
+        }
+
+        binding.edSearch.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                event.keyCode == KeyEvent.KEYCODE_ENTER
+            ) {
+                initiateSearch()
 
                 val inputMethodManager =
                     this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -337,9 +353,10 @@ class HomeActivity : AppCompatActivity() {
 
                 return@setOnEditorActionListener true
             }
-
             return@setOnEditorActionListener false
         }
+
+
     }
 
     private fun initRecyclerViewScadatel(scadatelList: List<Scadatel>) {
