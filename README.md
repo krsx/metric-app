@@ -1,10 +1,11 @@
 <!-- git remote add origin https|ssh:path/to/the/repository.git  -->
 <!-- git pull origin main --rebase -->
 <div align="center">
-<h1> [Project Name] </h1>
+<h1> Metric - RTU and SCADATEL Management App with Scanning System </h1>
 <a href="https://github.com/zero-911/readme-project-template/header.png">
-    <img src="./img/header.png" alt="readme-project-template">
+    <img src="./img/metric.png" alt="readme-project-template">
 </a>
+</div>
 
 <!-- You can make badge by read on official documentation at https://shields.io/badges -->
 
@@ -24,12 +25,14 @@
 <a href="#-reference">Reference</a>&nbsp;&bull;&nbsp;
 <a href="#-issue">Issue</a>&nbsp;&bull;&nbsp;
 <a href="#-license">License</a>&nbsp;&bull;&nbsp;
-<a href="#-author">Author</a>
+<a href="#-author">I Putu Krisna Erlangga</a>
 </p>
 
 ## 📄 Introduction
 
-`[Project Name]`is a Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, diam id rhoncus dapibus, diam nunc faucibus nisi, vel tincidunt nisl nunc vitae libero. Donec euismod, diam id rhoncus dapibus, diam nunc faucibus nisi, vel tincidunt nisl nunc vitae libero.
+This application was developed to improve the efficiency and performance of UP2D Sulutenggo in managing RTU and SCADATEL units. Previously, data was viewed and processed through Microsoft Excel. However, with the increasing number of RTU and SCADATEL units, this approach became very difficult and inefficient. Additionally, issues with observing historical data made it challenging to perform necessary maintenance on each unit.
+
+To address this, my team and I developed `Metric`, an application designed to assist users in managing RTU and SCADATEL data. The application includes a scanning system to allow users to quickly and securely access information. To facilitate monitoring, the application also provides current and historical RTU and SCADATEL data in PDF and Excel formats, which can be automatically downloaded to the user's device.
 
 ## 💻 Tech Stack
 
@@ -37,8 +40,10 @@
 
 <!-- You can search the logo with https://simpleicons.org and copy the name in logo=copyhere same with color after badge/YourText-YourColor-->
 
--
--
+- [Clean Architecture](https://developer.android.com/topic/architecture)
+- [Hilt Dependency Injection](https://developer.android.com/training/dependency-injection/hilt-android)
+- [Retrofit](https://square.github.io/retrofit/)
+- [Room](https://developer.android.com/training/data-storage/room/)
 
 ## ⚙️ Installation
 
